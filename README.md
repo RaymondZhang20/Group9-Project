@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Group9-Project
+## Project Progress 1
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Project Description: 
+Our application will be presented in the form of a website, with the functionality to allow users who share similar interests in video games to connect with other users (like a find “someone you might know” function on social media). It is for users who sit at home while playing games to find friends with similar interests and to promote social activity. It will store location data for users for the “find users near you” functionality, it will also store data for user’s interests (games that the user is interested in?). It could potentially store the users' preferences of what other users it would want to be matched to (how far away is still near? timezone? age? gender?) and this could be an additional functionality, to match users taking their preferences into consideration.
 
-## Available Scripts
+### Minimal requirements:
+1. Implementing an account system that can let users register or log in when they access the website, store all their information in a database, and update to the database every time users changed or created accounts.
+- Add new user to the database when registering
+- Change information of an existing user in the database when editing profile etc.
+2. Implementing an algorithm that compute the match levels of different accounts in the database base on their locations, games played, gaming platform and so on. - And push every account it’s best matching accounts once it logged in.
+- Algorithm that find similarity of played games for different users
+3. Be able to view other users profiles and what games they play and send them friend invitations
+- Responsive window/link should be jumped out when clicking profile
+- Invitations sent should be and only be visible to that specific user (database should store these 2 users along with invitation)
 
-In the project directory, you can run:
+### Standard requirements:
+1. Be able to communicate with other users, maybe by sending direct messages
+2. Display users on a map along with filtering by games and whatever other filters
+3 .Be able to select games from a list of games, if the list is very large, may need a search functionality.
 
-### `npm start`
+### Stretch requirements:
+1. Link games to account???display in-game achievement?
+2. Send an invitation to everyone within an outlined area for people to join a users party/game
+3. Online voice call service to ensure better friend making process / gaming experience
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Task breakdown
+1. Choose proper database and implement database connector to the back-end.
+2. Implement account system on back-end: store update account info in database.
+3. Implement account system on front-end: log and register function and secured html structure with accounts.
+4. Implement matching algorithm on back-end.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prototypes 
 
-### `npm test`
+Log-in page:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Log-in page](./img/page1.png)
 
-### `npm run build`
+Map page:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![map page](./img/page2.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Main page:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![main page](./img/page3.png)
