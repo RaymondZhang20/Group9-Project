@@ -17,7 +17,7 @@ export default function Login() {
     async function handleLogin(e) {
         e.preventDefault();
         if (passwordRef.current.value === "" || accountRef.current.value === "") {
-            setError("Please enter your email/account and password");
+            setError(" Please enter your email/account and password");
         } else {
             try {
                 setLoading(true);
