@@ -41,7 +41,7 @@ export default function Login() {
                         <Form onSubmit={handleLogin}>
                             <Form.Group id="account-login">
                                 <Form.Label>Email/Account</Form.Label>
-                                <Form.Control type="text" placeholder="Email/Account" ref={accountRef} required/>
+                                <Form.Control type="text" placeholder="Please use Email for now" ref={accountRef} required/>
                             </Form.Group>
                             <Form.Group id="password-login">
                                 <Form.Label>Password</Form.Label>
