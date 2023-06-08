@@ -8,6 +8,7 @@ import {AuthProvider, useAuth} from "./contexts/AuthContext";
 import Account from "./pages/Account";
 import PrivateRoute from "./pages/PrivateRoute";
 import Footer from "./components/Footer";
+import MapPage from "./pages/MapPage";
 
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/:id"  element={<PrivateRoute>
                     <Account />
+                </PrivateRoute>} />
+                <Route path="/:id/map"  element={<PrivateRoute>
+                    <MapPage />
                 </PrivateRoute>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
