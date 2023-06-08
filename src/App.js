@@ -9,7 +9,7 @@ import Account from "./pages/Account";
 import PrivateRoute from "./pages/PrivateRoute";
 import Footer from "./components/Footer";
 import MapPage from "./pages/MapPage";
-
+import Header from "./components/Header";
 
 function App() {
   const {currentUser} = useAuth();
@@ -41,6 +41,7 @@ function App() {
   return (
     <div>
         <AuthProvider>
+            <Header />
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
