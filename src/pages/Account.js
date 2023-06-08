@@ -7,19 +7,25 @@ export default function Account() {
     const [error, setError] = useState("");
     const {logout, currentUser} = useAuth();
     const navigate = useNavigate();
+    const uid = currentUser.uid;
+
+    function handleToMap(e) {
+        e.preventDefault();
+        navigate(`/${uid}/map`);
+    }
     async function handleLogout(e) {
         e.preventDefault();
         setError("");
         try {
             await logout();
-            navigate("/");
+            navigate(`/`);
         } catch (e) {
             setError("Cannot log out because: " + e.message);
         }
     }
     return (
         <div id="Account-whole">
-            <Navigate to={"/"+currentUser.uid} replace={true} />
+            <Navigate to={"/"+uid} replace={true} />
             <h1>Account Profile</h1>
             <Card>
                 <Card.Body>
@@ -29,6 +35,7 @@ export default function Account() {
                 </Card.Body>
             </Card>
             <div className="text-center">
+                <Button className="w-75 mt-3" onClick={handleToMap}>To Map</Button>
                 <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
             </div>
         </div>
