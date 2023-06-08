@@ -8,13 +8,14 @@ import {AuthProvider, useAuth} from "./contexts/AuthContext";
 import Account from "./pages/Account";
 import PrivateRoute from "./pages/PrivateRoute";
 import MapPage from "./pages/MapPage";
-
+import Header from "./components/Header";
 
 function App() {
   const {currentUser} = useAuth();
 
   return (
         <AuthProvider>
+            <Header />
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
