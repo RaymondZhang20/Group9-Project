@@ -43,13 +43,13 @@
 }
 
 #sign {
-    position: fixed;
-    padding: 10px 10px 10px 10px;
-    bottom: 0;
-    width: 100%;
-    height: 100px;
-    background: #0D6EFD;
-    text-align: center;
+  position: fixed;
+  padding: 10px 10px 10px 10px;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background: #0D6EFD;
+  text-align: center;
 }
 
 .btn-sign {
@@ -64,4 +64,25 @@
 
 .text-sign {
   color: white;
+}
+
+.bg {
+  top:0px;
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo {
+  top:170px;
+  left:140px;
+  position:absolute;
+  background: linear-gradient(to right, #14C6CC 0%, #6EB1F5 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 3px 3px rgba(255,255,255,0.5);
+  font-family: 'Lato', sans-serif;
+  font-size: 50px;
+  line-height: 65px;
 }
