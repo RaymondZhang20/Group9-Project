@@ -1,38 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import Modal from 'react-bootstrap/Modal';
 
 function UpdateUserInfo() {
-  const [showModal, setShowModal] = useState(false);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
+    alert("Updated Successfully!");
   };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
   return (
     <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '60px' }}>
       <Card className="card-container" style={{ width: '550px' }}>
         <Card.Body>
           <Card.Title>Update Info</Card.Title>
-          <Form>
+          <Form onSubmit={handleSubmit}>
+            <Form.Text className="text-muted">
+                          We'll never share your information with anyone else.
+            </Form.Text>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
+
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control type="first-name" placeholder="Enter First Name" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control type="last-name" placeholder="Enter Last Name" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicTimeZone">
@@ -97,26 +100,11 @@ function UpdateUserInfo() {
             </Form.Group>
 
             <Button variant="primary" type="submit">
-              Submit
+              Update
             </Button>
           </Form>
         </Card.Body>
       </Card>
-
-      <Modal show={showModal} onHide={handleCloseModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>Submission Successful</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <p>Your form has been submitted successfully!</p>
-                {/* Additional content for the modal body */}
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseModal}>
-                  Close
-                </Button>
-              </Modal.Footer>
-      </Modal>
     </div>
   );
 }
