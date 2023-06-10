@@ -9,6 +9,7 @@ import Account from "./pages/Account";
 import PrivateRoute from "./pages/PrivateRoute";
 import MapPage from "./pages/MapPage";
 import Header from "./components/Header";
+import UpdateUserInfo from "./pages/UpdateUserInfo";
 
 function App() {
   const {currentUser} = useAuth();
@@ -22,6 +23,9 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/:id"  element={<PrivateRoute>
                     <Account />
+                </PrivateRoute>} />
+                <Route path="/:id/update"  element={<PrivateRoute>
+                    <UpdateUserInfo />
                 </PrivateRoute>} />
                 <Route path="/:id/map"  element={<PrivateRoute>
                     <MapPage />
