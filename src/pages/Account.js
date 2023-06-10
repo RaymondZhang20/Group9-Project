@@ -13,6 +13,10 @@ export default function Account() {
         e.preventDefault();
         navigate(`/${uid}/map`);
     }
+    function handleToUpdate(e) {
+        e.preventDefault();
+        navigate(`/${uid}/update`);
+    }
     async function handleLogout(e) {
         e.preventDefault();
         setError("");
@@ -36,6 +40,7 @@ export default function Account() {
             </Card>
             <div className="text-center">
                 <Button className="w-75 mt-3" onClick={handleToMap}>To Map</Button>
+                <Button className="w-75 mt-3" onClick={handleToUpdate}>Update My Info</Button>
                 <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
             </div>
         </div>

@@ -9,7 +9,7 @@ return <MapContainer center={[49.2677, -123.2420]} zoom={13} scrollWheelZoom={fa
   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 />
 <Marker position={[49.2677, -123.2420]}>
-  <Popup>
+  <Popup>g
     A pretty CSS3 popup. <br /> Easily customizable.
   </Popup>
 </Marker>
