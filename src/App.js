@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import {AuthProvider, useAuth} from "./contexts/AuthContext";
-import Account from "./pages/Account";
+import Profile from "./pages/Profile";
 import PrivateRoute from "./pages/PrivateRoute";
 import MapPage from "./pages/MapPage";
 import Header from "./components/Header";
@@ -22,13 +22,19 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/:id"  element={<PrivateRoute>
-                    <Account />
+                    <MapPage />
                 </PrivateRoute>} />
                 <Route path="/:id/update"  element={<PrivateRoute>
                     <UpdateUserInfo />
                 </PrivateRoute>} />
-                <Route path="/:id/map"  element={<PrivateRoute>
-                    <MapPage />
+                <Route path="/:id/profile"  element={<PrivateRoute>
+                    <Profile />
+                </PrivateRoute>} />
+                <Route path="/:id/chat"  element={<PrivateRoute>
+                    <NotFound />
+                </PrivateRoute>} />
+                <Route path="/:id/matching"  element={<PrivateRoute>
+                    <NotFound />
                 </PrivateRoute>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

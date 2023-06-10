@@ -3,16 +3,12 @@ import {useAuth} from "../contexts/AuthContext";
 import {useState} from "react";
 import {Navigate, useNavigate} from "react-router-dom"
 
-export default function Account() {
+export default function Profile() {
     const [error, setError] = useState("");
     const {logout, currentUser} = useAuth();
     const navigate = useNavigate();
     const uid = currentUser.uid;
 
-    function handleToMap(e) {
-        e.preventDefault();
-        navigate(`/${uid}/map`);
-    }
     function handleToUpdate(e) {
         e.preventDefault();
         navigate(`/${uid}/update`);
@@ -29,8 +25,7 @@ export default function Account() {
     }
     return (
         <div id="Account-whole">
-            <Navigate to={"/"+uid} replace={true} />
-            <h1>Account Profile</h1>
+            <h1>Profile Profile</h1>
             <Card>
                 <Card.Body>
                     <h1 className="text-center">Profile</h1>
@@ -39,7 +34,6 @@ export default function Account() {
                 </Card.Body>
             </Card>
             <div className="text-center">
-                <Button className="w-75 mt-3" onClick={handleToMap}>To Map</Button>
                 <Button className="w-75 mt-3" onClick={handleToUpdate}>Update My Info</Button>
                 <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
             </div>
