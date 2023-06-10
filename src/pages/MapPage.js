@@ -1,8 +1,10 @@
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import Map from "../components/Map";
 import Footer from "../components/Footer";
+import {useAuth} from "../contexts/AuthContext";
 
 export default function MapPage() {
+    const {currentUser} = useAuth();
   {/* Footer Boilerplate */}
   const markers = [
       { id: 1, name: 'Marker 1', filter: 'Category A' },
@@ -29,7 +31,10 @@ export default function MapPage() {
 
     return (
         <div id="MapPage-whole">
-            <h1>MapPage</h1>
+            <Navigate to={"/"+currentUser.uid} replace={true} />
+            <h1>MainPage</h1>
+            <h2>Welcome, user</h2>
+            <h2>You have 0 new matches, and 0 new messages</h2>
             <Map />
 
         {/* Footer Boilerplate */}
