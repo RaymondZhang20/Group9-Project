@@ -11,7 +11,7 @@ export default function Register() {
     const passwordRef = useRef();
     const conPasswordRef = useRef();
     const [error, setError] = useState("");
-    const [showAlert, setShowAlert] = useState(false)
+    const [showAlert, setShowAlert] = useState(false);
     const [loading, setLoading] = useState(false);
     const {register} = useAuth();
 
