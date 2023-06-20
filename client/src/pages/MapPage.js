@@ -2,9 +2,19 @@ import {Link, Navigate} from "react-router-dom";
 import Map from "../components/Map";
 import Footer from "../components/Footer";
 import {useAuth} from "../contexts/AuthContext";
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {getAccountAsync} from "../redux/accountReducers/accountThunks";
+import {emptyAccount} from "../redux/accountReducers/accountReducer";
 
 export default function MapPage() {
     const {currentUser} = useAuth();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (currentUser) {
+            dispatch(getAccountAsync(currentUser.uid));
+        }
+    }, [currentUser]);
   {/* Footer Boilerplate */}
   const markers = [
       { id: 1, name: 'Marker 1', filter: 'Category A' },

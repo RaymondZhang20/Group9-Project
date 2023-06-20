@@ -1,11 +1,20 @@
 import {Button, Card} from "react-bootstrap";
 import {useAuth} from "../contexts/AuthContext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Navigate, useNavigate} from "react-router-dom"
+import {getAccountAsync} from "../redux/accountReducers/accountThunks";
+import {useDispatch} from "react-redux";
+import {emptyAccount} from "../redux/accountReducers/accountReducer";
 
 export default function Profile() {
     const [error, setError] = useState("");
     const {logout, currentUser} = useAuth();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (currentUser) {
+            dispatch(getAccountAsync(currentUser.uid));
+        }
+    }, [currentUser]);
     const navigate = useNavigate();
     const uid = currentUser.uid;
 
@@ -18,6 +27,7 @@ export default function Profile() {
         setError("");
         try {
             await logout();
+            dispatch(emptyAccount());
             navigate(`/`);
         } catch (e) {
             setError("Cannot log out because: " + e.message);

@@ -1,7 +1,6 @@
 import './Home.css';
 import Sign from '../components/Sign'
 import bg from '../images/bg.jpg'
-import {Link} from "react-router-dom";
 export default function Home() {
     return (
         <div id="Home-whole">

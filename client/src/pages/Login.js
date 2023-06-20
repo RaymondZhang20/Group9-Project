@@ -3,14 +3,15 @@ import {Container, Card, Button, Form, Alert} from 'react-bootstrap'
 import {useRef, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import {useAuth} from "../contexts/AuthContext";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 export default function Login() {
     const accountRef = useRef();
     const passwordRef = useRef();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const {login} = useAuth();
+    const {login, currentUser} = useAuth();
 
     const navigate = useNavigate();
 
@@ -23,15 +24,16 @@ export default function Login() {
                 setLoading(true);
                 setError("");
                 await login(accountRef.current.value, passwordRef.current.value);
-                navigate("/1");
             } catch (e) {
                 setError("Cannot log you in because: " + e.message);
             }
+            navigate("/0");
             setLoading(false);
         }
     }
     return (
         <div id="Login-whole">
+            {currentUser && <Navigate to="/0" />}
             <Container className="Login-container align-items-center justify-content-center d-flex">
                 <Card>
                     <Card.Body>
