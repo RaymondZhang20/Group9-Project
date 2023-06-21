@@ -4,7 +4,7 @@ import Stack from 'react-bootstrap/Stack';
 export const ProfileField = ({ value }) => {
   return (
     <Stack className="mb-3" direction="horizontal" gap={2}>
-      {value.map((i) => <Badge pill bg="secondary">{i}</Badge>)}
+      {value.map((i, index) => <Badge pill bg="secondary" key={index}>{i}</Badge>)}
     </Stack>
   );
 };
