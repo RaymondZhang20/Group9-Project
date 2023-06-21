@@ -53,6 +53,7 @@ function UpdateUserInfo() {
     });
     if (response.ok) {
       alert("Updated Successfully!");
+      window.location.href = './profile'; 
     } else {
       alert("Failed to update user information.");
     }
