@@ -10,6 +10,7 @@ import PrivateRoute from "./pages/PrivateRoute";
 import MapPage from "./pages/MapPage";
 import Header from "./components/Header";
 import UpdateUserInfo from "./pages/UpdateUserInfo";
+import MatchingPage from './pages/MatchingPage';
 
 function App() {
   const {currentUser} = useAuth();
@@ -34,7 +35,7 @@ function App() {
                     <NotFound />
                 </PrivateRoute>} />
                 <Route path="/:id/matching"  element={<PrivateRoute>
-                    <NotFound />
+                    <MatchingPage />
                 </PrivateRoute>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
