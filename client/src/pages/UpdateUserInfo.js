@@ -7,6 +7,7 @@ function UpdateUserInfo() {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Updated Successfully!");
+    window.location.href = './profile';    
   };
   return (
     <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '60px' }}>
