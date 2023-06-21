@@ -28,12 +28,12 @@ function UpdateUserInfo() {
     // Get the updated user information from the form
     const form = e.target;
     const updatedUserInfo = {
-      firstName: form.elements['first-name'].value,
-      lastName: form.elements['last-name'].value,
-      timeZone: form.elements['time-zone'].value,
+      first_name: form.elements['first-name'].value,
+      last_name: form.elements['last-name'].value,
+      time_zone: form.elements['time-zone'].value,
       location: form.elements['location'].value,
       pronoun: form.elements['pronoun'].value,
-      playingTime: Array.from(form.elements['playing-time'])
+      play_time: Array.from(form.elements['playing-time'])
         .filter(input => input.checked)
         .map(input => input.value),
       language: Array.from(form.elements['language'])
@@ -111,33 +111,33 @@ function UpdateUserInfo() {
 
             <Form.Group className="mb-3" controlId="formBasicLanguage">
               <Form.Label>Language spoken</Form.Label>
-                  <Form.Check name="language" type="checkbox" label="English" />
-                  <Form.Check name="language" type="checkbox" label="Spanish" />
-                  <Form.Check name="language" type="checkbox" label="French" />
-                  <Form.Check name="language" type="checkbox" label="German" />
-                  <Form.Check name="language" type="checkbox" label="Mandarin" />
-                  <Form.Check name="language" type="checkbox" label="Cantonese" />
-                  <Form.Check name="language" type="checkbox" label="Japanese" />
-                  <Form.Check name="language" type="checkbox" label="Korean" />
-                  <Form.Check name="language" type="checkbox" label="Italian" />
-                  <Form.Check name="language" type="checkbox" label="Portuguese" />
-                  <Form.Check name="language" type="checkbox" label="Russian" />
-                  <Form.Check name="language" type="checkbox" label="Arabic" />
-                  <Form.Check name="language" type="checkbox" label="Hindi" />
-                  <Form.Check name="language" type="checkbox" label="Bengali" />
-                  <Form.Check name="language" type="checkbox" label="Dutch" />
-                  <Form.Check name="language" type="checkbox" label="Swedish" />
-                  <Form.Check name="language" type="checkbox" label="Other" />
+                  <Form.Check name="language" type="checkbox" label="English" value="English" />
+                  <Form.Check name="language" type="checkbox" label="Spanish" value="Spanish" />
+                  <Form.Check name="language" type="checkbox" label="French" value="French" />
+                  <Form.Check name="language" type="checkbox" label="German" value="German" />
+                  <Form.Check name="language" type="checkbox" label="Mandarin" value="Mandarin" />
+                  <Form.Check name="language" type="checkbox" label="Cantonese" value="Cantonese" />
+                  <Form.Check name="language" type="checkbox" label="Japanese" value="Japanese" />
+                  <Form.Check name="language" type="checkbox" label="Korean" value="Korean"/>
+                  <Form.Check name="language" type="checkbox" label="Italian" value="Italian"/>
+                  <Form.Check name="language" type="checkbox" label="Portuguese" value="Portuguese"/>
+                  <Form.Check name="language" type="checkbox" label="Russian" value="Russian"/>
+                  <Form.Check name="language" type="checkbox" label="Arabic" value="Arabic"/>
+                  <Form.Check name="language" type="checkbox" label="Hindi" value="Hindi"/>
+                  <Form.Check name="language" type="checkbox" label="Bengali" value="Bengali"/>
+                  <Form.Check name="language" type="checkbox" label="Dutch" value="Dutch"/>
+                  <Form.Check name="language" type="checkbox" label="Swedish" value="Swedish"/>
+                  <Form.Check name="language" type="checkbox" label="Other" value="Other"/>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPlatform">
               <Form.Label>Platform</Form.Label>
-              <Form.Check name="platform" type="checkbox" label="Phone" />
-              <Form.Check name="platform" type="checkbox" label="PC" />
-              <Form.Check name="platform" type="checkbox" label="PS" />
-              <Form.Check name="platform" type="checkbox" label="XBOX" />
-              <Form.Check name="platform" type="checkbox" label="NS" />
-              <Form.Check name="platform" type="checkbox" label="Other" />
+              <Form.Check name="platform" type="checkbox" label="Phone" value="Phone"/>
+              <Form.Check name="platform" type="checkbox" label="PC" value="PC"/>
+              <Form.Check name="platform" type="checkbox" label="PS" value="PS"/>
+              <Form.Check name="platform" type="checkbox" label="XBOX" value="XBOX"/>
+              <Form.Check name="platform" type="checkbox" label="NS" value="NS"/>
+              <Form.Check name="platform" type="checkbox" label="Other" value="Other"/>
             </Form.Group>
 
             <Button variant="primary" type="submit">
