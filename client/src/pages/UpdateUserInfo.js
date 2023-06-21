@@ -12,7 +12,7 @@ function UpdateUserInfo() {
   useEffect(() => {
     // Fetch the current user's information from the server
     const fetchUserInfo = async () => {
-      const response = await fetch(`http://localhost:3001/users/${uid}`);
+      const response = await fetch(`http://localhost:5000/users/${uid}`);
       if (response.ok) {
         const data = await response.json();
         setUserInfo(data);
@@ -44,7 +44,7 @@ function UpdateUserInfo() {
         .map(input => input.value),
     };
     // Send the updated user information to the server
-    const response = await fetch(`http://localhost:3001/users/${uid}`, {
+    const response = await fetch(`http://localhost:5000/users/${uid}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
