@@ -6,62 +6,67 @@ var accounts = [
   {
     "email": "zhangxueyong2019@163.com",
     "uid": "K5G3uLk1Bub5bBwnwejZrEHNGIs2",
+    "account_name": "abc",
     "first_name": "XueYong",
     "last_name": "Zhang",
     "time_zone": null,
     "location": null,
-    "pronoun": 1,
-    "play_time": [1,2,3],
-    "language": [1],
-    "platform": [1,2,4,5]
+    "pronoun": "He/Him",
+    "play_time": ["Evening"],
+    "language": ["Spanish","French","Russian","Arabic"],
+    "platform": ["Phone","NS"]
   },
   {
     "email": "opkisky@gmail.com",
     "uid": "f5oaJV5FuSZViDZ12new9hwvw842",
+    "account_name": "abc",
     "first_name": "sss",
     "last_name": "zxx",
     "time_zone": null,
     "location": null,
-    "pronoun": 1,
-    "play_time": [1,2,3],
-    "language": [1],
-    "platform": [1,2,4,5]
+    "pronoun": "He/Him",
+    "play_time": ["Evening"],
+    "language": ["Spanish","French","Russian","Arabic"],
+    "platform": ["Phone","NS"]
   },
   {
     "email": "shawn01zhu@gmail.com",
     "uid": "RVKoP27ociPlYYVLq86aTEiymUW2",
+    "account_name": "abc",
     "first_name": "sss",
     "last_name": "zxx",
     "time_zone": null,
     "location": null,
-    "pronoun": 1,
-    "play_time": [1,2,3],
-    "language": [1],
-    "platform": [1,2,4,5]
+    "pronoun": "He/Him",
+    "play_time": ["Evening"],
+    "language": ["Spanish","French","Russian","Arabic"],
+    "platform": ["Phone","NS"]
   },
   {
     "email": "jasperhuang@hotmail.com",
     "uid": "GoTpCIvVrAM5VQgH5JK6ddPcZRp1",
+    "account_name": "abc",
     "first_name": "sss",
     "last_name": "zxx",
     "time_zone": null,
     "location": null,
-    "pronoun": 1,
-    "play_time": [1,2,3],
-    "language": [1],
-    "platform": [1,2,4,5]
+    "pronoun": "He/Him",
+    "play_time": ["Evening"],
+    "language": ["Spanish","French","Russian","Arabic"],
+    "platform": ["Phone","NS"]
   },
   {
     "email": "dorothy.unicorn@gmail.com",
     "uid": "eUaiHoqEwcTIkZg9ZyHFkSQ9Xd22",
+    "account_name": "abc",
     "first_name": "sss",
     "last_name": "zxx",
     "time_zone": null,
     "location": null,
-    "pronoun": 1,
-    "play_time": [1,2,3],
-    "language": [1],
-    "platform": [1,2,4,5]
+    "pronoun": "He/Him",
+    "play_time": ["Evening"],
+    "language": ["Spanish","French","Russian","Arabic"],
+    "platform": ["Phone","NS"]
   }
 ];
 
