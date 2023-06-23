@@ -23,6 +23,8 @@ function UpdateUserInfo() {
     // Get the updated user information from the form
     const form = e.target;
     const updatedUserInfo = {
+      uid: uid,
+      account_name: form.elements['account-name'].value,
       first_name: form.elements['first-name'].value,
       last_name: form.elements['last-name'].value,
       time_zone: form.elements['time-zone'].value,
@@ -39,19 +41,15 @@ function UpdateUserInfo() {
         .map(input => input.value),
     };
     // Send the updated user information to the server
-    const response = await fetch(`http://localhost:5000/users/${uid}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedUserInfo)
-    });
-    if (response.ok) {
+    try {
+      dispatch(updateAccountAsync(updatedUserInfo));
       alert("Updated Successfully!");
-      window.location.href = './profile'; 
-    } else {
+      window.location.href = './profile';
+    } catch (e) {
       alert("Failed to update user information.");
-    }
+      // setError("Cannot update profile: " + e.message);
+      // not sure which way is better
+    }  
   };
 
 
@@ -65,6 +63,10 @@ function UpdateUserInfo() {
             <Form.Text className="text-muted">
                           We'll never share your information with anyone else.
             </Form.Text>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Account Name</Form.Label>
+              <Form.Control name="account-name" type="text" placeholder="Enter Account Name" defaultValue={userInfo.account_name} />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>First Name</Form.Label>
               <Form.Control name="first-name" type="text" placeholder="Enter First Name" defaultValue={userInfo.first_name} />
