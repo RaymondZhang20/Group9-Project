@@ -19,7 +19,9 @@ export default function Profile() {
     const navigate = useNavigate();
     const uid = currentUser.uid;
     const user = useSelector(state => state.account.currentUser);
-    const userInfo = [{field: "first", value: user.first_name},
+    const userInfo = 
+    [{field: "account Name", value: user.account_name},
+    {field: "first", value: user.first_name},
     {field: "last", value: user.last_name},
     {field: "timezone", value: user.time_zone},
     {field: "location", value: user.location},
