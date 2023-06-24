@@ -79,7 +79,34 @@ function UpdateUserInfo() {
 
             <Form.Group className="mb-3" controlId="formBasicTimeZone">
               <Form.Label>Time Zone</Form.Label>
-              <Form.Control name = "time-zone" type="text" placeholder="Enter time zone" defaultValue={userInfo.time_zone} />
+              <Form.Control name = "time-zone" as="select" defaultValue={userInfo.time_zone} >
+                <option>Select time zone</option>
+                <option>UTC-12:00</option>
+                <option>UTC-11:00</option>
+                <option>UTC-10:00</option>
+                <option>UTC-09:00</option>
+                <option>UTC-08:00</option>
+                <option>UTC-07:00</option>
+                <option>UTC-06:00</option>
+                <option>UTC-05:00</option>
+                <option>UTC-04:00</option>
+                <option>UTC-03:00</option>
+                <option>UTC-02:00</option>
+                <option>UTC-01:00</option>
+                <option>UTC+00:00</option>
+                <option>UTC+01:00</option>
+                <option>UTC+02:00</option>
+                <option>UTC+03:00</option>
+                <option>UTC+04:00</option>
+                <option>UTC+05:00</option>
+                <option>UTC+06:00</option>
+                <option>UTC+07:00</option>
+                <option>UTC+08:00</option>
+                <option>UTC+09:00</option>
+                <option>UTC+10:00</option>
+                <option>UTC+11:00</option>
+                <option>UTC+12:00</option>
+                </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicLocation">
