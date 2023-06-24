@@ -3,7 +3,7 @@ import Map from "../components/Map";
 import Footer from "../components/Footer";
 import {useAuth} from "../contexts/AuthContext";
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync} from "../redux/accountReducers/accountThunks";
 import {emptyAccount} from "../redux/accountReducers/accountReducer";
 
@@ -15,6 +15,7 @@ export default function MapPage() {
             dispatch(getAccountAsync(currentUser.uid));
         }
     }, [currentUser]);
+    const user = useSelector(state => state.account.currentUser);
   {/* Footer Boilerplate */}
   const markers = [
       { id: 1, name: 'Marker 1', filter: 'Category A' },
@@ -43,7 +44,7 @@ export default function MapPage() {
         <div id="MapPage-whole">
             <Navigate to={"/"+currentUser.uid} replace={true} />
             <h1>MainPage</h1>
-            <h2>Welcome, user</h2>
+            <h2>Welcome, {user.account_name}</h2>
             <h2>You have 0 new matches, and 0 new messages</h2>
             <Map />
 

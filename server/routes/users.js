@@ -14,7 +14,10 @@ var accounts = [
     "pronoun": "He/Him",
     "play_time": ["Evening"],
     "language": ["Spanish","French","Russian","Arabic"],
-    "platform": ["Phone","NS"]
+    "platform": ["Phone","NS"],
+    "friends": ["f5oaJV5FuSZViDZ12new9hwvw842", "RVKoP27ociPlYYVLq86aTEiymUW2", "GoTpCIvVrAM5VQgH5JK6ddPcZRp1", "eUaiHoqEwcTIkZg9ZyHFkSQ9Xd22"],
+    "invitations": [],
+    "matches": []
   },
   {
     "email": "opkisky@gmail.com",
@@ -27,7 +30,10 @@ var accounts = [
     "pronoun": "He/Him",
     "play_time": ["Evening"],
     "language": ["Spanish","French","Russian","Arabic"],
-    "platform": ["Phone","NS"]
+    "platform": ["Phone","NS"],
+    "friends": [],
+    "invitations": [],
+    "matches": []
   },
   {
     "email": "shawn01zhu@gmail.com",
@@ -40,7 +46,10 @@ var accounts = [
     "pronoun": "He/Him",
     "play_time": ["Evening"],
     "language": ["Spanish","French","Russian","Arabic"],
-    "platform": ["Phone","NS"]
+    "platform": ["Phone","NS"],
+    "friends": [],
+    "invitations": [],
+    "matches": []
   },
   {
     "email": "jasperhuang@hotmail.com",
@@ -53,7 +62,10 @@ var accounts = [
     "pronoun": "He/Him",
     "play_time": ["Evening"],
     "language": ["Spanish","French","Russian","Arabic"],
-    "platform": ["Phone","NS"]
+    "platform": ["Phone","NS"],
+    "friends": [],
+    "invitations": [],
+    "matches": []
   },
   {
     "email": "dorothy.unicorn@gmail.com",
@@ -66,13 +78,16 @@ var accounts = [
     "pronoun": "He/Him",
     "play_time": ["Evening"],
     "language": ["Spanish","French","Russian","Arabic"],
-    "platform": ["Phone","NS"]
+    "platform": ["Phone","NS"],
+    "friends": [],
+    "invitations": [],
+    "matches": []
   }
 ];
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send(accounts);
 });
 
 router.get('/:uid', function (req, res, next) {
@@ -83,6 +98,21 @@ router.get('/:uid', function (req, res, next) {
   } else {
     return res.send(foundAcc);
   }
+});
+
+router.post('/', function (req, res, next) {
+  const newAccount = {
+    uid: req.body.uid,
+    account_name: req.body.account_name,
+    play_time: [],
+    language: [],
+    platform: [],
+    friends: [],
+    invitations: [],
+    matches: []
+  }
+  accounts.push(newAccount);
+  return res.send(newAccount);
 });
 
 router.patch('/:uid', function (req, res, next) {

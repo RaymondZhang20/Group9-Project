@@ -1,15 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getAccountAsync, updateAccountAsync} from "./accountThunks";
+import {createAccountAsync, getAccountAsync, updateAccountAsync} from "./accountThunks";
 import {REQUEST_STATE} from "../utils";
 
 const initialState = {
     loading_login_register: false,
-    loading_context: true,
     auth_error: "",
     alert: false,
     currentUser: {},
     request_error: null,
     getAccount: REQUEST_STATE.IDLE,
+    createAccount: REQUEST_STATE.IDLE,
     updateAccount: REQUEST_STATE.IDLE
 }
 
@@ -22,6 +22,12 @@ const accountSlice = createSlice({
         },
         testAccount: (state, action) => {
             console.log(JSON.parse(JSON.stringify(state.currentUser)));
+        },
+        setLoadingLogReg: (state, action) => {
+            state.loading_login_register = action.payload;
+        },
+        setAuthError: (state, action) => {
+            state.auth_error = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -39,6 +45,21 @@ const accountSlice = createSlice({
             .addCase(getAccountAsync.rejected, (state, action) => {
                 console.log("get account rejected" + action.error);
                 state.getAccount = REQUEST_STATE.REJECTED;
+                state.request_error = action.error;
+            })
+            .addCase(createAccountAsync.pending, (state) => {
+                console.log("create account pending");
+                state.createAccount = REQUEST_STATE.PENDING;
+                state.request_error = null;
+            })
+            .addCase(createAccountAsync.fulfilled, (state, action) => {
+                console.log("create account fulfilled");
+                state.createAccount = REQUEST_STATE.FULFILLED;
+            })
+            .addCase(createAccountAsync.rejected, (state, action) => {
+                console.log("create account rejected");
+                console.log(action.error);
+                state.createAccount = REQUEST_STATE.REJECTED;
                 state.request_error = action.error;
             })
             .addCase(updateAccountAsync.pending, (state) => {
@@ -60,5 +81,5 @@ const accountSlice = createSlice({
     }
 });
 
-export const {emptyAccount, testAccount} = accountSlice.actions;
+export const {emptyAccount, testAccount, setLoadingLogReg, setAuthError} = accountSlice.actions;
 export default accountSlice.reducer;

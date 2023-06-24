@@ -4,15 +4,19 @@ import {useRef, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import {useAuth} from "../contexts/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setAuthError, setLoadingLogReg} from "../redux/accountReducers/accountReducer";
+import {createAccountAsync} from "../redux/accountReducers/accountThunks";
 
 export default function Register() {
     const emailRef = useRef();
     const accountRef = useRef();
     const passwordRef = useRef();
     const conPasswordRef = useRef();
-    const [error, setError] = useState("");
     const [showAlert, setShowAlert] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const loading = useSelector(state => state.account).loading_login_register;
+    const error = useSelector(state => state.account).auth_error;
     const {register} = useAuth();
 
     const navigate = useNavigate();
@@ -20,18 +24,18 @@ export default function Register() {
     async function handleRegister(e) {
         e.preventDefault();
         if (passwordRef.current.value !== conPasswordRef.current.value) {
-            setError("Two Passwords do not match");
+            dispatch(setAuthError("Two Passwords do not match"));
         } else {
             try {
-                setLoading(true);
-                setError("");
+                dispatch(setLoadingLogReg(true));
+                dispatch(setAuthError(""));
                 await register(emailRef.current.value, passwordRef.current.value);
                 setShowAlert(true);
-                navigate("/login");
+                navigate("/login", {state: accountRef.current.value});
             } catch (e) {
-                setError("Cannot create the account because: " + e.message);
+                dispatch(setAuthError("Cannot create the account because: " + e.message));
             }
-            setLoading(false);
+            dispatch(setLoadingLogReg(false));
         }
     }
     return (

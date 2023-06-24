@@ -8,6 +8,13 @@ export const getAccountAsync = createAsyncThunk(
     }
 );
 
+export const createAccountAsync = createAsyncThunk(
+    "users/createAccount",
+    async (acc) => {
+        return await AccountService.createAccount(acc);
+    }
+);
+
 export const updateAccountAsync = createAsyncThunk(
     "users/updateAccount",
     async (acc) => {

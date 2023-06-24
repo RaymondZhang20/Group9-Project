@@ -1,39 +1,53 @@
 import './LoginRegister.css';
 import {Container, Card, Button, Form, Alert} from 'react-bootstrap'
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import {useAuth} from "../contexts/AuthContext";
-import {Link, Navigate, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setAuthError, setLoadingLogReg} from "../redux/accountReducers/accountReducer";
+import {createAccountAsync, getAccountAsync} from "../redux/accountReducers/accountThunks";
 
 export default function Login() {
     const accountRef = useRef();
     const passwordRef = useRef();
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
     const {login, currentUser} = useAuth();
-
+    const dispatch = useDispatch();
+    const loading = useSelector(state => state.account).loading_login_register;
+    const error = useSelector(state => state.account).auth_error;
+    const location = useLocation();
+    useEffect(() => {
+        if (location.state !== null) {
+            const newAccount = {
+                uid: currentUser.uid,
+                account_name: location.state
+            }
+            dispatch(createAccountAsync(newAccount));
+        }
+        if (location.state == null && currentUser !== null) {
+            navigate("/0");
+        }
+    }, []);
     const navigate = useNavigate();
 
     async function handleLogin(e) {
         e.preventDefault();
         if (passwordRef.current.value === "" || accountRef.current.value === "") {
-            setError(" Please enter your email/account and password");
+            dispatch(setAuthError(" Please enter your email/account and password"));
         } else {
             try {
-                setLoading(true);
-                setError("");
+                dispatch(setLoadingLogReg(true));
+                dispatch(setAuthError(""));
                 await login(accountRef.current.value, passwordRef.current.value);
             } catch (e) {
-                setError("Cannot log you in because: " + e.message);
+                dispatch(setAuthError("Cannot log you in because: " + e.message));
             }
             navigate("/0");
-            setLoading(false);
+            dispatch(setLoadingLogReg(false));
         }
     }
     return (
         <div id="Login-whole">
-            {currentUser && <Navigate to="/0" />}
             <Container className="Login-container align-items-center justify-content-center d-flex">
                 <Card>
                     <Card.Body>
