@@ -115,11 +115,8 @@ function UpdateUserInfo() {
 
             <Form.Group className="mb-3" controlId="formBasicPlayingTime">
               <Form.Label>Prefer playing time</Form.Label>
-              <Form.Check name="play-time" type="checkbox" label="Morning" value="Morning" defaultChecked={userInfo.play_time.includes("Morning")}/>
-              <Form.Check name="play-time" type="checkbox" label="Afternoon" value="Afternoon" defaultChecked={userInfo.play_time.includes("Afternoon")}/>
-              <Form.Check name="play-time" type="checkbox" label="Evening" value="Evening" defaultChecked={userInfo.play_time.includes("Evening")}/>
-              {/* {profileOption["play_time"].map((option) => {
-                return (<Form.Check name="play_time" type="checkbox" label={option} value={option} defaultChecked={userInfo.play_time.includes(option)}/>);})} */}
+              {profileOption["play-time"].map((option) => {
+                return (<Form.Check name="play-time" type="checkbox" label={option} value={option} defaultChecked={userInfo.play_time.includes(option)}/>);})}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicLanguage">
