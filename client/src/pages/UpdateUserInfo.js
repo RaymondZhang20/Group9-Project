@@ -6,6 +6,21 @@ import Card from 'react-bootstrap/Card';
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
 
+const profileOption = {
+  "time-zone" : ["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", 
+   "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", 
+   "UTC-03:00", "UTC-02:00", "UTC-01:00", "UTC+00:00", "UTC+01:00",
+   "UTC+02:00", "UTC+03:00", "UTC+04:00", "UTC+05:00", "UTC+06:00",
+   "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00",
+   "UTC+12:00"],
+   "pronoun" : ["He/Him", "She/Her", "They/Them", "Ze/Hir", "Xe/Xem", "Other"],
+   "play-time" : ["Morning", "Afternoon", "Evening"],
+   "language" : ["English", "Spanish", "French", "German", "Mandarin", "Cantonese",
+   "Japanese", "Korean", "Italian", "Portuguese", "Russian", "Arabic", "Hindi",
+   "Bengali", "Dutch", "Swedish", "Other"],
+   "platform" : ["Phone", "PC", "PS", "XBOX", "NS", "Other"]
+};
+
 function UpdateUserInfo() {
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
@@ -30,7 +45,7 @@ function UpdateUserInfo() {
       time_zone: form.elements['time-zone'].value,
       location: form.elements['location'].value,
       pronoun: form.elements['pronoun'].value,
-      play_time: Array.from(form.elements['playing-time'])
+      play_time: Array.from(form.elements['play-time'])
         .filter(input => input.checked)
         .map(input => input.value),
       language: Array.from(form.elements['language'])
@@ -81,31 +96,7 @@ function UpdateUserInfo() {
               <Form.Label>Time Zone</Form.Label>
               <Form.Control name = "time-zone" as="select" defaultValue={userInfo.time_zone} >
                 <option>Select time zone</option>
-                <option>UTC-12:00</option>
-                <option>UTC-11:00</option>
-                <option>UTC-10:00</option>
-                <option>UTC-09:00</option>
-                <option>UTC-08:00</option>
-                <option>UTC-07:00</option>
-                <option>UTC-06:00</option>
-                <option>UTC-05:00</option>
-                <option>UTC-04:00</option>
-                <option>UTC-03:00</option>
-                <option>UTC-02:00</option>
-                <option>UTC-01:00</option>
-                <option>UTC+00:00</option>
-                <option>UTC+01:00</option>
-                <option>UTC+02:00</option>
-                <option>UTC+03:00</option>
-                <option>UTC+04:00</option>
-                <option>UTC+05:00</option>
-                <option>UTC+06:00</option>
-                <option>UTC+07:00</option>
-                <option>UTC+08:00</option>
-                <option>UTC+09:00</option>
-                <option>UTC+10:00</option>
-                <option>UTC+11:00</option>
-                <option>UTC+12:00</option>
+                {profileOption["time-zone"].map((option) => {return (<option>{option}</option>);})}
                 </Form.Control>
             </Form.Group>
 
@@ -118,51 +109,26 @@ function UpdateUserInfo() {
               <Form.Label>Pronoun</Form.Label>
               <Form.Control name="pronoun" as="select" defaultValue={userInfo.pronoun}>
                 <option>Select pronouns</option>
-                <option>He/Him</option>
-                <option>She/Her</option>
-                <option>They/Them</option>
-                <option>Ze/Hir</option>
-                <option>Xe/Xem</option>
-                <option>Other</option>
+                {profileOption["pronoun"].map((option) => {return (<option>{option}</option>);})}
               </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPlayingTime">
               <Form.Label>Prefer playing time</Form.Label>
-              <Form.Check name="playing-time" type="checkbox" label="Morning" value="Morning" defaultChecked={userInfo.play_time.includes("Morning")}/>
-              <Form.Check name="playing-time" type="checkbox" label="Afternoon" value="Afternoon" defaultChecked={userInfo.play_time.includes("Afternoon")}/>
-              <Form.Check name="playing-time" type="checkbox" label="Evening" value="Evening" defaultChecked={userInfo.play_time.includes("Evening")}/>
+              {profileOption["play-time"].map((option) => {
+                return (<Form.Check name="play-time" type="checkbox" label={option} value={option} defaultChecked={userInfo.play_time.includes(option)}/>);})}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicLanguage">
               <Form.Label>Language spoken</Form.Label>
-                  <Form.Check name="language" type="checkbox" label="English" value="English" defaultChecked={userInfo.language.includes("English")}/>
-                  <Form.Check name="language" type="checkbox" label="Spanish" value="Spanish" defaultChecked={userInfo.language.includes("Spanish")}/>
-                  <Form.Check name="language" type="checkbox" label="French" value="French" defaultChecked={userInfo.language.includes("French")}/>
-                  <Form.Check name="language" type="checkbox" label="German" value="German" defaultChecked={userInfo.language.includes("German")}/>
-                  <Form.Check name="language" type="checkbox" label="Mandarin" value="Mandarin" defaultChecked={userInfo.language.includes("Mandarin")}/>
-                  <Form.Check name="language" type="checkbox" label="Cantonese" value="Cantonese" defaultChecked={userInfo.language.includes("Cantonese")}/>
-                  <Form.Check name="language" type="checkbox" label="Japanese" value="Japanese" defaultChecked={userInfo.language.includes("Japanese")}/>
-                  <Form.Check name="language" type="checkbox" label="Korean" value="Korean" defaultChecked={userInfo.language.includes("Korean")}/>
-                  <Form.Check name="language" type="checkbox" label="Italian" value="Italian" defaultChecked={userInfo.language.includes("Italian")}/>
-                  <Form.Check name="language" type="checkbox" label="Portuguese" value="Portuguese" defaultChecked={userInfo.language.includes("Portuguese")}/>
-                  <Form.Check name="language" type="checkbox" label="Russian" value="Russian" defaultChecked={userInfo.language.includes("Russian")}/>
-                  <Form.Check name="language" type="checkbox" label="Arabic" value="Arabic" defaultChecked={userInfo.language.includes("Arabic")}/>
-                  <Form.Check name="language" type="checkbox" label="Hindi" value="Hindi" defaultChecked={userInfo.language.includes("Hindi")}/>
-                  <Form.Check name="language" type="checkbox" label="Bengali" value="Bengali" defaultChecked={userInfo.language.includes("Bengali")}/>
-                  <Form.Check name="language" type="checkbox" label="Dutch" value="Dutch" defaultChecked={userInfo.language.includes("Dutch")}/>
-                  <Form.Check name="language" type="checkbox" label="Swedish" value="Swedish" defaultChecked={userInfo.language.includes("Swedish")}/>
-                  <Form.Check name="language" type="checkbox" label="Other" value="Other" defaultChecked={userInfo.language.includes("Other")}/>
+              {profileOption["language"].map((option) => {
+                return (<Form.Check name="language" type="checkbox" label={option} value={option} defaultChecked={userInfo.language.includes(option)}/>);})}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPlatform">
               <Form.Label>Platform</Form.Label>
-              <Form.Check name="platform" type="checkbox" label="Phone" value="Phone" defaultChecked={userInfo.platform.includes("Phone")}/>
-              <Form.Check name="platform" type="checkbox" label="PC" value="PC" defaultChecked={userInfo.platform.includes("PC")}/>
-              <Form.Check name="platform" type="checkbox" label="PS" value="PS" defaultChecked={userInfo.platform.includes("PS")}/>
-              <Form.Check name="platform" type="checkbox" label="XBOX" value="XBOX" defaultChecked={userInfo.platform.includes("XBOX")}/>
-              <Form.Check name="platform" type="checkbox" label="NS" value="NS" defaultChecked={userInfo.platform.includes("NS")}/>
-              <Form.Check name="platform" type="checkbox" label="Other" value="Other" defaultChecked={userInfo.platform.includes("Other")}/>
+              {profileOption["platform"].map((option) => {
+                return (<Form.Check name="platform" type="checkbox" label={option} value={option} defaultChecked={userInfo.platform.includes(option)}/>);})}
             </Form.Group>
 
             <Button variant="primary" type="submit">
