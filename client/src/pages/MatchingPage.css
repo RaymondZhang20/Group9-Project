@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+}
+
+.selection {
+  flex: 1;
+  border: 1px solid #ccc;
+  min-height: 100vh;
+  padding-top: 60px;
+  padding: 60px;
+  box-shadow: 0 60px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.cards {
+  flex: 4;
+  min-height: 100vh;
+  display: grid;
+  justify-content: center;
+  padding-top: 60px;
+}
