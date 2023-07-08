@@ -95,7 +95,7 @@ function UpdateUserInfo() {
             <Form.Group className="mb-3" controlId="formBasicTimeZone">
               <Form.Label>Time Zone</Form.Label>
               <Form.Control name = "time-zone" as="select" defaultValue={userInfo.time_zone} >
-                <option>Select time zone</option>
+                <option disabled={true}>Select time zone</option>
                 {profileOption["time-zone"].map((option) => {return (<option>{option}</option>);})}
                 </Form.Control>
             </Form.Group>
@@ -108,7 +108,7 @@ function UpdateUserInfo() {
             <Form.Group className="mb-3" controlId="formBasicPronouns">
               <Form.Label>Pronoun</Form.Label>
               <Form.Control name="pronoun" as="select" defaultValue={userInfo.pronoun}>
-                <option>Select pronouns</option>
+                <option disabled={true}>Select pronouns</option>
                 {profileOption["pronoun"].map((option) => {return (<option>{option}</option>);})}
               </Form.Control>
             </Form.Group>
