@@ -179,7 +179,7 @@ router.patch('/logout/:uid', function(req, res, next) {
 });
 
 router.get('/friendslocation/:uid', function(req, res, next) {
-  User.find({uid: req.params.uid}).select('geolocation friends').populate({path:'friends', select:'account_name geolocation'}).then((result) => {
+  User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation'}).then((result) => {
     if (!result) {
       res.status(404).send('Cannot found the user');
     } else {
