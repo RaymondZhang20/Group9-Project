@@ -1,8 +1,13 @@
 import Card from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from "react-router-dom"
+import { useAuth } from "../contexts/AuthContext";
 import { ProfileField } from '../components/ProfileField';
+import { useDispatch, useSelector } from "react-redux";
+import { getAccountAsync, updateAccountAsync } from "../redux/accountReducers/accountThunks";
 
 const gameList = [{ "title": "Minecraft", "url": "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png", "platform": ["Phone", "PC", "PS", "XBOX"] },
 { "title": "PUBG: Battlegrounds", "url": "https://upload.wikimedia.org/wikipedia/en/9/9f/Pubgbattlegrounds.png", "platform": ["Phone", "PC", "PS", "XBOX"] },
@@ -12,25 +17,62 @@ const gameList = [{ "title": "Minecraft", "url": "https://upload.wikimedia.org/w
 { "title": "Apex Legends", "url": "https://upload.wikimedia.org/wikipedia/en/d/db/Apex_legends_cover.jpg", "platform": ["Phone", "PC", "PS", "XBOX", "NS"] }];
 // please add more, please
 
+
 function GameSelector() {
+    const [selectedGame, setSelectedGame] = useState(["Minecraft"]);
+
+    const { currentUser } = useAuth();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.account.currentUser);
+    const uid = currentUser.uid;
+
+    const handleUpdate = () => {
+        console.log(selectedGame);
+        //todo: update to profile
+    }
+
+    const handleBack = () => {
+        navigate(`/${uid}/profile`);
+    }
+
+    const handleSelect = (g) => {
+        const index = selectedGame.findIndex(game => game === g);
+        if (index == -1) {
+            const newSelect = [...selectedGame];
+            newSelect.push(g);
+            setSelectedGame(newSelect);
+        } else {
+            const newSelect = [...selectedGame];
+            newSelect.splice(index, 1)
+            setSelectedGame(newSelect);
+        }
+    }
+
+    const setBorder = (g) => (
+        selectedGame.includes(g) ? "primary" : "light"
+    )
+
     return (
         <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '80px' }}>
-            <p>for now: just a list of games displayed, nothing you can do with this page</p>
+            <p>Select games you have played below!</p>
             <Row xs={1} md={3} className="g-4" style={{ width: '900px' }}>
-                {gameList.map((game, idx) => (
-                    <Col key={idx}>
-                        <Card key={game.title} style={{ width: '250px', height: '350px' }}>
-                            <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                                <img src={game.url} style={{ width: '100%' }}></img>
-                            </div>
-                            <Card.Body>
-                                <Card.Title>{game.title}</Card.Title>
-                                <ProfileField value={game.platform} style={{ width: '250px'}}/>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
+                {gameList.map((game, idx) => (<Col key={idx}>
+                    <Card key={game.title} border={setBorder(game.title)} onClick={() => handleSelect(game.title)} style={{ width: '250px', height: '350px' }}>
+                        <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                            <img src={game.url} style={{ width: '100%' }}></img>
+                        </div>
+                        <Card.Body>
+                            <Card.Title>{game.title}</Card.Title>
+                            <ProfileField value={game.platform} style={{ width: '250px' }} />
+                        </Card.Body>
+                    </Card>
+                </Col>))}
             </Row>
+            <div className="text-center">
+                <Button className="w-75 mt-3" onClick={handleUpdate}>Update</Button>
+                <Button className="w-75 mt-3" onClick={handleBack}>Back</Button>
+            </div>
         </div>
     );
 }
