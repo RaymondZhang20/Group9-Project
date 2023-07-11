@@ -10,6 +10,7 @@ import PrivateRoute from "./pages/PrivateRoute";
 import MapPage from "./pages/MapPage";
 import Header from "./components/Header";
 import UpdateUserInfo from "./pages/UpdateUserInfo";
+import GameSelector from './pages/GameSelector';
 import MatchingPage from './pages/MatchingPage';
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
                 </PrivateRoute>} />
                 <Route path="/:id/update"  element={<PrivateRoute>
                     <UpdateUserInfo />
+                </PrivateRoute>} />
+                <Route path="/:id/game"  element={<PrivateRoute>
+                    <GameSelector />
                 </PrivateRoute>} />
                 <Route path="/:id/profile"  element={<PrivateRoute>
                     <Profile />
