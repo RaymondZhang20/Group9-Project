@@ -6,7 +6,7 @@ const initialState = {
     loading_login_register: false,
     auth_error: "",
     alert: false,
-    currentUser: {},
+    currentUser: {requests:[],ignored_requests:[]},
     request_error: null,
     getAccount: REQUEST_STATE.IDLE,
     createAccount: REQUEST_STATE.IDLE,
