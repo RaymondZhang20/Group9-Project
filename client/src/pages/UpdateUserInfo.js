@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
 
+// TODO: refactor the time-zone to use moment.js.
+
 const profileOption = {
   "time-zone" : ["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", 
    "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", 
@@ -14,7 +16,7 @@ const profileOption = {
    "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00",
    "UTC+12:00"],
    "pronoun" : ["He/Him", "She/Her", "They/Them", "Ze/Hir", "Xe/Xem", "Other"],
-   "play-time" : ["Morning", "Afternoon", "Evening"],
+   "play-time" : ["Morning (6am-12pm)", "Afternoon(12pm-7pm)", "Evening(7pm-6am)"],
    "language" : ["English", "Spanish", "French", "German", "Mandarin", "Cantonese",
    "Japanese", "Korean", "Italian", "Portuguese", "Russian", "Arabic", "Hindi",
    "Bengali", "Dutch", "Swedish", "Other"],
@@ -31,7 +33,7 @@ function UpdateUserInfo() {
     if (currentUser) {
         dispatch(getAccountAsync(currentUser.uid));
     }
-}, [currentUser]);
+  }, [currentUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,6 +69,19 @@ function UpdateUserInfo() {
     }  
   };
 
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  const locationField = document.querySelector('input[name="location"]');
+  locationField.value = "Latitude: " + position.coords.latitude +
+  ", Longitude: " + position.coords.longitude;
+}
 
 
   return (
@@ -100,9 +115,10 @@ function UpdateUserInfo() {
                 </Form.Control>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicLocation">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Location</Form.Label>
-              <Form.Control name="location" type="text" placeholder="Enter location" defaultValue={userInfo.location} />
+              <Form.Control name="location" type="text" placeholder="Enter Location" defaultValue={userInfo.location} />
+              <Button onClick={getLocation}>Get Location</Button>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPronouns">
