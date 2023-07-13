@@ -36,9 +36,16 @@ const profileOption = {
   return (
     <div className="container">
       <div className="selection">  // TODO: fix the upper padding for selection
-        {createLanguageCheckers()}
-        <div style={{ padding: '10px 0' }} />
-        {createPlatformCheckers()}
+          {createCheckers("Language Spoken", "language")}
+          <div style={{ padding: '10px 0' }} />
+          {createCheckers("Platform", "platform")}
+          <div style={{ padding: '10px 0' }} />
+          {createCheckers("Play Time", "play-time")}
+          <div style={{ padding: '10px 0' }} />
+          {createCheckers("Pronoun", "pronoun")}
+          <div style={{ padding: '10px 0' }} />
+          {createCheckers("Time Zone", "time-zone")}
+          <div style={{ padding: '10px 0' }} />
         <button type="submit">Apply Filters</button>
       </div>
       <div className="cards">
@@ -51,25 +58,25 @@ const profileOption = {
     </div>
   );
 
-function createLanguageCheckers() {
-  return (
-    <div>
-      <span>Language spoken:</span>
-      {profileOption["language"].map((option) => {
-        return (
-          <div key={option}>
-            <input
-              name="language"
-              type="checkbox"
-              id={`language-${option}`}
-              value={option}
-            />
-            <label htmlFor={`language-${option}`}>{option}</label>
-          </div>
-        );
-      })}
-    </div>
-  );
+function createCheckers(title, opt) {
+    return (
+        <div>
+            <span>{title}:</span>
+            {profileOption[opt].map((option) => {
+                return (
+                    <div key={option}>
+                        <input
+                            name={opt}
+                            type="checkbox"
+                            id={`${opt}-${option}`}
+                            value={option}
+                        />
+                        <label htmlFor={`${opt}-${option}`}>{option}</label>
+                    </div>
+                );
+            })}
+        </div>
+    );
 }
 
 function createPlatformCheckers() {
