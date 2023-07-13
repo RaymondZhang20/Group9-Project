@@ -6,7 +6,7 @@ var cors = require('cors');
 require('dotenv').config();
 var mongoose = require('mongoose');
 const mongoAtlasUri =
-    `mongodb+srv://shawn:11223344@cluster0.h62b0ay.mongodb.net/group_project?retryWrites=true&w=majority`;
+    `mongodb+srv://raymond:11223344@cluster0.h62b0ay.mongodb.net/group_project?retryWrites=true&w=majority`;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,7 +26,7 @@ app.use('/users', usersRouter);
 try {
     mongoose.connect(
         mongoAtlasUri,
-        { useNewUrlParser: true, useUnifiedTopology: true }
+        { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 }
     );
 } catch (e) {
     console.log("could not connect");

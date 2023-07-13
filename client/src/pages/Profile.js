@@ -21,14 +21,14 @@ export default function Profile() {
     const user = useSelector(state => state.account.currentUser);
     const userInfo = 
     [{field: "account Name", value: user.account_name},
-    {field: "first", value: user.first_name},
-    {field: "last", value: user.last_name},
-    {field: "timezone", value: user.time_zone},
-    {field: "location", value: user.location},
-    {field: "pronoun", value: user.pronoun},
-    {field: "time", value: user.play_time}, 
-    {field: "language", value: user.language},
-    {field: "platform", value: user.platform}];
+    {field: "first", value: user.profile.first_name},
+    {field: "last", value: user.profile.last_name},
+    {field: "timezone", value: user.profile.time_zone},
+    {field: "location", value: user.profile.location},
+    {field: "pronoun", value: user.profile.pronoun},
+    {field: "time", value: user.profile.play_time},
+    {field: "language", value: user.profile.language},
+    {field: "platform", value: user.profile.platform}];
 
     function handleToUpdate(e) {
         e.preventDefault();
