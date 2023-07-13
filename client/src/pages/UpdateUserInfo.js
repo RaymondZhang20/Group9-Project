@@ -6,8 +6,6 @@ import Card from 'react-bootstrap/Card';
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
 
-// TODO: refactor the time-zone to use moment.js.
-
 const profileOption = {
   "time-zone" : ["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", 
    "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", 
@@ -42,20 +40,22 @@ function UpdateUserInfo() {
     const updatedUserInfo = {
       uid: uid,
       account_name: form.elements['account-name'].value,
-      first_name: form.elements['first-name'].value,
-      last_name: form.elements['last-name'].value,
-      time_zone: form.elements['time-zone'].value,
-      location: form.elements['location'].value,
-      pronoun: form.elements['pronoun'].value,
-      play_time: Array.from(form.elements['play-time'])
-        .filter(input => input.checked)
-        .map(input => input.value),
-      language: Array.from(form.elements['language'])
-        .filter(input => input.checked)
-        .map(input => input.value),
-      platform: Array.from(form.elements['platform'])
-        .filter(input => input.checked)
-        .map(input => input.value),
+      profile: {
+        first_name: form.elements['first-name'].value,
+        last_name: form.elements['last-name'].value,
+        time_zone: form.elements['time-zone'].value,
+        location: form.elements['location'].value,
+        pronoun: form.elements['pronoun'].value,
+        play_time: Array.from(form.elements['play-time'])
+          .filter(input => input.checked)
+          .map(input => input.value),
+        language: Array.from(form.elements['language'])
+          .filter(input => input.checked)
+          .map(input => input.value),
+        platform: Array.from(form.elements['platform'])
+          .filter(input => input.checked)
+          .map(input => input.value),
+      }
     };
     // Send the updated user information to the server
     try {
@@ -64,8 +64,6 @@ function UpdateUserInfo() {
       window.location.href = './profile';
     } catch (e) {
       alert("Failed to update user information.");
-      // setError("Cannot update profile: " + e.message);
-      // not sure which way is better
     }  
   };
 

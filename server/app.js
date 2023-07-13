@@ -26,7 +26,7 @@ app.use('/users', usersRouter);
 try {
     mongoose.connect(
         mongoAtlasUri,
-        { useNewUrlParser: true, useUnifiedTopology: true }
+        { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 5000 }
     );
 } catch (e) {
     console.log("could not connect");
