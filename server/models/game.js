@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
 const gameSchema = new mongoose.Schema({
-    gameName: {
+    title: {
         type: String,
         required: true
     },
-    imageURL: {
+    url: {
         type: String
+    },
+    platform: {
+        type: Array
     }
 });
 
