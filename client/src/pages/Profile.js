@@ -34,6 +34,11 @@ export default function Profile() {
         e.preventDefault();
         navigate(`/${uid}/update`);
     }
+    function handleSelectGame(e) {
+        e.preventDefault();
+        navigate(`/${uid}/game`);
+    }
+
     async function handleLogout(e) {
         e.preventDefault();
         setError("");
@@ -68,6 +73,7 @@ export default function Profile() {
             </Card>
             <div className="text-center">
                 <Button className="w-75 mt-3" onClick={handleToUpdate}>Update My Info</Button>
+                <Button className="w-75 mt-3" onClick={handleSelectGame}>Select Games</Button>
                 <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
             </div>
         </div>

@@ -156,6 +156,7 @@ router.post('/', async function (req, res, next) {
     profile: {},
     friends: [],
     requests: [],
+    ignored_requests: [],
     games: []
   });
   try {
@@ -178,8 +179,26 @@ router.patch('/logout/:uid', function(req, res, next) {
   });
 });
 
+router.patch('/request/:uid', function(req, res, next) {
+  const updater = {
+    send: {query: {$addToSet: {"requests": req.body._id}},message: 'The request is sent successfully'},
+    accept: {query: {$addToSet: {"friends": req.body._id}, $pull: {"requests": req.body._id}},message: 'The request is accepted successfully'},
+    ignore: {query: {$addToSet: {"ignored_requests": req.body._id}, $pull: {"requests": req.body._id}},message: 'The request is ignored successfully'},
+    pend: {query: {$addToSet: {"requests": req.body._id}, $pull: {"ignored_requests": req.body._id}},message: 'The request is pended successfully'},
+  }
+  User.findOneAndUpdate({uid: req.params.uid},updater[req.body.type]["query"]).then((result) => {
+    if (!result) {
+      res.status(404).send('Cannot found the user');
+    } else {
+      res.status(200).json(updater[req.body.type]["message"]);
+    }
+  }).catch((err) => {
+    res.status(500).json({message: err.message});
+  });
+});
+
 router.get('/friendslocation/:uid', function(req, res, next) {
-  User.find({uid: req.params.uid}).select('geolocation friends').populate({path:'friends', select:'account_name geolocation'}).then((result) => {
+  User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation'}).then((result) => {
     if (!result) {
       res.status(404).send('Cannot found the user');
     } else {
@@ -191,7 +210,11 @@ router.get('/friendslocation/:uid', function(req, res, next) {
 });
 
 router.get('/:uid', function(req, res, next) {
-  User.findOneAndUpdate({uid: req.params.uid},{online: true}, {returnDocument:'after'}).then((result) => {
+  User.findOneAndUpdate({uid: req.params.uid},{online: true}, {returnDocument:'after'})
+      .populate({path:'friends', select:'account_name uid'})
+      .populate({path:'requests', select:'account_name uid'})
+      .populate({path:'ignored_requests', select:'account_name uid'})
+      .then((result) => {
     if (!result) {
       res.status(404).send('Cannot found the user');
     } else {

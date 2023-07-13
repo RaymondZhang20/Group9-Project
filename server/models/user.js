@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'User'
     },
+    ignored_requests: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User'
+    },
     games: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Game'
