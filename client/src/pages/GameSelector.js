@@ -19,17 +19,33 @@ const gameList = [{ "title": "Minecraft", "url": "https://upload.wikimedia.org/w
 
 
 function GameSelector() {
-    const [selectedGame, setSelectedGame] = useState(["Minecraft"]);
+    const [selectedGame, setSelectedGame] = useState([]);
 
     const { currentUser } = useAuth();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userInfo = useSelector(state => state.account.currentUser);
+    const initSelect = userInfo.game;
+    setSelectedGame(initSelect);
     const uid = currentUser.uid;
 
+    useEffect(() => {
+        if (currentUser) {
+            dispatch(getAccountAsync(currentUser.uid));
+        }
+    }, [currentUser]);
+
     const handleUpdate = () => {
-        console.log(selectedGame);
-        //todo: update to profile
+        const updatedUserInfo = { ...userInfo };
+        updatedUserInfo.game = selectedGame;
+        try {
+            dispatch(updateAccountAsync(updatedUserInfo));
+            alert("Updated Successfully!");
+            window.location.href = './profile';
+        } catch (e) {
+            alert("Failed to update user information.");
+            // setError("Cannot update profile: " + e.message);
+        }
     }
 
     const handleBack = () => {
