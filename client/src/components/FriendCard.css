@@ -1,9 +1,13 @@
 /* FriendCard.css */
+.friend-card.selected {
+    background-color: #aedfec;
+}
+
 .friend-card {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    background-color: #B3CAD8;
+    background-color: #97A5C0;
     padding: 10px;
     border-radius: 5px;
 }
