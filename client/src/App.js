@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import UpdateUserInfo from "./pages/UpdateUserInfo";
 import GameSelector from './pages/GameSelector';
 import MatchingPage from './pages/MatchingPage';
+import ChatPage from './pages/ChatPage';
 
 function App() {
   const {currentUser} = useAuth();
@@ -36,7 +37,7 @@ function App() {
                     <Profile />
                 </PrivateRoute>} />
                 <Route path="/:id/chat"  element={<PrivateRoute>
-                    <NotFound />
+                    <ChatPage />
                 </PrivateRoute>} />
                 <Route path="/:id/matching"  element={<PrivateRoute>
                     <MatchingPage />

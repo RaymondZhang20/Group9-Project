@@ -1,0 +1,44 @@
+/* ChatPage.css */
+.chat-page {
+    /*background-color: #EBEBE9;*/
+    display: flex;
+    justify-content: space-between;
+    /*height: calc(100vh - 60px);*/
+    padding-top: 60px;
+}
+
+.friends-list {
+    background-color: #EEF1EA;
+    width: 30%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.friends-list .title {
+    background-color: #97A5C0;
+    padding: 15px;
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
+}
+
+.chat-ui {
+    width: 70%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+}
+
+.chat-ui .title {
+    background-color: #82ABA3;
+    padding: 15px;
+    font-size: larger;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}

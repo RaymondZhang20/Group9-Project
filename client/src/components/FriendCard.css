@@ -1,0 +1,22 @@
+/* FriendCard.css */
+.friend-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #B3CAD8;
+    padding: 10px;
+    border-radius: 5px;
+}
+.friend-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.friend-card .status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
