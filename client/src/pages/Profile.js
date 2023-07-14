@@ -17,17 +17,17 @@ const gameList = [{ "id": "64ab23e5c83ed8d6a2bada24", "title": "Minecraft", "url
 { "id": "64afe1f5da7f0f37da363aed", "title": "Apex Legends", "url": "https://upload.wikimedia.org/wikipedia/en/d/db/Apex_legends_cover.jpg", "platform": ["Phone", "PC", "PS", "XBOX", "NS"] }];
 
 export default function Profile() {
-    const [error, setError] = useState("");
-    const { logout, currentUser } = useAuth();
+    const {logout, currentUser} = useAuth();
     const dispatch = useDispatch();
     useEffect(() => {
         if (currentUser) {
             dispatch(getAccountAsync(currentUser.uid));
         }
     }, [currentUser]);
-    const navigate = useNavigate();
-    const uid = currentUser.uid;
     const user = useSelector(state => state.account.currentUser);
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+    const uid = currentUser.uid;
     const userInfo =
         [{ field: "account Name", value: user.account_name },
         { field: "first", value: user.profile.first_name },
@@ -38,9 +38,7 @@ export default function Profile() {
         { field: "time", value: user.profile.play_time },
         { field: "language", value: user.profile.language },
         { field: "platform", value: user.profile.platform }];
-    console.log(user.games);
     const games = gameList.filter(game => user.games.includes(game.id));
-    console.log(games);
 
     function handleToUpdate(e) {
         e.preventDefault();
