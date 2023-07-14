@@ -1,14 +1,13 @@
 import Card from 'react-bootstrap/Card';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import { removeMatch } from '../redux/matchingReducers/matchingReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import './MatchingPage.css';
+import Select from "react-select";
 
 export default function MatchingPage() {
   const dispatch = useDispatch();
   const accountsJSON = useSelector((state) => state.matchingAccounts.accounts);
-
-// TODO: Calculate the play-time and calculate using that and the user's timezone to query
 
 const profileOption = {
   "time-zone" : ["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00",
@@ -25,38 +24,37 @@ const profileOption = {
    "platform" : ["Phone", "PC", "PS", "XBOX", "NS", "Other"]
 };
 
-  const handleDelete = (id) => {
+const handleDelete = (id) => {
     dispatch(removeMatch(id))
-  }
+}
 
-  const handleSubmit = () => {
+const handleSubmit = () => {
     // TODO
-  }
+}
 
-  return (
+return (
     <div className="container">
-      <div className="selection">  // TODO: fix the upper padding for selection
-          {createCheckers("Language Spoken", "language")}
-          <div style={{ padding: '10px 0' }} />
-          {createCheckers("Platform", "platform")}
-          <div style={{ padding: '10px 0' }} />
-          {createCheckers("Play Time", "play-time")}
-          <div style={{ padding: '10px 0' }} />
-          {createCheckers("Pronoun", "pronoun")}
-          <div style={{ padding: '10px 0' }} />
-          {createCheckers("Time Zone", "time-zone")}
-          <div style={{ padding: '10px 0' }} />
-        <button type="submit">Apply Filters</button>
-      </div>
-      <div className="cards">
-          {accountsJSON.map((data) => (
-              <div key = {JSON.parse(data).uid}>
-              {createCard(data)}
-              </div>
-          ))}
-      </div>
+         <div className="selection">
+              {createCheckers("Language Spoken", "language")}
+              <div style={{ padding: '10px 0' }} />
+              {createCheckers("Platform", "platform")}
+              <div style={{ padding: '10px 0' }} />
+              {createCheckers("Play Time", "play-time")}
+              <div style={{ padding: '10px 0' }} />
+              {createCheckers("Pronoun", "pronoun")}
+              <div style={{ padding: '10px 0' }} />
+             <Dropdown placeHolder="Select..." options={testOptions} />
+              <button type="submit">Apply Filters</button>
+         </div>
+         <div className="cards">
+              {accountsJSON.map((data) => (
+                  <div key = {JSON.parse(data).uid}>
+                  {createCard(data)}
+                  </div>
+              ))}
+         </div>
     </div>
-  );
+);
 
 function createCheckers(title, opt) {
     return (
@@ -79,27 +77,23 @@ function createCheckers(title, opt) {
     );
 }
 
-function createPlatformCheckers() {
-  return (
-    <div>
-      <span>Platform:</span>
-      {profileOption["platform"].map((option) => {
-        return (
-          <div key={option}>
-            <input
-              name="platform"
-              type="checkbox"
-              id={`platform-${option}`}
-              value={option}
-            />
-            <label htmlFor={`platform-${option}`}>{option}</label>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+function genderMultiSelect() {
+  const genderOptions = [
+    {value: "he", label: "He/Him"},
+    {value: "she", label: "She/Her"},
+    {value: "they", label: "They/Them"},
+    {value: "ze", label: "Ze/Hir"},
+    {value: "xe", label: "Xe/Xem"},
+    {value: "o", label: "Other"}
+  ];
+//  const colorStyles = {
+//  }
+//
+//  const loadOptions = (searchValue, callback) {
+//  }
 
+  return <Select loadOptions={loadOptions} isMulti style = {colorStyles}>;
+}
 
 function createCard(accountJSON) {
   const account = JSON.parse(accountJSON)

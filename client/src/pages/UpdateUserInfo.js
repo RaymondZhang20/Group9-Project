@@ -6,13 +6,17 @@ import Card from 'react-bootstrap/Card';
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
 
+// value: [-12, -11, -10, -9, -8, -7, -6, -5, -4, -3. -2, -1, +0, +1, +2, +3, +4, +5, +6, +7, +8, +9, +10, +11, +12]
 const profileOption = {
-  "time-zone" : ["UTC-12:00", "UTC-11:00", "UTC-10:00", "UTC-09:00", 
-   "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", 
-   "UTC-03:00", "UTC-02:00", "UTC-01:00", "UTC+00:00", "UTC+01:00",
-   "UTC+02:00", "UTC+03:00", "UTC+04:00", "UTC+05:00", "UTC+06:00",
-   "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00",
-   "UTC+12:00"],
+  "time-zone" :
+  ["Baker Island", "Jarvis Island", "Honolulu", "Anchorage, Alaska",
+   "Los Angeles, Vancouver, Tijuana", "Denver, Edmonton, Ciudad Juárez", "Mexico City, Chicago",
+   "New York, Toronto, Havana", "Santiago, Santo Domingo, Halifax",
+   "São Paulo, Argentina", "South Georgia and the South Sandwich Islands",
+   "Azores islands", "London, Dublin, Lisbon", "Berlin, Rome, Paris",
+   "Cairo, Johannesburg, Khartoum, Kyiv", " Moscow, Istanbul", "Dubai, Baku", "Karachi, Tashkent", "Dhaka, Almaty, Omsk",
+   "Ho Chi Minh City, Bangkok", "Shanghai, Singapore", "Tokyo, Seoul", "Sydney", "Nouméa",
+   "Auckland, Suva"],
    "pronoun" : ["He/Him", "She/Her", "They/Them", "Ze/Hir", "Xe/Xem", "Other"],
    "play-time" : ["Morning (6am-12pm)", "Afternoon(12pm-7pm)", "Evening(7pm-12am)", "Midnight(12am-6am)"],
    "language" : ["English", "Spanish", "French", "German", "Mandarin", "Cantonese",
@@ -35,6 +39,10 @@ function UpdateUserInfo() {
     e.preventDefault();
     // Get the updated user information from the form
     const form = e.target;
+    const locationString = form.elements['location'].value;
+      const [latitude, longitude] = locationString
+        .split(',')
+        .map((coord) => coord.split(':')[1].trim());
     const updatedUserInfo = {
       uid: currentUser.uid,
       account_name: form.elements['account-name'].value,
@@ -53,9 +61,10 @@ function UpdateUserInfo() {
         platform: Array.from(form.elements['platform'])
           .filter(input => input.checked)
           .map(input => input.value),
-      }
+      },
+      geolocation: { lat: latitude, long: longitude }
     };
-    // Send the updated user information to the server
+
     try {
       dispatch(updateAccountAsync(updatedUserInfo));
       alert("Updated Successfully!");
