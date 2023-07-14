@@ -30,6 +30,24 @@ const ChatPage = () => {
                 { text: "Sure, why not", sentByMe: true },
             ]
         },
+        {
+            id: 3,
+            username: 'Dorothy333',
+            online: true,
+            avatar: DefaultUser,
+            messages: [
+                { text: "Hey there!", sentByMe: true },
+                { text: "Hi! How's it going?", sentByMe: false },
+                { text: "I'm doing well. What about you?", sentByMe: true },
+                { text: "I'm doing great too!", sentByMe: false },
+                { text: "That's nice to hear. Have any plans for the weekend?", sentByMe: true },
+                { text: "No, not yet. Any suggestions?", sentByMe: false },
+                { text: "How about a hike?", sentByMe: true },
+                { text: "Sounds like a plan. I'm in!", sentByMe: false },
+                { text: "Great! I'll send you the details.", sentByMe: true },
+                { text: "Looking forward to it. Thanks!", sentByMe: false },
+            ]
+        },
     ]);
 
     const [selectedFriend, setSelectedFriend] = useState(friends[0]);

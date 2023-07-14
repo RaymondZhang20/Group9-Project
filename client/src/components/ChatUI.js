@@ -19,6 +19,7 @@ const ChatUI = ({ friend }) => {
             </div>
             <div className="chat-input">
                 <input type="text" placeholder="Type a message" />
+                {/* replace with icon? */}
                 <button>Send</button>
             </div>
         </div>
