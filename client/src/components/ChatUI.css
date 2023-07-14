@@ -6,6 +6,7 @@
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
     padding: 10px;
+    border-radius: 5px;
 }
 
 .chat-header img {
@@ -22,6 +23,7 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
+    border-radius: 5px;
 }
 
 .chat-input {
@@ -30,6 +32,7 @@
     border-top: 1px solid #ccc;
     padding: 10px;
     margin-top: auto;
+    border-radius: 5px;
 }
 
 .chat-input input {
