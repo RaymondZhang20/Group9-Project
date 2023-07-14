@@ -8,7 +8,6 @@ import {emptyAccount} from "../redux/accountReducers/accountReducer";
 import {ProfileField} from '../components/ProfileField';
 
 export default function Profile() {
-    const [error, setError] = useState("");
     const {logout, currentUser} = useAuth();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -16,9 +15,10 @@ export default function Profile() {
             dispatch(getAccountAsync(currentUser.uid));
         }
     }, [currentUser]);
-    const navigate = useNavigate();
-    const uid = currentUser.uid;
     const user = useSelector(state => state.account.currentUser);
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+    const uid = currentUser.uid;
     const userInfo = 
     [{field: "account Name", value: user.account_name},
     {field: "first", value: user.profile.first_name},
