@@ -10,7 +10,6 @@ import {useAuth} from "../contexts/AuthContext";
 function Map(props) {
 
   const mapFriends = useSelector(state => state.mapReducer.locations);
-  console.log(mapFriends)
   const dispatch = useDispatch();
   const {currentUser} = useAuth();
 
@@ -31,12 +30,29 @@ return <MapContainer center={[49.2677, -123.2420]} zoom={13} scrollWheelZoom={fa
   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 />
+{/* {createPins(mapFriends)} */}
 <Marker position={[49.2677, -123.2420]}>
   <Popup>g
-    A pretty CSS3 popup. <br /> Easily customizable.
+    A pretty CSS3 popup.{createPins(mapFriends)} <br /> Easily customizable.
   </Popup>
 </Marker>
 </MapContainer>;
+}
+
+function createPins(mapFriends) {
+  if (mapFriends[0] === undefined) {
+  } else {
+    console.log(Object.keys(mapFriends[0].friends[0]))
+    var currentlocation = [mapFriends[0].geolocation.lat, mapFriends[0].geolocation.long]
+    return (
+      <Marker position={currentlocation}>
+    <Popup>g
+      You are Here
+    </Popup>
+  </Marker>
+    )
+  }
+
 }
 
 export default Map;
