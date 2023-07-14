@@ -31,28 +31,38 @@ return <MapContainer center={[49.2677, -123.2420]} zoom={13} scrollWheelZoom={fa
   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 />
 {/* {createPins(mapFriends)} */}
-<Marker position={[49.2677, -123.2420]}>
-  <Popup>g
-    A pretty CSS3 popup.{createPins(mapFriends)} <br /> Easily customizable.
-  </Popup>
-</Marker>
+{createPins(mapFriends)}
 </MapContainer>;
 }
 
 function createPins(mapFriends) {
   if (mapFriends[0] === undefined) {
   } else {
-    console.log(Object.keys(mapFriends[0].friends[0]))
     var currentlocation = [mapFriends[0].geolocation.lat, mapFriends[0].geolocation.long]
     return (
+      <div>
       <Marker position={currentlocation}>
-    <Popup>g
-      You are Here
-    </Popup>
-  </Marker>
+        <Popup>g
+          You are Here
+        </Popup>
+      </Marker>
+      {mapFriends[0].friends.map((friend) => 
+      createFriendsPins(friend)
+      )}
+    </div>
     )
   }
+}
 
+function createFriendsPins(friend) {
+  var friendLocation = [friend.geolocation.lat, friend.geolocation.lon]
+  return (      
+  <Marker key = {friend.account_name} position={friendLocation}>
+    <Popup>g
+      {friend.account_name}
+    </Popup>
+  </Marker>
+  )
 }
 
 export default Map;
