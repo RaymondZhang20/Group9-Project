@@ -14,7 +14,7 @@ const profileOption = {
    "UTC+07:00", "UTC+08:00", "UTC+09:00", "UTC+10:00", "UTC+11:00",
    "UTC+12:00"],
    "pronoun" : ["He/Him", "She/Her", "They/Them", "Ze/Hir", "Xe/Xem", "Other"],
-   "play-time" : ["Morning (6am-12pm)", "Afternoon(12pm-7pm)", "Evening(7pm-6am)"],
+   "play-time" : ["Morning (6am-12pm)", "Afternoon(12pm-7pm)", "Evening(7pm-12am)", "Midnight(12am-6am)"],
    "language" : ["English", "Spanish", "French", "German", "Mandarin", "Cantonese",
    "Japanese", "Korean", "Italian", "Portuguese", "Russian", "Arabic", "Hindi",
    "Bengali", "Dutch", "Swedish", "Other"],
