@@ -35,6 +35,10 @@ function UpdateUserInfo() {
     e.preventDefault();
     // Get the updated user information from the form
     const form = e.target;
+    const locationString = form.elements['location'].value;
+      const [latitude, longitude] = locationString
+        .split(',')
+        .map((coord) => coord.split(':')[1].trim());
     const updatedUserInfo = {
       uid: currentUser.uid,
       account_name: form.elements['account-name'].value,
@@ -53,9 +57,10 @@ function UpdateUserInfo() {
         platform: Array.from(form.elements['platform'])
           .filter(input => input.checked)
           .map(input => input.value),
-      }
+      },
+      geolocation: { lat: latitude, long: longitude }
     };
-    // Send the updated user information to the server
+
     try {
       dispatch(updateAccountAsync(updatedUserInfo));
       alert("Updated Successfully!");
