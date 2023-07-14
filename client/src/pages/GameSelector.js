@@ -34,7 +34,6 @@ function GameSelector() {
         try {
             dispatch(updateAccountAsync(updatedUserInfo));
             alert("Updated Successfully!");
-            window.location.href = './game';
         } catch (e) {
             alert("Failed to update user information.");
             // setError("Cannot update profile: " + e.message);
@@ -62,28 +61,32 @@ function GameSelector() {
         selectedGame.includes(g) ? "primary" : "light"
     )
 
-    return (
-        <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '80px' }}>
-            <p>Select games you have played below!</p>
-            <Row xs={1} md={3} className="g-4" style={{ width: '900px' }}>
-                {gameList.map((game, idx) => (<Col key={idx}>
-                    <Card key={game.title} border={setBorder(game.id)} onClick={() => handleSelect(game.id)} style={{ width: '250px', height: '350px' }}>
-                        <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
-                            <img src={game.url} style={{ width: '100%' }}></img>
-                        </div>
-                        <Card.Body>
-                            <Card.Title>{game.title}</Card.Title>
-                            <ProfileField value={game.platform} style={{ width: '250px' }} />
-                        </Card.Body>
-                    </Card>
-                </Col>))}
-            </Row>
-            <div className="text-center">
-                <Button className="w-75 mt-3" onClick={handleUpdate}>Update</Button>
-                <Button className="w-75 mt-3" onClick={handleBack}>Back</Button>
+    if (userInfo.uid) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '80px' }}>
+                <p>Select games you have played below!</p>
+                <Row xs={1} md={3} className="g-4" style={{ width: '900px' }}>
+                    {gameList.map((game, idx) => (<Col key={idx}>
+                        <Card key={game.title} border={setBorder(game.id)} onClick={() => handleSelect(game.id)} style={{ width: '250px', height: '350px' }}>
+                            <div style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                                <img src={game.url} style={{ width: '100%' }}></img>
+                            </div>
+                            <Card.Body>
+                                <Card.Title>{game.title}</Card.Title>
+                                <ProfileField value={game.platform} style={{ width: '250px' }} />
+                            </Card.Body>
+                        </Card>
+                    </Col>))}
+                </Row>
+                <div className="text-center">
+                    <Button className="w-75 mt-3" onClick={handleUpdate}>Update</Button>
+                    <Button className="w-75 mt-3" onClick={handleBack}>Back</Button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (<p>Loading user informations...</p>);
+    }
 }
 
 export default GameSelector;

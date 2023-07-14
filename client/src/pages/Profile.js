@@ -1,7 +1,7 @@
 import { Button, Card, ListGroup } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useDeferredValue, useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom"
+import { Navigate, useLocation, useNavigate, useRouteError } from "react-router-dom"
 import { getAccountAsync } from "../redux/accountReducers/accountThunks";
 import { useDispatch, useSelector } from "react-redux";
 import { emptyAccount } from "../redux/accountReducers/accountReducer";
@@ -28,7 +28,11 @@ export default function Profile() {
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const uid = currentUser.uid;
-    const userInfo =
+    let userInfo = [];
+    let games = [];
+    console.log(user);
+    if (user.uid) {
+        userInfo =
         [{ field: "account Name", value: user.account_name },
         { field: "first", value: user.profile.first_name },
         { field: "last", value: user.profile.last_name },
@@ -38,7 +42,8 @@ export default function Profile() {
         { field: "time", value: user.profile.play_time },
         { field: "language", value: user.profile.language },
         { field: "platform", value: user.profile.platform }];
-    const games = gameList.filter(game => user.games.includes(game.id));
+        games = gameList.filter(game => user.games.includes(game.id));
+    }
 
     function handleToUpdate(e) {
         e.preventDefault();
@@ -60,9 +65,10 @@ export default function Profile() {
             setError("Cannot log out because: " + e.message);
         }
     }
-    return (
-        <div id="Account-whole" style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '60px' }}>
-            <div id="profile" style={{ display: 'flex' }}>
+    if (user.uid) {
+        return (
+            <div id="Account-whole" style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '60px' }}>
+            <div id="profile" style={{ display: 'flex',paddingTop: '40px' }}>
                 <Card className="card-container" style={{ width: '550px' }}>
                     <Card.Body>
                         <h1 className="text-center">Profile</h1>
@@ -83,10 +89,10 @@ export default function Profile() {
                     </Card.Body>
                 </Card>
                 <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '80px', paddingLeft: '80px' }}>
-                    <Row xs={1} md={3} className="g-4" style={{ width: '600px', height: '250px' }}>
+                    <Row xs={1} md={3} className="g-4" style={{ maxWidth: '600px', maxHeight: '250px' }}>
                         {games.map((game, idx) => (<Col key={idx}>
-                            <Card key={game.title} style={{ width: '160px', height: '230px' }}>
-                                <div style={{ width: '100%', height: '160px', overflow: 'hidden' }}>
+                            <Card key={game.title} style={{ maxWidth: '160px', maxHeight: '230px', minHeight:'100%' }}>
+                                <div style={{ width: '100%', maxHeight: '160px', overflow: 'hidden'}}>
                                     <img src={game.url} style={{ width: '100%' }}></img>
                                 </div>
                                 <Card.Body>
@@ -103,5 +109,9 @@ export default function Profile() {
                 <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
             </div>
         </div>
-    );
+        );
+    } else {
+        return (<p>Loading user informations...</p>);
+    }
+    
 }
