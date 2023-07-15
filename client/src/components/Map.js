@@ -38,6 +38,7 @@ return <MapContainer center={[49.2677, -123.2420]} zoom={13} scrollWheelZoom={fa
 function createPins(mapFriends) {
   if (mapFriends[0] === undefined) {
   } else {
+    console.log(mapFriends)
     var currentlocation = [mapFriends[0].geolocation.lat, mapFriends[0].geolocation.long]
     return (
       <div>
@@ -55,7 +56,8 @@ function createPins(mapFriends) {
 }
 
 function createFriendsPins(friend) {
-  var friendLocation = [friend.geolocation.lat, friend.geolocation.lon]
+  console.log(friend)
+  var friendLocation = [friend.geolocation.lat, friend.geolocation.long]
   return (      
   <Marker key = {friend.account_name} position={friendLocation}>
     <Popup>g

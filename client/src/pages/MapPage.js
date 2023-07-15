@@ -48,7 +48,7 @@ export default function MapPage() {
             <h2>Welcome, {user.account_name}</h2>
             <h2>You have 0 new matches, and 0 new messages</h2>
             <FriendRequests/>
-            {/*<Map />*/}
+            <Map />
 
         {/* Footer Boilerplate */}
         <Footer
