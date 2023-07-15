@@ -26,6 +26,25 @@
     border-radius: 5px;
     margin-bottom: 10px;
 }
+.empty-chat .title {
+    background-color: #4f7562;
+    padding: 15px;
+    font-size: larger;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.empty-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+    color: #666;
+}
+
 
 .chat-ui {
     width: 100%;

@@ -50,7 +50,7 @@ const ChatPage = () => {
         },
     ]);
 
-    const [selectedFriend, setSelectedFriend] = useState(friends[0]);
+    const [selectedFriend, setSelectedFriend] = useState(null);
 
     const handleSelectFriend = (id) => {
         const friend = friends.find(friend => friend.id === id);
@@ -63,7 +63,13 @@ const ChatPage = () => {
                 <FriendsList friends={friends} onSelectFriend={handleSelectFriend} selectedFriend={selectedFriend} />
             </div>
             <div className="chat-ui">
-                <ChatUI friend={selectedFriend} />
+                {selectedFriend ?
+                    <ChatUI friend={selectedFriend} /> :
+                    <div className="empty-chat">
+                        <div className="title">Messages</div>
+                        <div className="empty-message">Select a friend to start chatting!</div>
+                    </div>
+                }
             </div>
         </div>
     );
