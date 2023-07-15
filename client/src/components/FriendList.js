@@ -10,7 +10,7 @@ const FriendsList = ({ friends, onSelectFriend, selectedFriend }) => {
                     friend={friend}
                     key={friend.id}
                     onClick={() => onSelectFriend(friend.id)}
-                    isSelected={friend.id === selectedFriend.id}
+                    isSelected={selectedFriend && friend.id === selectedFriend.id}
                 />
             ))}
         </div>

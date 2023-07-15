@@ -8,9 +8,8 @@ const ChatUI = ({ friend }) => {
             <div className="title">Messages</div>
             <div className="chat-header">
                 <img src={friend.avatar} alt={friend.username} />
-                <h4>{friend.username}</h4>
-                {/* replace with icon? */}
-                <button>Voice Call</button>
+                <h5>{friend.username}</h5>
+                <button className="btn btn-success">Voice Call</button>
             </div>
             <div className="chat-body">
                 {friend.messages.map((message, index) => (
@@ -18,12 +17,12 @@ const ChatUI = ({ friend }) => {
                 ))}
             </div>
             <div className="chat-input">
-                <input type="text" placeholder="Type a message" />
-                {/* replace with icon? */}
-                <button>Send</button>
+                <textarea placeholder="Type a message"></textarea>
+                <button className="btn btn-success">Send</button>
             </div>
         </div>
     );
 };
 
 export default ChatUI;
+
