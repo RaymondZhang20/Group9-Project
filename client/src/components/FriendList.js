@@ -5,17 +5,20 @@ const FriendsList = ({ friends, onSelectFriend, selectedFriend }) => {
     return (
         <div>
             <div className="title">Friends</div>
-            {friends.map(friend => (
-                <FriendCard
-                    friend={friend}
-                    key={friend.id}
-                    onClick={() => onSelectFriend(friend.id)}
-                    isSelected={selectedFriend && friend.id === selectedFriend.id}
-                />
-            ))}
+            {friends.length > 0 ? (
+                friends.map(friend => (
+                    <FriendCard
+                        friend={friend}
+                        key={friend.id}
+                        onClick={() => onSelectFriend(friend.id)}
+                        isSelected={selectedFriend && friend.id === selectedFriend.id}
+                    />
+                ))
+            ) : (
+                <div className="empty-message">You have no one to chat with, go make some friends!</div>
+            )}
         </div>
     );
 };
-
 
 export default FriendsList;
