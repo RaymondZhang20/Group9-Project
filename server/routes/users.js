@@ -167,7 +167,19 @@ router.post('/', async function (req, res, next) {
   }
 });
 
-router.patch('/logout/:uid', function(req, res, next) {
+router.get('/friendslocation/:uid', function(req, res, next) {
+  User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation'}).then((result) => {
+    if (!result) {
+      res.status(404).send('Cannot found the user');
+    } else {
+      res.status(200).json(result);
+    }
+  }).catch((err) => {
+    res.status(500).json({message: err.message});
+  });
+});
+
+router.patch('/:uid/logout', function(req, res, next) {
   User.findOneAndUpdate({uid: req.params.uid},{online: false},{returnDocument:'after'}).then((result) => {
     if (!result) {
       res.status(404).send('Cannot found the user');
@@ -179,10 +191,26 @@ router.patch('/logout/:uid', function(req, res, next) {
   });
 });
 
-router.patch('/request/:uid', function(req, res, next) {
+router.patch('/:uid/remove', function(req, res, next) {
+  User.findOneAndUpdate({uid: req.params.uid}, {$pull: {"friends": req.body._id}}).then((result) => {
+    if (!result) {
+      res.status(404).send('Cannot found the user');
+    } else {
+      User.findByIdAndUpdate(req.body._id, {$pull: {"friends": result["_id"]}}).then((result) => {
+        res.status(200).json({message: "successfully removed"});
+      }).catch((err) => {
+        res.status(500).json({message: err.message});
+      });
+    }
+  }).catch((err) => {
+    res.status(500).json({message: err.message});
+  });
+});
+
+router.patch('/:uid/requests', function(req, res, next) {
   const updater = {
     send: {query: {$addToSet: {"requests": req.body._id}},message: 'The request is sent successfully'},
-    accept: {query: {$addToSet: {"friends": req.body._id}, $pull: {"requests": req.body._id}},message: 'The request is accepted successfully'},
+    accept: {query: {$addToSet: {"friends": req.body._id}, $pull: {"requests": req.body._id, "ignored_requests": req.body._id}},message: 'The request is accepted successfully'},
     ignore: {query: {$addToSet: {"ignored_requests": req.body._id}, $pull: {"requests": req.body._id}},message: 'The request is ignored successfully'},
     pend: {query: {$addToSet: {"requests": req.body._id}, $pull: {"ignored_requests": req.body._id}},message: 'The request is pended successfully'},
   }
@@ -190,6 +218,13 @@ router.patch('/request/:uid', function(req, res, next) {
     if (!result) {
       res.status(404).send('Cannot found the user');
     } else {
+      if (req.body.type === "accept") {
+        return User.findByIdAndUpdate(req.body._id, {$addToSet: {"friends": result["_id"]}}).then((result) => {
+          res.status(200).json(updater[req.body.type]["message"]);
+        }).catch((err) => {
+          res.status(500).json({message: err.message});
+        });
+      }
       res.status(200).json(updater[req.body.type]["message"]);
     }
   }).catch((err) => {
@@ -197,13 +232,23 @@ router.patch('/request/:uid', function(req, res, next) {
   });
 });
 
-router.get('/friendslocation/:uid', function(req, res, next) {
-  User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation'}).then((result) => {
-    if (!result) {
-      res.status(404).send('Cannot found the user');
-    } else {
-      res.status(200).json(result);
-    }
+router.get('/:uid/matching', function(req, res, next) {
+  User.find({uid: req.params.uid}).then((result) => {
+    const friends_id = [...result[0]["friends"], result[0]["_id"]];
+    const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];
+    return [{requests_id}, {
+      $nor: friends_id.map(f => {
+        return {_id: f}
+      })
+    }];
+  }).then((query) => {
+    return User.find(query[1]).select('account_name uid').then((result2) => {
+      const result_with_requests = result2.map((f) => {
+        let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
+        return Object.assign({requested}, f["_doc"]);
+      })
+      res.status(200).json(result_with_requests);
+    });
   }).catch((err) => {
     res.status(500).json({message: err.message});
   });
@@ -228,7 +273,11 @@ router.get('/:uid', function(req, res, next) {
 router.patch('/:uid', function (req, res, next) {
   const AccUid = {uid: req.params.uid};
   const updatedAcc = req.body;
-  User.findOneAndUpdate(AccUid,updatedAcc,{returnDocument:'after'}).then((result) => {
+  User.findOneAndUpdate(AccUid,updatedAcc,{returnDocument:'after'})
+      .populate({path:'friends', select:'account_name uid'})
+      .populate({path:'requests', select:'account_name uid'})
+      .populate({path:'ignored_requests', select:'account_name uid'})
+      .then((result) => {
     if (!result) {
       res.status(404).send('Cannot found the user');
     } else {

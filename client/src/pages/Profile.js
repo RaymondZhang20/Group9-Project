@@ -30,7 +30,7 @@ export default function Profile() {
     const uid = currentUser.uid;
     let userInfo = [];
     let games = [];
-    console.log(user);
+    // console.log(user);
     if (user.uid) {
         userInfo =
         [{ field: "account Name", value: user.account_name },

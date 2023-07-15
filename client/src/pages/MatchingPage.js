@@ -1,24 +1,21 @@
 import Card from 'react-bootstrap/Card';
 import {Button} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { removeMatch } from '../redux/matchingReducers/matchingReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import React, {useState, useEffect} from 'react';
 import {useAuth} from "../contexts/AuthContext";
 import {getAccountAsync} from "../redux/accountReducers/accountThunks";
 import './MatchingPage.css';
 import Select from "react-select";
+import user_img from "../redux/default_user.png";
 
 export default function MatchingPage() {
   const dispatch = useDispatch();
-  const accountsJSON = useSelector((state) => state.matchingAccounts.accounts);
+  const user = useSelector(state => state.account.currentUser);
   const { currentUser } = useAuth();
-  useEffect(() => {
-      if (currentUser) {
-         dispatch(getAccountAsync(currentUser.uid));
-      }
-  }, [currentUser]);
   const [genderOptions, setGenderOptions] = useState([]);
+  const [matchings, setMatchings] = useState([]);
+  const [change, setChange] = useState(0);
 
   // initialize a HashMap to handle timezone offset
   const timeZoneValues = [-12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -36,10 +33,6 @@ export default function MatchingPage() {
       timeZoneMap.set(timeZoneOptions[i], timeZoneValues[i]);
   }
 
-const handleDelete = (id) => {
-    dispatch(removeMatch(id))
-}
-
 const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -50,6 +43,18 @@ const handleSubmit = async (e) => {
     if (games) findGameMatching();
     if (language) findLanguageMatching();
     if (genderOptions) findGenderMatching();
+    fetch(`http://localhost:5000/users/${user.uid}/matching`, {
+        method: 'GET'
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return response.json();
+    }).then((data) => {
+        setMatchings(data);
+    }).catch((error) => {
+        console.error(error);
+    });
 }
 // Get the current user's timezone offset
 function getUserOffset() {
@@ -100,53 +105,131 @@ function findGenderMatching() {
     // TODO: how to get other information
 }
 
+    function handleApprove(e, _id) {
+        e.preventDefault();
+        const acc = {type: "accept", _id: _id};
+        fetch(`http://localhost:5000/users/${user.uid}/requests`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(acc)
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        }).then((data) => {
+            setChange(Math.random());
+            // setShowAlert({
+            //     show: true,
+            //     variant: "success",
+            //     message: data
+            //
+            // });
+        }).catch((error) => {
+            // setShowAlert({
+            //     show: true,
+            //     variant: "danger",
+            //     message: error.message
+            //
+            // });
+        });
+    }
+
+    function handleSend(e, uid) {
+        e.preventDefault();
+        const acc = {type: "send", _id: user._id};
+        fetch(`http://localhost:5000/users/${uid}/requests`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(acc)
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        }).then((data) => {
+            setChange(Math.random());
+            // setShowAlert({
+            //     show: true,
+            //     variant: "success",
+            //     message: data
+            //
+            // });
+        }).catch((error) => {
+            // setShowAlert({
+            //     show: true,
+            //     variant: "danger",
+            //     message: error.message
+            //
+            // });
+        });
+    }
+
+    function handleIgnore(e, _id) {
+        e.preventDefault();
+    }
+
 return (
     <div className="container">
          <div className="selection">
-              {createCheckers()}
-              <div style={{ padding: '10px 0' }} />
-              {AnimatedMulti()}
-              <div style={{ padding: '10px 0' }} />
-              <button type="submit">Apply Filters</button>
+             <Form onSubmit={(e) => handleSubmit(e)}>
+                 <div>
+                     <Form.Check
+                         name="time"
+                         type={'checkbox'}
+                         label={`Play in same time`}
+                     />
+                 </div>
+                 <div>
+                     <Form.Check
+                         name="game"
+                         type={'checkbox'}
+                         label={`Play same game(s)`}
+                     />
+                 </div>
+                 <div>
+                     <Form.Check
+                         name="language"
+                         type={'checkbox'}
+                         label={`Speak same language`}
+                     />
+                 </div>
+                 <div style={{ padding: '10px 0' }} />
+                 {AnimatedMulti()}
+                 <div style={{ padding: '10px 0' }} />
+                 <Button variant="primary" type="submit">Apply Filters</Button>
+             </Form>
          </div>
          <div className="cards">
-              {accountsJSON.map((data) => (
-                  <div key = {JSON.parse(data).uid}>
-                  {createCard(data)}
-                  </div>
-              ))}
+              {matchings.length === 0?
+                  <h1 style={{ marginBottom: '100px' }}>No matching for you, sorry</h1>:
+                  matchings.map((request) => (
+                      <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }}>
+                          <Card.Img variant="top" src={user_img} style={{width: '250px', height: '250px'}}/>
+                          <Card.Body>
+                              <Card.Title className="text-center">{request.account_name}</Card.Title>
+                              <div style={{ display:'flex', justifyContent:'center', gap:'8px' }}>
+                                  {request.requested?
+                                      <Button variant="primary" onClick={(e) => handleApprove(e,request._id)}>
+                                          Add As Friend
+                                      </Button> :
+                                      <Button variant="primary" onClick={(e) => handleSend(e,request.uid)}>
+                                          Send Friend Request
+                                      </Button>
+                                  }
+                                  {/*<Button variant="secondary" onClick={(e) => handleIgnore(e,request._id)}>*/}
+                                  {/*    Ignore*/}
+                                  {/*</Button>*/}
+                              </div>
+                          </Card.Body>
+                      </Card>))}
          </div>
     </div>
 );
-
-function createCheckers() {
-  return (
-    <Form>
-        <div>
-          <Form.Check
-            name="time"
-            type={'checkbox'}
-            label={`Play in same time`}
-          />
-        </div>
-        <div>
-          <Form.Check
-            name="game"
-            type={'checkbox'}
-            label={`Play same game(s)`}
-          />
-        </div>
-        <div>
-          <Form.Check
-            name="language"
-            type={'checkbox'}
-            label={`Speak same language`}
-          />
-        </div>
-    </Form>
-  );
-}
-
 
 function AnimatedMulti() {
     const selectorGenderOptions = [
@@ -165,37 +248,6 @@ function AnimatedMulti() {
             onChange={setGenderOptions}
         />
     );
-}
-
-function createCard(accountJSON) {
-  const account = JSON.parse(accountJSON)
-  return (
-  <Card style={{ width: '200%' }}>
-      <Card.Body>
-          <Card.Title>{account.first_name} {account.last_name}</Card.Title>
-          <Card.Text>
-          {account.pronoun}
-          </Card.Text>
-          <Card.Text>
-          {account.time_zone}
-          </Card.Text>
-          <Card.Text>
-          {account.platform}
-          </Card.Text>
-          <Card.Text>
-          {account.play_time}
-          </Card.Text>
-          <Card.Text>
-          {account.platform}
-          </Card.Text>
-          <Card.Text>
-          {account.language}
-          </Card.Text>
-          <Button onClick={() => handleDelete(account.uid)}>Remove Match </Button>
-          <Button>Match </Button>
-      </Card.Body>
-  </Card>
-  )
 }
 
 //// Check if two time ranges overlap
