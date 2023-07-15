@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import FriendsList from '../components/FriendList';
 import ChatUI from '../components/ChatUI';
 import './ChatPage.css';
 import DefaultUser from '../redux/default_user.png';
+// import { useAuth } from '../contexts/AuthContext';
+// import {useDispatch, useSelector} from "react-redux";
+// import {getAccountAsync} from "../redux/accountReducers/accountThunks";
 
 const ChatPage = () => {
+    //attempt to fetch from database
+    // const dispatch = useDispatch();
+    // const { currentUser } = useAuth();
+    // const { account } = useSelector(state => state.account);
+    // const friends = account.friends || [];
+
     const [friends] = useState([
         {
             id: 1,
@@ -51,6 +60,12 @@ const ChatPage = () => {
     ]);
 
     const [selectedFriend, setSelectedFriend] = useState(null);
+
+    // useEffect(() => {
+    //     if (currentUser && currentUser.uid) {
+    //         dispatch(getAccountAsync(currentUser.uid));
+    //     }
+    // }, [dispatch, currentUser]);
 
     const handleSelectFriend = (id) => {
         const friend = friends.find(friend => friend.id === id);
