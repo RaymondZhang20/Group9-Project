@@ -20,11 +20,12 @@ export default function Login() {
         if (location.state !== null) {
             const newAccount = {
                 uid: currentUser.uid,
-                account_name: location.state
+                account_name: location.state,
+                email: currentUser.email
             }
             dispatch(createAccountAsync(newAccount));
         }
-        if (location.state == null && currentUser !== null) {
+        if (location.state === null && currentUser !== null) {
             navigate("/0");
         }
     }, []);

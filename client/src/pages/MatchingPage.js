@@ -8,6 +8,7 @@ import {getAccountAsync} from "../redux/accountReducers/accountThunks";
 import './MatchingPage.css';
 import Select from "react-select";
 import user_img from "../redux/default_user.png";
+import {useNavigate} from "react-router-dom";
 
 export default function MatchingPage() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export default function MatchingPage() {
   const [genderOptions, setGenderOptions] = useState([]);
   const [matchings, setMatchings] = useState([]);
   const [change, setChange] = useState(0);
+  const navigate = useNavigate();
 
   // initialize a HashMap to handle timezone offset
   const timeZoneValues = [-12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -169,6 +171,22 @@ function findGenderMatching() {
         });
     }
 
+    function handleSee(e, uid) {
+        e.preventDefault();
+        fetch(`http://localhost:5000/users/${uid}`, {
+            method: 'GET'
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        }).then((data) => {
+            navigate(`/${user.uid}/profile`, {state: data});
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
     function handleIgnore(e, _id) {
         e.preventDefault();
     }
@@ -209,7 +227,12 @@ return (
                   <h1 style={{ marginBottom: '100px' }}>No matching for you, sorry</h1>:
                   matchings.map((request) => (
                       <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }}>
-                          <Card.Img variant="top" src={user_img} style={{width: '250px', height: '250px'}}/>
+                          <div className="Request-container">
+                              <Card.Img src={user_img} alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
+                              <div className="Request-middle">
+                                  <div className="Request-text">See Profile</div>
+                              </div>
+                          </div>
                           <Card.Body>
                               <Card.Title className="text-center">{request.account_name}</Card.Title>
                               <div style={{ display:'flex', justifyContent:'center', gap:'8px' }}>

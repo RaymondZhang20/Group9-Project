@@ -148,7 +148,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', async function (req, res, next) {
   const newAccount = new User({
-    email: req.boby.email,
+    email: req.body.email,
     uid: req.body.uid,
     account_name: req.body.account_name,
     online: false,
@@ -266,6 +266,19 @@ router.get('/:uid', function(req, res, next) {
       res.status(200).json(result);
     }
   }).catch((err) => {
+    res.status(500).json({message: err.message});
+  });
+});
+
+router.delete('/:uid', function(req, res, next) {
+  User.findOneAndDelete({uid: req.params.uid})
+      .then((result) => {
+        if (!result) {
+          res.status(404).send('Cannot found the user');
+        } else {
+          res.status(200).json({message: "The account is closed"});
+        }
+      }).catch((err) => {
     res.status(500).json({message: err.message});
   });
 });

@@ -37,7 +37,7 @@ const Header = ({ user }) => {
             <Container>
                 <Navbar.Text>{uid===0 ? "Not signed in yet" : `Signed in as: ${currentUser.email}`}</Navbar.Text>
                 <NavDropdown title="Menu" id="collasible-nav-dropdown" onSelect={handleSelect}>
-                    <NavDropdown.Item eventKey="/">Map</NavDropdown.Item>
+                    <NavDropdown.Item eventKey="/">Main</NavDropdown.Item>
                     <NavDropdown.Item eventKey="/profile">Account Profile</NavDropdown.Item>
                     <NavDropdown.Item eventKey="/chat">Chat&Friends</NavDropdown.Item>
                     <NavDropdown.Item eventKey="/matching">Matching</NavDropdown.Item>

@@ -1,4 +1,4 @@
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import {Card, Stack, Button, Nav, Alert} from 'react-bootstrap'
 import Map from "../components/Map";
 import Footer from "../components/Footer";
@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
 import user_img from "../redux/default_user.png"
+import "../components/Request.css"
 import {emptyAccount, testAccount} from "../redux/accountReducers/accountReducer";
 
 export default function MapPage() {
@@ -48,7 +49,7 @@ export default function MapPage() {
             <h2>Welcome, {user.account_name}</h2>
             <h2>You have 0 new matches, and 0 new messages</h2>
             <FriendRequests/>
-            {/*<Map />*/}
+            <Map />
 
         {/* Footer Boilerplate */}
         <Footer
@@ -68,6 +69,7 @@ const FriendRequests = () => {
     const [change, setChange] = useState(0);
     const {currentUser} = useAuth();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
         if (currentUser) {
             dispatch(getAccountAsync(currentUser.uid));
@@ -203,6 +205,23 @@ const FriendRequests = () => {
             // });
         });
     }
+
+    function handleSee(e, uid) {
+        e.preventDefault();
+        fetch(`http://localhost:5000/users/${uid}`, {
+            method: 'GET'
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        }).then((data) => {
+            navigate(`/${user.uid}/profile`, {state: data});
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
     const GenerateCards = () => {
       switch (requestState) {
           case "pending":
@@ -210,7 +229,12 @@ const FriendRequests = () => {
                       <h1 style={{ marginBottom: '100px' }}>No pending requests for now... <br/> Go to matching page to find more friends! </h1>:
                       user.requests.map((request) => (
                           <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
-                              <Card.Img variant="top" src={user_img} style={{width: '250px', height: '250px'}}/>
+                              <div className="Request-container">
+                                  <Card.Img src={user_img} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>
+                                      <div className="Request-middle">
+                                          <div className="Request-text">See Profile</div>
+                                      </div>
+                              </div>
                               <Card.Body>
                                   <Card.Title className="text-center">{request.account_name}</Card.Title>
                                   <div style={{ display:'flex', justifyContent:'center', gap:'8px' }}>
@@ -249,6 +273,9 @@ const FriendRequests = () => {
                               <div style={{ display:'flex', justifyContent:'center', gap:'8px' }}>
                                   <Button variant="primary" onClick={(e) => handleRemove(e,request._id)}>
                                       Remove
+                                  </Button>
+                                  <Button variant="primary" onClick={(e) => handleSee(e,request.uid)}>
+                                      See Profile
                                   </Button>
                               </div>
                           </Card.Body>

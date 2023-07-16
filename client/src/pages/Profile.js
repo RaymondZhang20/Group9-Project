@@ -17,7 +17,8 @@ const gameList = [{ "id": "64ab23e5c83ed8d6a2bada24", "title": "Minecraft", "url
 { "id": "64afe1f5da7f0f37da363aed", "title": "Apex Legends", "url": "https://upload.wikimedia.org/wikipedia/en/d/db/Apex_legends_cover.jpg", "platform": ["Phone", "PC", "PS", "XBOX", "NS"] }];
 
 export default function Profile() {
-    const {logout, currentUser} = useAuth();
+    const location = useLocation();
+        const {logout, currentUser} = useAuth();
     const dispatch = useDispatch();
     useEffect(() => {
         if (currentUser) {
@@ -30,25 +31,39 @@ export default function Profile() {
     const uid = currentUser.uid;
     let userInfo = [];
     let games = [];
-    // console.log(user);
-    if (user.uid) {
+    if (location.state !== null) {
         userInfo =
-        [{ field: "account Name", value: user.account_name },
-        { field: "first", value: user.profile.first_name },
-        { field: "last", value: user.profile.last_name },
-        { field: "timezone", value: user.profile.time_zone },
-        { field: "location", value: user.profile.location },
-        { field: "pronoun", value: user.profile.pronoun },
-        { field: "time", value: user.profile.play_time },
-        { field: "language", value: user.profile.language },
-        { field: "platform", value: user.profile.platform }];
-        games = gameList.filter(game => user.games.includes(game.id));
+            [{ field: "account Name", value: location.state.account_name },
+                { field: "first", value: location.state.profile.first_name },
+                { field: "last", value: location.state.profile.last_name },
+                { field: "timezone", value: location.state.profile.time_zone },
+                { field: "location", value: location.state.profile.location },
+                { field: "pronoun", value: location.state.profile.pronoun },
+                { field: "time", value: location.state.profile.play_time },
+                { field: "language", value: location.state.profile.language },
+                { field: "platform", value: location.state.profile.platform }];
+        games = gameList.filter(game => location.state.games.includes(game.id));
+    } else {
+        if (user.uid) {
+            userInfo =
+                [{ field: "account Name", value: user.account_name },
+                    { field: "first", value: user.profile.first_name },
+                    { field: "last", value: user.profile.last_name },
+                    { field: "timezone", value: user.profile.time_zone },
+                    { field: "location", value: user.profile.location },
+                    { field: "pronoun", value: user.profile.pronoun },
+                    { field: "time", value: user.profile.play_time },
+                    { field: "language", value: user.profile.language },
+                    { field: "platform", value: user.profile.platform }];
+            games = gameList.filter(game => user.games.includes(game.id));
+        }
     }
 
     function handleToUpdate(e) {
         e.preventDefault();
         navigate(`/${uid}/update`);
     }
+
     function handleSelectGame(e) {
         e.preventDefault();
         navigate(`/${uid}/game`);
@@ -65,6 +80,12 @@ export default function Profile() {
             setError("Cannot log out because: " + e.message);
         }
     }
+
+    function handleBack(e) {
+        e.preventDefault();
+        navigate(-1);
+    }
+
     if (user.uid) {
         return (
             <div id="Account-whole" style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '60px' }}>
@@ -104,9 +125,14 @@ export default function Profile() {
                 </div>
             </div>
             <div className="text-center" style={{ paddingTop: '40px'}}>
-                <Button className="w-75 mt-3" onClick={handleToUpdate}>Update My Info</Button>
-                <Button className="w-75 mt-3" onClick={handleSelectGame}>Select Games</Button>
-                <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
+                {location.state === null ?
+                    <div>
+                        <Button className="w-75 mt-3" onClick={handleToUpdate}>Update My Info</Button>
+                        <Button className="w-75 mt-3" onClick={handleSelectGame}>Select Games</Button>
+                        <Button className="w-75 mt-3" onClick={handleLogout}>LogOut</Button>
+                    </div> :
+                    <Button className="w-75 mt-3" onClick={handleBack}>Back</Button>
+                }
             </div>
         </div>
         );
