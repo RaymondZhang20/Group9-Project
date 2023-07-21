@@ -103,17 +103,17 @@ function showPosition(position) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>First Name</Form.Label>
-              <Form.Control name="first-name" type="text" placeholder="Enter First Name" defaultValue={userInfo.profile.first_name} />
+              <Form.Control name="first-name" type="text" placeholder="Enter First Name" defaultValue={userInfo.profile?userInfo.profile.first_name:""} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control name="last-name" type="text" placeholder="Enter Last Name" defaultValue={userInfo.profile.last_name} />
+              <Form.Control name="last-name" type="text" placeholder="Enter Last Name" defaultValue={userInfo.profile?userInfo.profile.last_name:""} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicTimeZone">
               <Form.Label>Time Zone</Form.Label>
-              <Form.Control name = "time-zone" as="select" defaultValue={userInfo.profile.time_zone} >
+              <Form.Control name = "time-zone" as="select" defaultValue={userInfo.profile?userInfo.profile.time_zone:"Select time zone"} >
                 <option disabled={true}>Select time zone</option>
                 {profileOption["time-zone"].map((option) => {return (<option>{option}</option>);})}
                 </Form.Control>
@@ -121,13 +121,13 @@ function showPosition(position) {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Location</Form.Label>
-              <Form.Control name="location" type="text" placeholder="Allow location access by clicking the button below" defaultValue={userInfo.profile.location} readOnly/>
+              <Form.Control name="location" type="text" placeholder="Allow location access by clicking the button below" defaultValue={userInfo.profile?userInfo.profile.location:""} readOnly/>
               <Button onClick={getLocation}>Get Location</Button>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPronouns">
               <Form.Label>Pronoun</Form.Label>
-              <Form.Control name="pronoun" as="select" defaultValue={userInfo.profile.pronoun}>
+              <Form.Control name="pronoun" as="select" defaultValue={userInfo.profile?userInfo.profile.pronoun:"Select pronouns"}>
                 <option disabled={true}>Select pronouns</option>
                 {profileOption["pronoun"].map((option) => {return (<option>{option}</option>);})}
               </Form.Control>
@@ -136,19 +136,19 @@ function showPosition(position) {
             <Form.Group className="mb-3" controlId="formBasicPlayingTime">
               <Form.Label>Prefer playing time</Form.Label>
               {profileOption["play-time"].map((option) => {
-                return (<Form.Check name="play-time" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile.play_time.includes(option)}/>);})}
+                return (<Form.Check name="play-time" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile?userInfo.profile.play_time.includes(option):false}/>);})}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicLanguage">
               <Form.Label>Language spoken</Form.Label>
               {profileOption["language"].map((option) => {
-                return (<Form.Check name="language" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile.language.includes(option)}/>);})}
+                return (<Form.Check name="language" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile?userInfo.profile.language.includes(option):false}/>);})}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPlatform">
               <Form.Label>Platform</Form.Label>
               {profileOption["platform"].map((option) => {
-                return (<Form.Check name="platform" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile.platform.includes(option)}/>);})}
+                return (<Form.Check name="platform" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile?userInfo.profile.platform.includes(option):false}/>);})}
             </Form.Group>
 
             <Button variant="primary" type="submit">
