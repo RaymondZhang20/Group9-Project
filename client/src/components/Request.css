@@ -14,22 +14,36 @@
     opacity: 0;
     position: absolute;
     top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
 }
 
-.Request-container:hover .Request-image {
+.Request-image-container {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.Request-detail-container {
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: middle;
+    padding-left: 20px;
+}
+
+.Request-image-container:hover .Request-image {
     opacity: 0.3;
 }
 
-.Request-container:hover .Request-middle {
+.Request-image-container:hover .Request-middle {
     opacity: 1;
 }
 
 .Request-text {
     color: blue;
-    font-size: 16px;
+    text-shadow: 2px 2px 5px #6eb8fd;
+    font-size: 20px;
     padding: 16px 32px;
+    justify-content: center;
+    align-items: center;
 }

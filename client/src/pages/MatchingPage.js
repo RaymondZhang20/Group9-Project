@@ -12,11 +12,16 @@ import {useNavigate} from "react-router-dom";
 
 export default function MatchingPage() {
   const dispatch = useDispatch();
+    useEffect(() => {
+        if (currentUser) {
+            dispatch(getAccountAsync(currentUser.uid));
+        }
+    }, []);
   const user = useSelector(state => state.account.currentUser);
   const { currentUser } = useAuth();
   const [genderOptions, setGenderOptions] = useState([]);
   const [matchings, setMatchings] = useState([]);
-  const [change, setChange] = useState(0);
+  const [showAlert, setShowAlert] = useState({show:false, variant: "success", message: "..."});
   const navigate = useNavigate();
 
   // initialize a HashMap to handle timezone offset
@@ -41,11 +46,13 @@ const handleSubmit = async (e) => {
     const time = form.elements["time"].checked;
     const games = form.elements["game"].checked;
     const language = form.elements["language"].checked;
-    if (time) findTimeMatching();
-    if (games) findGameMatching();
-    if (language) findLanguageMatching();
-    if (genderOptions) findGenderMatching();
-    fetch(`http://localhost:5000/users/${user.uid}/matching`, {
+    // if (time) findTimeMatching();
+    // if (games) findGameMatching();
+    // if (language) findLanguageMatching();
+    // if (genderOptions) findGenderMatching();
+    const genders = genderOptions.map((a) => a.value);
+    const queryString = new URLSearchParams({ genders, time, games, language }).toString();
+    fetch(`http://localhost:5000/users/${user.uid}/matching?${queryString}`, {
         method: 'GET'
     }).then((response) => {
         if (!response.ok) {
@@ -53,6 +60,7 @@ const handleSubmit = async (e) => {
         }
         return response.json();
     }).then((data) => {
+        console.log(data);
         setMatchings(data);
     }).catch((error) => {
         console.error(error);
@@ -122,20 +130,22 @@ function findGenderMatching() {
             }
             return response.json();
         }).then((data) => {
-            setChange(Math.random());
-            // setShowAlert({
-            //     show: true,
-            //     variant: "success",
-            //     message: data
-            //
-            // });
+            setMatchings(matchings.filter((m) => {
+                return m._id === _id;
+            }));
+            setShowAlert({
+                show: true,
+                variant: "success",
+                message: data
+
+            });
         }).catch((error) => {
-            // setShowAlert({
-            //     show: true,
-            //     variant: "danger",
-            //     message: error.message
-            //
-            // });
+            setShowAlert({
+                show: true,
+                variant: "danger",
+                message: error.message
+
+            });
         });
     }
 
@@ -154,20 +164,22 @@ function findGenderMatching() {
             }
             return response.json();
         }).then((data) => {
-            setChange(Math.random());
-            // setShowAlert({
-            //     show: true,
-            //     variant: "success",
-            //     message: data
-            //
-            // });
+            setMatchings(matchings.filter((m) => {
+                return m.uid !== uid;
+            }));
+            setShowAlert({
+                show: true,
+                variant: "success",
+                message: data
+
+            });
         }).catch((error) => {
-            // setShowAlert({
-            //     show: true,
-            //     variant: "danger",
-            //     message: error.message
-            //
-            // });
+            setShowAlert({
+                show: true,
+                variant: "danger",
+                message: error.message
+
+            });
         });
     }
 
@@ -185,10 +197,6 @@ function findGenderMatching() {
         }).catch((error) => {
             console.error(error);
         });
-    }
-
-    function handleIgnore(e, _id) {
-        e.preventDefault();
     }
 
 return (
@@ -226,11 +234,19 @@ return (
               {matchings.length === 0?
                   <h1 style={{ marginBottom: '100px' }}>No matching for you, sorry</h1>:
                   matchings.map((request) => (
-                      <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }}>
+                      <Card key={request.uid} style={{ minWidth: '550px', maxWidth: '550px', maxHeight: '350px' }}>
                           <div className="Request-container">
-                              <Card.Img src={user_img} alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
-                              <div className="Request-middle">
-                                  <div className="Request-text">See Profile</div>
+                              <div className="Request-image-container">
+                                  <Card.Img src="http://localhost:5000/img/avatar/default" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
+                                  <div className="Request-middle" style={{ right: "47.5%" }}>
+                                      <div className="Request-text">See Profile</div>
+                                  </div>
+                              </div>
+                              <div className="Request-detail-container">
+                                  <p>0 common friends</p>
+                                  <p>0 common games</p>
+                                  <p>same time zone</p>
+                                  <p>0 hours play-time overlapped</p>
                               </div>
                           </div>
                           <Card.Body>
@@ -244,9 +260,11 @@ return (
                                           Send Friend Request
                                       </Button>
                                   }
-                                  {/*<Button variant="secondary" onClick={(e) => handleIgnore(e,request._id)}>*/}
-                                  {/*    Ignore*/}
-                                  {/*</Button>*/}
+                                  <Button variant="secondary" onClick={(e) => setMatchings(matchings.filter((m) => {
+                                      return m.uid !== request.uid;
+                                  }))}>
+                                      Ignore
+                                  </Button>
                               </div>
                           </Card.Body>
                       </Card>))}

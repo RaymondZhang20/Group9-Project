@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    avatar: {
+        type: String
+    },
     online: {
         type: Boolean,
         required: true

@@ -107,6 +107,11 @@ function patchUserRequests(req, res, next) {
 }
 
 function getUserMatching(req, res, next) {
+    const genders = req.query.genders.split(',');
+    const timeChecked = req.query.time;
+    const gamesChecked = req.query.games;
+    const languageChecked = req.query.language;
+    console.log(genders, timeChecked, gamesChecked, languageChecked);
     User.find({uid: req.params.uid}).then((result) => {
         const friends_id = [...result[0]["friends"], result[0]["_id"]];
         const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];

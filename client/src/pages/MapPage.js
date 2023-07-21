@@ -19,22 +19,6 @@ export default function MapPage() {
         }
     }, [currentUser]);
     const user = useSelector(state => state.account.currentUser);
-  {/* Footer Boilerplate */}
-  const markers = [
-      { id: 1, name: 'Marker 1', filter: 'Category A' },
-      { id: 2, name: 'Marker 2', filter: 'Category B' },
-      { id: 3, name: 'Marker 3', filter: 'Category A' },
-      { id: 4, name: 'Marker 4', filter: 'Category C' },
-  ];
-
-  const filterOptions = ['Category A', 'Category B', 'Category C'];
-
-  const handleFilterChange = (event) => {
-    const selectedFilter = event.target.value;
-    // Perform filtering logic based on the selected filter
-    // Update the map display accordingly
-    console.log('Selected filter:', selectedFilter);
-  };
 
   const handleSearch = (searchText) => {
     // Perform search logic based on the entered search text
@@ -50,15 +34,6 @@ export default function MapPage() {
             <h2>You have 0 new matches, and 0 new messages</h2>
             <FriendRequests/>
             <Map />
-
-        {/* Footer Boilerplate */}
-        <Footer
-              markers={markers}
-              filterOptions={filterOptions}
-              onFilterChange={handleFilterChange}
-              onSearch={handleSearch}
-        />
-        {/* Ends here */}
         </div>
     );
 }
@@ -192,17 +167,17 @@ const FriendRequests = () => {
             return response.json();
         }).then((data) => {
             setChange(Math.random());
-            // setShowAlert({
-            //     show: true,
-            //     variant: "success",
-            //     message: data
-            // });
+            setShowAlert({
+                show: true,
+                variant: "success",
+                message: data.message
+            });
         }).catch((error) => {
-            // setShowAlert({
-            //     show: true,
-            //     variant: "danger",
-            //     message: error.message
-            // });
+            setShowAlert({
+                show: true,
+                variant: "danger",
+                message: error.message
+            });
         });
     }
 
@@ -230,10 +205,12 @@ const FriendRequests = () => {
                       user.requests.map((request) => (
                           <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
                               <div className="Request-container">
-                                  <Card.Img src={user_img} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>
-                                      <div className="Request-middle">
+                                  <div className="Request-image-container">
+                                      <Card.Img src={user_img} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>
+                                      <div className="Request-middle"  style={{ left: "50%" }}>
                                           <div className="Request-text">See Profile</div>
                                       </div>
+                                  </div>
                               </div>
                               <Card.Body>
                                   <Card.Title className="text-center">{request.account_name}</Card.Title>
