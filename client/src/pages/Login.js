@@ -16,8 +16,10 @@ export default function Login() {
     const loading = useSelector(state => state.account).loading_login_register;
     const error = useSelector(state => state.account).auth_error;
     const location = useLocation();
+    let eee = 0;
     useEffect(() => {
-        if (location.state !== null) {
+        eee++;
+        if (location.state !== null && eee===1) {
             const newAccount = {
                 uid: currentUser.uid,
                 account_name: location.state,

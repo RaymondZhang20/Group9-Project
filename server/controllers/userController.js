@@ -13,12 +13,20 @@ function getAllUsers(req, res, next) {
 }
 
 async function postUser(req, res, next) {
+    try {
+        sameUser = await User.find({uid: req.body.uid});
+        if (!sameUser) {
+            res.status(204).json({message: 'The same account has been created'});
+        }
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
     const newAccount = new User({
         email: req.body.email,
         uid: req.body.uid,
         account_name: req.body.account_name,
         online: false,
-        geolocation: {lat: null, lon: null},
+        geolocation: {lat: 49.26935329299636, long: -123.25641295980517},
         profile: {},
         friends: [],
         requests: [],
@@ -137,7 +145,7 @@ function getUserLogIn(req, res, next) {
 }
 
 function deleteUser(req, res, next) {
-    User.findOneAndDelete({uid: req.params.uid})
+    User.deleteMany({uid: req.params.uid})
         .then((result) => {
             if (!result) {
                 res.status(404).send('Cannot found the user');

@@ -6,7 +6,7 @@ const initialState = {
     loading_login_register: false,
     auth_error: "",
     alert: false,
-    currentUser: {requests:[],ignored_requests:[], friends:[]},
+    currentUser: {requests:[],ignored_requests:[], friends:[], profile:{}},
     request_error: null,
     getAccount: REQUEST_STATE.IDLE,
     createAccount: REQUEST_STATE.IDLE,
@@ -18,7 +18,7 @@ const accountSlice = createSlice({
     initialState: initialState,
     reducers: {
         emptyAccount: (state, action) => {
-            state.currentUser = {};
+            state.currentUser = {requests:[],ignored_requests:[], friends:[], profile:{}};
         },
         testAccount: (state, action) => {
             console.log(JSON.parse(JSON.stringify(state.currentUser)));
