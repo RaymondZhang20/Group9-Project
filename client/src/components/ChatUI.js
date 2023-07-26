@@ -7,7 +7,8 @@ const ChatUI = ({ friend }) => {
 
     const handleSend = async () => {
         if (input.trim() !== '') {
-            friend.messages.push({ content: input, sentByMe: true });
+            const timeStamp = new Date().toISOString();
+            friend.messages.push({ content: input, sentByMe: true, timeStamp  });
             setInput('');
 
             // Send the message to the server
@@ -15,7 +16,8 @@ const ChatUI = ({ friend }) => {
             //     _id: 'smth',
             //     content: input,
             //     recipient: friend.uid,
-            //     sender: user.uid
+            //     sender: user.uid,
+            //     timeStamp: new Date().toISOString()
             // };
             //
             // await fetch('http://localhost:5000/messages', {//
