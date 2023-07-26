@@ -3,7 +3,7 @@ const Game = require("../models/game");
 function getAllGames(req, res, next) {
     Game.find().then((result) => {
         if (!result) {
-            res.status(404).send('Cannot found the users');
+            res.status(404).send('Cannot found the games');
         } else {
             res.status(200).json(result);
         }
@@ -15,7 +15,7 @@ function getAllGames(req, res, next) {
 function getGame(req, res, next) {
     Game.findById(req.params.id).then((result) => {
         if (!result) {
-            res.status(404).send('Cannot found the users');
+            res.status(404).send('Cannot found the game');
         } else {
             res.status(200).json(result);
         }
