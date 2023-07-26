@@ -13,6 +13,7 @@ import UpdateUserInfo from "./pages/UpdateUserInfo";
 import GameSelector from './pages/GameSelector';
 import MatchingPage from './pages/MatchingPage';
 import ChatPage from './pages/ChatPage';
+import AddGame from './pages/AddGame';
 import {SocketProvider} from "./contexts/SocketProvider";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/game/add" element={<AddGame />} />
                 <Route path="/:id"  element={<PrivateRoute>
                     <MapPage />
                 </PrivateRoute>} />

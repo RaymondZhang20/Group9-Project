@@ -50,6 +50,10 @@ function GameSelector() {
         }
     }
 
+    const handleAdd = () => {
+        navigate(`/game/add`);
+    }
+
     const handleBack = () => {
         navigate(`/${uid}/profile`);
     }
@@ -90,6 +94,7 @@ function GameSelector() {
                 </Row>
                 <div className="text-center">
                     <Button className="w-75 mt-3" onClick={handleUpdate}>Update</Button>
+                    <Button className="w-75 mt-3" onClick={handleAdd}>Add A New Game</Button>
                     <Button className="w-75 mt-3" onClick={handleBack}>Back</Button>
                 </div>
             </div>

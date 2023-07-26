@@ -24,4 +24,18 @@ function getGame(req, res, next) {
     });
 }
 
-module.exports = {getAllGames, getGame}
+async function postGame(req, res, next) {
+    const newGame = new Game({
+        title: req.body.title,
+        platform: req.body.platform,
+        url: req.body.url
+    });
+    try {
+        const saved = await newGame.save();
+        res.status(201).json(saved);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+module.exports = {getAllGames, getGame, postGame}
