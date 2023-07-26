@@ -4,6 +4,7 @@ import ChatUI from '../components/ChatUI';
 import './ChatPage.css';
 import DefaultUser from '../redux/default_user.png';
 import {useSelector} from "react-redux";
+import {SocketProvider} from "../contexts/SocketProvider";
 
 const ChatPage = () => {
     //attempt to fetch from database
@@ -118,20 +119,22 @@ const ChatPage = () => {
     };
 
     return (
-        <div className="chat-page">
-            <div className="friends-list">
-                <FriendsList friends={friends} onSelectFriend={handleSelectFriend} selectedFriend={selectedFriend} />
+        <SocketProvider id={user.uid}>
+            <div className="chat-page">
+                <div className="friends-list">
+                    <FriendsList friends={friends} onSelectFriend={handleSelectFriend} selectedFriend={selectedFriend} />
+                </div>
+                <div className="chat-ui">
+                    {selectedFriend ?
+                        <ChatUI friend={selectedFriend} /> :
+                        <div className="empty-chat">
+                            <div className="title">Messages</div>
+                            <div className="empty-message">Select a friend to start chatting!</div>
+                        </div>
+                    }
+                </div>
             </div>
-            <div className="chat-ui">
-                {selectedFriend ?
-                    <ChatUI friend={selectedFriend} /> :
-                    <div className="empty-chat">
-                        <div className="title">Messages</div>
-                        <div className="empty-message">Select a friend to start chatting!</div>
-                    </div>
-                }
-            </div>
-        </div>
+        </SocketProvider>
     );
 };
 

@@ -13,6 +13,7 @@ import UpdateUserInfo from "./pages/UpdateUserInfo";
 import GameSelector from './pages/GameSelector';
 import MatchingPage from './pages/MatchingPage';
 import ChatPage from './pages/ChatPage';
+import {SocketProvider} from "./contexts/SocketProvider";
 
 function App() {
   const {currentUser} = useAuth();
