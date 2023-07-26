@@ -16,3 +16,8 @@
 .chat-message.left {
     align-self: flex-start;
 }
+
+.timestamp {
+    font-size: 0.6em;
+    color: #888;
+}
