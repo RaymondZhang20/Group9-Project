@@ -9,9 +9,9 @@ const FriendsList = ({ friends, onSelectFriend, selectedFriend }) => {
                 friends.map(friend => (
                     <FriendCard
                         friend={friend}
-                        key={friend.id}
-                        onClick={() => onSelectFriend(friend.id)}
-                        isSelected={selectedFriend && friend.id === selectedFriend.id}
+                        key={friend.uid}
+                        onClick={() => onSelectFriend(friend.uid)}
+                        isSelected={selectedFriend && friend.uid === selectedFriend.uid}
                     />
                 ))
             ) : (

@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 // const User = require("../models/user");
-const {getAllUsers, postUser, getFriendsLocation, patchUserLogout, patchUserRemoveFriend, patchUserRequests, getUserMatching, getUserLogIn, deleteUser, patchUser} = require("../controllers/userController");
+const {getAllUsers, postUser, getFriendsLocation, patchUserLogout, patchUserRemoveFriend, patchUserRequests, getUserMatching, getUserLogIn, deleteUser, patchUser,
+    getMessages
+} = require("../controllers/userController");
 
 router.get('/', getAllUsers);
 
@@ -22,6 +24,8 @@ router.get('/:uid', getUserLogIn);
 router.delete('/:uid', deleteUser);
 
 router.patch('/:uid', patchUser);
+
+router.get('/:senderUid/:reciUid', getMessages);
 
 
 module.exports = router;

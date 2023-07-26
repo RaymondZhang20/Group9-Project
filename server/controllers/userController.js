@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Chat = require("../models/chat");
 
 function getAllUsers(req, res, next) {
     User.find().then((result) => {
@@ -121,7 +122,7 @@ function getUserMatching(req, res, next) {
             })
         }];
     }).then((query) => {
-        return User.find(query[1]).select('account_name uid').then((result2) => {
+        return User.find(query[1]).select('account_name uid profile').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
                 return Object.assign({requested}, f["_doc"]);
@@ -180,4 +181,26 @@ function patchUser(req, res, next) {
     });
 }
 
-module.exports = {getAllUsers, postUser, getFriendsLocation, patchUserLogout, patchUserRemoveFriend, patchUserRequests, getUserMatching, getUserLogIn, deleteUser, patchUser};
+function getMessages(req, res, next) {
+    const query = { $or: [
+            {$and: [{sender: req.params.senderUid}, {recipient: req.params.reciUid}]},
+            {$and: [{recipient: req.params.senderUid}, {sender: req.params.reciUid}]}
+        ]};
+    Chat.find(query).then((result) => {
+        if (!result) {
+            res.status(404).send('Cannot found the messages');
+        } else {
+            res.status(200).json(result.map((message) => {
+                if (message.sender === req.params.senderUid) {
+                    return {...message._doc, sentByMe: true};
+                } else {
+                    return {...message._doc, sentByMe: false};
+                }
+            }));
+        }
+    }).catch((err) => {
+        res.status(500).json({message: err.message});
+    });
+}
+
+module.exports = {getAllUsers, postUser, getFriendsLocation, patchUserLogout, patchUserRemoveFriend, patchUserRequests, getUserMatching, getUserLogIn, deleteUser, patchUser, getMessages};

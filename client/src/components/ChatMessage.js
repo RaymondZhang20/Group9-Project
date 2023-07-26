@@ -5,7 +5,7 @@ const ChatMessage = ({ message }) => {
     const align = message.sentByMe ? 'right' : 'left';
     return (
         <div className={`chat-message ${align}`}>
-            <p>{message.text}</p>
+            <p>{message.content}</p>
         </div>
     );
 };
