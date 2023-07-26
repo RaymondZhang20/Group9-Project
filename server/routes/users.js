@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-// const User = require("../models/user");
 const {getAllUsers, postUser, getFriendsLocation, patchUserLogout, patchUserRemoveFriend, patchUserRequests, getUserMatching, getUserLogIn, deleteUser, patchUser,
     getMessages
 } = require("../controllers/userController");

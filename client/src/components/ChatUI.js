@@ -1,32 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ChatUI.css';
 import ChatMessage from './ChatMessage';
+import {useSocket} from "../contexts/SocketProvider";
 
 const ChatUI = ({ friend }) => {
     const [input, setInput] = useState('');
+    const socket = useSocket();
+
+    useEffect(() => {
+        socket.on("receive-message", (message) => {
+            console.log(message);
+        });
+    }, []);
 
     const handleSend = async () => {
         if (input.trim() !== '') {
             const timeStamp = new Date().toISOString();
+            socket.emit('send-message', {recipient: friend.uid, message: { content: input, timeStamp  }});
             friend.messages.push({ content: input, sentByMe: true, timeStamp  });
             setInput('');
-
-            // Send the message to the server
-            // const message = {
-            //     _id: 'smth',
-            //     content: input,
-            //     recipient: friend.uid,
-            //     sender: user.uid,
-            //     timeStamp: new Date().toISOString()
-            // };
-            //
-            // await fetch('http://localhost:5000/messages', {//
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(message),
-            // });
         }
     };
     return (

@@ -5,6 +5,11 @@ var logger = require('morgan');
 var cors = require('cors');
 require('dotenv').config();
 var mongoose = require('mongoose');
+const io = require('socket.io')(5001, {
+    cors: {
+        origin: ["http://localhost:3000"],
+    },
+});
 const mongoAtlasUri =
     `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.h62b0ay.mongodb.net/group_project?retryWrites=true&w=majority`;
 
@@ -37,5 +42,28 @@ const db = mongoose.connection;
 db.once('open', () => {
     console.log("Connected to MongoDB");
 });
+
+const Chat = require("./models/chat");
+const User = require("./models/user");
+
+io.on('connection', socket => {
+    const id = socket.handshake.query.id;
+    socket.join(id);
+    console.log(`websocket on ${id}`);
+
+    socket.on('send-message', ({recipient, message}) => {
+        Chat.create({
+            content: message.content,
+            sender: id,
+            recipient: recipient,
+            timeStamp: message.timeStamp
+        }).then((me) => {
+            socket.emit('receive-message', me);
+        }).catch((error) => {
+            console.error(error);
+        });
+        // socket.signal.to(recipient).emit('receive-message', message);
+    });
+})
 
 module.exports = app;

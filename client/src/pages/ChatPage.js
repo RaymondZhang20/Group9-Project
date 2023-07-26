@@ -4,10 +4,11 @@ import ChatUI from '../components/ChatUI';
 import './ChatPage.css';
 import DefaultUser from '../redux/default_user.png';
 import {useSelector} from "react-redux";
-import {SocketProvider} from "../contexts/SocketProvider";
+import {SocketProvider, useSocket} from "../contexts/SocketProvider";
 
 const ChatPage = () => {
     const user = useSelector(state => state.account.currentUser);
+    // const socket = useSocket();
 
     function setMessages(friendUid) {
         return fetch(`http://localhost:5000/users/${user.uid}/${friendUid}`, {
