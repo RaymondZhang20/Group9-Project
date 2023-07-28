@@ -108,7 +108,16 @@ function patchUserRequests(req, res, next) {
 }
 
 function getUserMatching(req, res, next) {
-    const genders = req.query.genders.split(',');
+    const genderFrontend = req.query.genders.split(',');
+    const pronouns = [
+        {value: "he", label: "He/Him"},
+        {value: "she", label: "She/Her"},
+        {value: "they", label: "They/Them"},
+        {value: "ze", label: "Ze/Hir"},
+        {value: "xe", label: "Xe/Xem"},
+        {value: "o", label: "Other"}
+    ];
+    const genders = pronouns.filter(pronoun => genderFrontend.includes(pronoun.value)).map(pronoun => pronoun.label);
     const timeChecked = req.query.time;
     const gamesChecked = req.query.games;
     const languageChecked = req.query.language;
@@ -127,7 +136,7 @@ function getUserMatching(req, res, next) {
         if (languageChecked) {
             findQuery['profile.language'] = {$in: query[2]};
         }
-        if (genders.length > 1) {
+        if (genders.length >= 1) {
             console.log(genders.length);
             console.log("1");
             findQuery['profile.pronoun'] = {$in: genders};
@@ -143,7 +152,6 @@ function getUserMatching(req, res, next) {
         console.log(err);
         res.status(500).json({message: err.message});
     });
-
 }
 
 function getUserLogIn(req, res, next) {
