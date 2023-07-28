@@ -10,21 +10,6 @@ const ChatPage = () => {
     const user = useSelector(state => state.account.currentUser);
     // const socket = useSocket();
 
-    function setMessages(friendUid) {
-        return fetch(`http://localhost:5000/users/${user.uid}/${friendUid}`, {
-            method: 'GET'
-        }).then((response) => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }).then((data) => {
-            return data;
-        }).catch((error) => {
-            console.error(error);
-        });
-    }
-
     const [friends, setFriends] = useState(user.friends.map((friend) => {
         let f = Object.assign({selected: false}, friend);
         f["online"] = true;
@@ -33,9 +18,9 @@ const ChatPage = () => {
         return f;
     }));
 
-    useEffect(() => {
-        friends.forEach((friend) => {
-            fetch(`http://localhost:5000/users/${user.uid}/${friend.uid}`, {
+    function getFriendsMessages() {
+        const messagesPromises = friends.map((friend) => {
+            return fetch(`http://localhost:5000/users/${user.uid}/${friend.uid}`, {
                 method: 'GET'
             }).then((response) => {
                 if (!response.ok) {
@@ -43,16 +28,24 @@ const ChatPage = () => {
                 }
                 return response.json();
             }).then((data) => {
-                setFriends(friends.map((f) => {
-                    if (f.uid === friend.uid) {
-                        return {...f, messages: data};
-                    } else {
-                        return f;
-                    }
-                }));
+                return {data, uid: friend.uid};
             }).catch((error) => {
                 console.error(error);
             });
+        });
+        return Promise.all(messagesPromises);
+    }
+
+    useEffect(() => {
+        getFriendsMessages().then((messages) => {
+            setFriends(friends.map((f) => {
+                for (const message of messages) {
+                    if (f.uid === message.uid) {
+                        return {...f, messages: message.data};
+                    }
+                }
+                return f;
+            }));
         });
     },[]);
 
