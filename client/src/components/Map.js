@@ -5,10 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { getFriendsLocationAsync } from '../redux/mapReducers/thunks';
 import { getAccountAsync } from '../redux/accountReducers/accountThunks';
 import {useAuth} from "../contexts/AuthContext";
+import {Button} from 'react-bootstrap'
+import {Link, Navigate, useNavigate} from "react-router-dom";
 
 
 function Map(props) {
-
+  const navigate = useNavigate();
   const mapFriends = useSelector(state => state.mapReducer.locations);
   const dispatch = useDispatch();
   const {currentUser} = useAuth();
@@ -20,19 +22,24 @@ function Map(props) {
   }, [currentUser]);
 
   const user = useSelector(state => state.account.currentUser);
-
   useEffect(() => {
     dispatch(getFriendsLocationAsync(currentUser.uid))
   }, [dispatch])
 
-return <MapContainer center={[49.2677, -123.2420]} zoom={13} scrollWheelZoom={false}>
-<TileLayer
-  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-/>
-{/* {createPins(mapFriends)} */}
-{createPins(mapFriends)}
-</MapContainer>;
+function handleSee(e, uid) {
+  e.preventDefault();
+  fetch(`http://localhost:5000/users/${uid}`, {
+      method: 'GET'
+  }).then((response) => {
+      if (!response.ok) {
+          throw new Error(response.statusText);
+      }
+      return response.json();
+  }).then((data) => {
+      navigate(`/${user.uid}/profile`, {state: data});
+  }).catch((error) => {
+      console.error(error);
+  });
 }
 
 function createPins(mapFriends) {
@@ -41,15 +48,21 @@ function createPins(mapFriends) {
     var currentlocation = [mapFriends[0].geolocation.lat, mapFriends[0].geolocation.long]
     return (
       <div>
-      <Marker position={currentlocation}>
-        <Popup>g
-          You are Here
-        </Popup>
-      </Marker>
-      {mapFriends[0].friends.map((friend) => 
-      createFriendsPins(friend)
-      )}
-    </div>
+         <MapContainer center={currentlocation} zoom={13} scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+              <Marker position={currentlocation}>
+                <Popup>
+                  You are Here
+                </Popup>
+              </Marker>
+              {mapFriends[0].friends.map((friend) => 
+              createFriendsPins(friend)
+                  )}
+          </MapContainer>;
+        </div>
     )
   }
 }
@@ -58,11 +71,22 @@ function createFriendsPins(friend) {
   var friendLocation = [friend.geolocation.lat, friend.geolocation.long]
   return (      
   <Marker key = {friend.account_name} position={friendLocation}>
-    <Popup>g
-      {friend.account_name}
+    <Popup>
+      <center>
+        {friend.account_name} <br></br>
+        <Button variant="primary" onClick={(e) => handleSee(e,friend.uid)}>
+            See Profile
+        </Button>
+      </center>
     </Popup>
   </Marker>
   )
 }
+
+return (
+  <div>{createPins(mapFriends)}</div>
+)
+}
+
 
 export default Map;
