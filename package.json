@@ -1,0 +1,24 @@
+{
+  "name": "group9-project",
+  "version": "1.0.0",
+  "description": "Our application will be presented in the form of a website, with the functionality to allow users who share similar interests in video games to connect with other users (like a find “someone you might know” function on social media). It is for users who sit at home while playing games to find friends with similar interests and to promote social activity. It will store location data for users for the “find users near you” functionality, it will also store data for user’s interests (games that the user is interested in?). It could potentially store the users' preferences of what other users it would want to be matched to (how far away is still near? timezone? age? gender?) and this could be an additional functionality, to match users taking their preferences into consideration.",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "cd server && npm install",
+    "start-server": "cd server && npm start",
+    "install-client": "cd client && npm install",
+    "build-client": "cd client && npm run build",
+    "start-client": "cd client && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaymondZhang20/Group9-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RaymondZhang20/Group9-Project/issues"
+  },
+  "homepage": "https://github.com/RaymondZhang20/Group9-Project#readme"
+}
