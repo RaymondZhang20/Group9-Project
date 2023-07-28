@@ -126,20 +126,19 @@ function getUserMatching(req, res, next) {
         const friends_id = [...result[0]["friends"], result[0]["_id"]];
         const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];
         const language = result[0].profile.language;
+        const games = result[0].games;
         return [{requests_id}, {
             $nor: friends_id.map(f => {
                 return {_id: f}
             })
-        }, language];
+        }, language, games];
     }).then((query) => {
         let findQuery = {...query[1]};
         if (languageChecked) {
             findQuery['profile.language'] = {$in: query[2]};
         }
-        if (genders.length >= 1) {
-            console.log(genders.length);
-            console.log("1");
-            findQuery['profile.pronoun'] = {$in: genders};
+        if (gamesChecked) {
+            findQuery['games'] = {$in: query[3]};
         }
         return User.find(findQuery).select('account_name uid profile').then((result2) => {
             const result_with_requests = result2.map((f) => {
