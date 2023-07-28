@@ -52,7 +52,7 @@ const handleSubmit = async (e) => {
     // if (genderOptions) findGenderMatching();
     const genders = genderOptions.map((a) => a.value);
     const queryString = new URLSearchParams({ genders, time, games, language }).toString();
-    fetch(`http://localhost:5000/users/${user.uid}/matching?${queryString}`, {
+    fetch(`https://room9-backend.onrender.com/users/${user.uid}/matching?${queryString}`, {
         method: 'GET'
     }).then((response) => {
         if (!response.ok) {
@@ -118,7 +118,7 @@ function findGenderMatching() {
     function handleApprove(e, _id) {
         e.preventDefault();
         const acc = {type: "accept", _id: _id};
-        fetch(`http://localhost:5000/users/${user.uid}/requests`, {
+        fetch(`https://room9-backend.onrender.com/users/${user.uid}/requests`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -152,7 +152,7 @@ function findGenderMatching() {
     function handleSend(e, uid) {
         e.preventDefault();
         const acc = {type: "send", _id: user._id};
-        fetch(`http://localhost:5000/users/${uid}/requests`, {
+        fetch(`https://room9-backend.onrender.com/users/${uid}/requests`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -185,7 +185,7 @@ function findGenderMatching() {
 
     function handleSee(e, uid) {
         e.preventDefault();
-        fetch(`http://localhost:5000/users/${uid}`, {
+        fetch(`https://room9-backend.onrender.com/users/${uid}`, {
             method: 'GET'
         }).then((response) => {
             if (!response.ok) {
@@ -237,7 +237,7 @@ return (
                       <Card key={request.uid} style={{ minWidth: '550px', maxWidth: '550px', maxHeight: '350px' }}>
                           <div className="Request-container">
                               <div className="Request-image-container">
-                                  <Card.Img src="http://localhost:5000/img/avatar/default" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
+                                  <Card.Img src="https://room9-backend.onrender.com/img/avatar/default" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
                                   <div className="Request-middle" style={{ right: "47.5%" }}>
                                       <div className="Request-text">See Profile</div>
                                   </div>

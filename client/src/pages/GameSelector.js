@@ -23,7 +23,7 @@ function GameSelector() {
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const response = await fetch('http://localhost:5000/games/');
+                const response = await fetch('https://room9-backend.onrender.com/games/');
                 if (!response.ok) {
                     throw new Error('Failed to get list of games.');
                 }

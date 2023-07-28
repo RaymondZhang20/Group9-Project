@@ -22,7 +22,7 @@ export default function AddGame() {
                 url: form.elements['url'].value
             };
             console.log(newGame);
-            const response = await fetch('http://localhost:5000/games/', {
+            const response = await fetch('https://room9-backend.onrender.com/games/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

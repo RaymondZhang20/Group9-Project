@@ -11,7 +11,7 @@ const ChatPage = () => {
     // const socket = useSocket();
 
     function setMessages(friendUid) {
-        return fetch(`http://localhost:5000/users/${user.uid}/${friendUid}`, {
+        return fetch(`https://room9-backend.onrender.com/users/${user.uid}/${friendUid}`, {
             method: 'GET'
         }).then((response) => {
             if (!response.ok) {
@@ -35,7 +35,7 @@ const ChatPage = () => {
 
     useEffect(() => {
         friends.forEach((friend) => {
-            fetch(`http://localhost:5000/users/${user.uid}/${friend.uid}`, {
+            fetch(`https://room9-backend.onrender.com/users/${user.uid}/${friend.uid}`, {
                 method: 'GET'
             }).then((response) => {
                 if (!response.ok) {

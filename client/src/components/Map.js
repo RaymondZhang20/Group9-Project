@@ -28,7 +28,7 @@ function Map(props) {
 
 function handleSee(e, uid) {
   e.preventDefault();
-  fetch(`http://localhost:5000/users/${uid}`, {
+  fetch(`https://room9-backend.onrender.com/users/${uid}`, {
       method: 'GET'
   }).then((response) => {
       if (!response.ok) {

@@ -1,5 +1,5 @@
 const getAccount = async (uid) => {
-    const response = await fetch(`http://localhost:5000/users/${uid}`, {
+    const response = await fetch(`https://room9-backend.onrender.com/users/${uid}`, {
         method: 'GET'
     });
 
@@ -12,7 +12,7 @@ const getAccount = async (uid) => {
 };
 
 const createAccount = async (acc) => {
-    const response = await fetch(`http://localhost:5000/users`, {
+    const response = await fetch(`https://room9-backend.onrender.com/users`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ const createAccount = async (acc) => {
 };
 
 const updateAccount = async (acc) => {
-    const response = await fetch(`http://localhost:5000/users/${acc.uid}`, {
+    const response = await fetch(`https://room9-backend.onrender.com/users/${acc.uid}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'

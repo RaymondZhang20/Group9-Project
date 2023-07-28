@@ -58,7 +58,7 @@ const FriendRequests = () => {
     function handleApprove(e, _id) {
         e.preventDefault();
         const acc = {type: "accept", _id: _id};
-        fetch(`http://localhost:5000/users/${user.uid}/requests`, {
+        fetch(`https://room9-backend.onrender.com/users/${user.uid}/requests`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ const FriendRequests = () => {
     function handleIgnore(e, _id) {
         e.preventDefault();
         const acc = {type: "ignore", _id: _id};
-        fetch(`http://localhost:5000/users/${user.uid}/requests`, {
+        fetch(`https://room9-backend.onrender.com/users/${user.uid}/requests`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ const FriendRequests = () => {
     function handlePend(e, _id) {
         e.preventDefault();
         const acc = {type: "pend", _id: _id};
-        fetch(`http://localhost:5000/users/${user.uid}/requests`, {
+        fetch(`https://room9-backend.onrender.com/users/${user.uid}/requests`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -154,7 +154,7 @@ const FriendRequests = () => {
     function handleRemove(e, _id) {
         e.preventDefault();
         const acc = {_id: _id};
-        fetch(`http://localhost:5000/users/${user.uid}/remove`, {
+        fetch(`https://room9-backend.onrender.com/users/${user.uid}/remove`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -183,7 +183,7 @@ const FriendRequests = () => {
 
     function handleSee(e, uid) {
         e.preventDefault();
-        fetch(`http://localhost:5000/users/${uid}`, {
+        fetch(`https://room9-backend.onrender.com/users/${uid}`, {
             method: 'GET'
         }).then((response) => {
             if (!response.ok) {
