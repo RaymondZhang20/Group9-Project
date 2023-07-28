@@ -116,13 +116,23 @@ function getUserMatching(req, res, next) {
     User.find({uid: req.params.uid}).then((result) => {
         const friends_id = [...result[0]["friends"], result[0]["_id"]];
         const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];
+        const language = result[0].profile.language;
         return [{requests_id}, {
             $nor: friends_id.map(f => {
                 return {_id: f}
             })
-        }];
+        }, language];
     }).then((query) => {
-        return User.find(query[1]).select('account_name uid profile').then((result2) => {
+        let findQuery = {...query[1]};
+        if (languageChecked) {
+            findQuery['profile.language'] = {$in: query[2]};
+        }
+        if (genders.length > 1) {
+            console.log(genders.length);
+            console.log("1");
+            findQuery['profile.pronoun'] = {$in: genders};
+        }
+        return User.find(findQuery).select('account_name uid profile').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
                 return Object.assign({requested}, f["_doc"]);
@@ -130,8 +140,10 @@ function getUserMatching(req, res, next) {
             res.status(200).json(result_with_requests);
         });
     }).catch((err) => {
+        console.log(err);
         res.status(500).json({message: err.message});
     });
+
 }
 
 function getUserLogIn(req, res, next) {
