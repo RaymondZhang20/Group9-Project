@@ -58,7 +58,7 @@ io.on('connection', socket => {
             recipient: recipient,
             timeStamp: message.timeStamp
         }).then((me) => {
-            socket.emit('receive-message', me);
+            socket.to(recipient).emit('receive-message', me);
         }).catch((error) => {
             console.error(error);
         });

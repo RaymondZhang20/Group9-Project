@@ -5,12 +5,18 @@ import {useSocket} from "../contexts/SocketProvider";
 
 const ChatUI = ({ friend }) => {
     const [input, setInput] = useState('');
+    const [change, setChange] = useState(0);
     const socket = useSocket();
+    let ignore = false;
 
     useEffect(() => {
-        socket.on("receive-message", (message) => {
-            console.log(message);
-        });
+        if (!ignore) {
+            socket.on("receive-message", (message) => {
+                friend.messages.push({...message, sentByMe: false});
+                setChange(Math.random);
+            });
+        }
+        return () => {ignore = true}
     }, []);
 
     const handleSend = async () => {
