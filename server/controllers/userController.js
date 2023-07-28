@@ -133,13 +133,18 @@ function getUserMatching(req, res, next) {
             })
         }, language, games];
     }).then((query) => {
+        console.log(query);
         let findQuery = {...query[1]};
-        if (languageChecked) {
+        if (languageChecked === true) {
             findQuery['profile.language'] = {$in: query[2]};
         }
-        if (gamesChecked) {
+        if (gamesChecked === true) {
             findQuery['games'] = {$in: query[3]};
         }
+        if (genders.length >= 1) {
+            findQuery['profile.pronoun'] = {$in: genders};
+        }
+        console.log(findQuery);
         return User.find(findQuery).select('account_name uid profile').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
