@@ -10,24 +10,6 @@ const ChatPage = () => {
     const user = useSelector(state => state.account.currentUser);
     // const socket = useSocket();
 
-<<<<<<< HEAD
-    function setMessages(friendUid) {
-        return fetch(`https://room9-backend.onrender.com/users/${user.uid}/${friendUid}`, {
-            method: 'GET'
-        }).then((response) => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }).then((data) => {
-            return data;
-        }).catch((error) => {
-            console.error(error);
-        });
-    }
-
-=======
->>>>>>> origin/main
     const [friends, setFriends] = useState(user.friends.map((friend) => {
         let f = Object.assign({selected: false}, friend);
         f["online"] = true;
@@ -36,15 +18,9 @@ const ChatPage = () => {
         return f;
     }));
 
-<<<<<<< HEAD
-    useEffect(() => {
-        friends.forEach((friend) => {
-            fetch(`https://room9-backend.onrender.com/users/${user.uid}/${friend.uid}`, {
-=======
     function getFriendsMessages() {
         const messagesPromises = friends.map((friend) => {
-            return fetch(`http://localhost:5000/users/${user.uid}/${friend.uid}`, {
->>>>>>> origin/main
+            return fetch(`https://room9-backend.onrender.com/users/${user.uid}/${friend.uid}`, {
                 method: 'GET'
             }).then((response) => {
                 if (!response.ok) {
