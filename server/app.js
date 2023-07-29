@@ -11,7 +11,7 @@ const io = require('socket.io')(process.env.PORT, {
     },
 });
 const mongoAtlasUri =
-    `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.h62b0ay.mongodb.net/group_project?retryWrites=true&w=majority`;
+    `mongodb+srv://raymond:11223344@cluster0.h62b0ay.mongodb.net/group_project?retryWrites=true&w=majority`;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

@@ -27,7 +27,8 @@ async function postUser(req, res, next) {
         uid: req.body.uid,
         account_name: req.body.account_name,
         online: false,
-        geolocation: {lat: 49.26935329299636, long: -123.25641295980517},
+        avatar: "default",
+        geolocation: {lat: null, long: null},
         profile: {},
         friends: [],
         requests: [],
@@ -43,7 +44,7 @@ async function postUser(req, res, next) {
 }
 
 function getFriendsLocation(req, res, next) {
-    User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation'}).then((result) => {
+    User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation avatar'}).then((result) => {
         if (!result) {
             res.status(404).send('Cannot found the user');
         } else {
@@ -108,7 +109,16 @@ function patchUserRequests(req, res, next) {
 }
 
 function getUserMatching(req, res, next) {
-    const genders = req.query.genders.split(',');
+    const genderFrontend = req.query.genders.split(',');
+    const pronouns = [
+        {value: "he", label: "He/Him"},
+        {value: "she", label: "She/Her"},
+        {value: "they", label: "They/Them"},
+        {value: "ze", label: "Ze/Hir"},
+        {value: "xe", label: "Xe/Xem"},
+        {value: "o", label: "Other"}
+    ];
+    const genders = pronouns.filter(pronoun => genderFrontend.includes(pronoun.value)).map(pronoun => pronoun.label);
     const timeChecked = req.query.time;
     const gamesChecked = req.query.games;
     const languageChecked = req.query.language;
@@ -116,13 +126,31 @@ function getUserMatching(req, res, next) {
     User.find({uid: req.params.uid}).then((result) => {
         const friends_id = [...result[0]["friends"], result[0]["_id"]];
         const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];
+        const language = result[0].profile.language;
+        const games = result[0].games;
+        const time = result[0].profile.standard_time;
         return [{requests_id}, {
             $nor: friends_id.map(f => {
                 return {_id: f}
             })
-        }];
+        }, language, games, time];
     }).then((query) => {
-        return User.find(query[1]).select('account_name uid profile').then((result2) => {
+        console.log(query);
+        let findQuery = {...query[1]};
+        if (languageChecked === 'true') {
+            findQuery['profile.language'] = {$in: query[2]};
+        }
+        if (gamesChecked === 'true') {
+            findQuery['games'] = {$in: query[3]};
+        }
+        if (timeChecked === 'true') {
+            findQuery['profile.standard_time'] = {$in: query[4]};
+        }
+        if (genders.length >= 1) {
+            findQuery['profile.pronoun'] = {$in: genders};
+        }
+        console.log(findQuery);
+        return User.find(findQuery).select('account_name uid profile avatar').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
                 return Object.assign({requested}, f["_doc"]);
@@ -130,15 +158,16 @@ function getUserMatching(req, res, next) {
             res.status(200).json(result_with_requests);
         });
     }).catch((err) => {
+        console.log(err);
         res.status(500).json({message: err.message});
     });
 }
 
 function getUserLogIn(req, res, next) {
     User.findOneAndUpdate({uid: req.params.uid},{online: true}, {returnDocument:'after'})
-        .populate({path:'friends', select:'account_name uid'})
-        .populate({path:'requests', select:'account_name uid'})
-        .populate({path:'ignored_requests', select:'account_name uid'})
+        .populate({path:'friends', select:'account_name uid avatar'})
+        .populate({path:'requests', select:'account_name uid avatar'})
+        .populate({path:'ignored_requests', select:'account_name uid avatar'})
         .then((result) => {
             if (!result) {
                 res.status(404).send('Cannot found the user');
@@ -167,9 +196,9 @@ function patchUser(req, res, next) {
     const AccUid = {uid: req.params.uid};
     const updatedAcc = req.body;
     User.findOneAndUpdate(AccUid,updatedAcc,{returnDocument:'after'})
-        .populate({path:'friends', select:'account_name uid'})
-        .populate({path:'requests', select:'account_name uid'})
-        .populate({path:'ignored_requests', select:'account_name uid'})
+        .populate({path:'friends', select:'account_name uid avatar'})
+        .populate({path:'requests', select:'account_name uid avatar'})
+        .populate({path:'ignored_requests', select:'account_name uid avatar'})
         .then((result) => {
             if (!result) {
                 res.status(404).send('Cannot found the user');
