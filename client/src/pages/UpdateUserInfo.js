@@ -39,9 +39,12 @@ function UpdateUserInfo() {
     // Get the updated user information from the form
     const form = e.target;
     const locationString = form.elements['location'].value;
-      const [latitude, longitude] = locationString
-        .split(',')
-        .map((coord) => coord.split(':')[1].trim());
+    let latitude = null, longitude = null;
+    if (locationString) {
+      [latitude, longitude] = locationString
+          .split(',')
+          .map((coord) => coord.split(':')[1].trim());
+    }
     const updatedUserInfo = {
       uid: currentUser.uid,
       account_name: form.elements['account-name'].value,
