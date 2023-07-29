@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cors = require('cors');
 require('dotenv').config();
 var mongoose = require('mongoose');
-const io = require('socket.io')(process.env.PORT || 5001, {
+const io = require('socket.io')(process.env.PORT, {
     cors: {
         origin: ["https://room9-backend.onrender.com"],
     },
