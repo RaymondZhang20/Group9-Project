@@ -136,13 +136,13 @@ function getUserMatching(req, res, next) {
     }).then((query) => {
         console.log(query);
         let findQuery = {...query[1]};
-        if (languageChecked === true) {
+        if (languageChecked === 'true') {
             findQuery['profile.language'] = {$in: query[2]};
         }
-        if (gamesChecked === true) {
+        if (gamesChecked === 'true') {
             findQuery['games'] = {$in: query[3]};
         }
-        if (timeChecked === true) {
+        if (timeChecked === 'true') {
             findQuery['profile.standard_time'] = {$in: query[4]};
         }
         if (genders.length >= 1) {
