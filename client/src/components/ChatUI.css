@@ -1,12 +1,29 @@
 /* ChatUI.css */
+
 .chat-header {
     background-color: #D4E3DD;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: relative;
     border-bottom: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
+}
+
+.chat-header .chat-header-content {
+    display: flex;
+    align-items: center;
+}
+
+.chat-header .avatar {
+    flex: 1;
+}
+
+.chat-header .username {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
 }
 
 .chat-header img {

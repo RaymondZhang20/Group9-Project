@@ -40,9 +40,15 @@ const ChatUI = ({ friend }) => {
         <div className="chat-ui">
             <div className="title">Messages</div>
             <div className="chat-header">
-                <img src={friend.avatar} alt={friend.account_name} />
-                <h5>{friend.account_name}</h5>
-                <button className="btn btn-success">Voice Call</button>
+                <div className="chat-header-content">
+                    <div className="avatar">
+                        <img src={friend.avatar} alt={friend.account_name} />
+                    </div>
+                </div>
+                <div className="username">
+                    <h5>{friend.account_name}</h5>
+                </div>
+                {/*<button className="btn btn-success">Voice Call</button>*/}
             </div>
             <div className="chat-body">
                 {friend.messages.map((message, index) => (
@@ -63,4 +69,3 @@ const ChatUI = ({ friend }) => {
 };
 
 export default ChatUI;
-
