@@ -9,6 +9,7 @@ import './MatchingPage.css';
 import Select from "react-select";
 import user_img from "../redux/default_user.png";
 import {useNavigate} from "react-router-dom";
+import Avatar from "../components/Avatar";
 
 export default function MatchingPage() {
   const dispatch = useDispatch();
@@ -237,7 +238,7 @@ return (
                       <Card key={request.uid} style={{ minWidth: '550px', maxWidth: '550px', maxHeight: '350px' }}>
                           <div className="Request-container">
                               <div className="Request-image-container">
-                                  <Card.Img src="http://localhost:5000/img/avatar/default" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
+                                  <Avatar avatar="cod" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
                                   <div className="Request-middle" style={{ right: "47.5%" }}>
                                       <div className="Request-text">See Profile</div>
                                   </div>
