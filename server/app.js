@@ -7,7 +7,7 @@ require('dotenv').config();
 var mongoose = require('mongoose');
 const io = require('socket.io')(process.env.PORT, {
     cors: {
-        origin: ["https://room9-backend.onrender.com"],
+        origin: ["https://room9.onrender.com"],
     },
 });
 const mongoAtlasUri =
