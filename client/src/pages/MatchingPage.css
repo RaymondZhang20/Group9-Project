@@ -1,16 +1,21 @@
 .container {
   display: flex;
+  justify-content: space-between;
+  /*padding-top: 60px;*/
+}
+
+.box {
+  flex: 1;
+  padding: 80px;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.1);
+  height: 50vh;
+  margin-top: 65px;
 }
 
 .selection {
-  flex: 1;
-  border: 1px solid #ccc;
   min-height: 100vh;
-  padding-top: 60px;
-  padding: 60px;
-  box-shadow: 0 60px 4px rgba(0,0,0,0.1);
-  border-radius: 4px;
-  background-color: #fff;
 }
 
 .cards {
@@ -18,5 +23,5 @@
   min-height: 100vh;
   display: grid;
   justify-content: center;
-  padding-top: 60px;
+  margin-top: 65px;
 }

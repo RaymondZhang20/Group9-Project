@@ -133,6 +133,7 @@ const handleSubmit = async (e) => {
 
 return (
     <div className="container">
+        <div className="box">
          <div className="selection">
              <Form onSubmit={(e) => handleSubmit(e)}>
                  <div>
@@ -162,6 +163,7 @@ return (
                  <Button variant="primary" type="submit">Apply Filters</Button>
              </Form>
          </div>
+        </div>
          <div className="cards">
               {matchings.length === 0?
                   <h1 style={{ marginBottom: '100px' }}>No matching for you, sorry</h1>:
