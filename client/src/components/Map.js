@@ -7,6 +7,7 @@ import { getAccountAsync } from '../redux/accountReducers/accountThunks';
 import {useAuth} from "../contexts/AuthContext";
 import {Button} from 'react-bootstrap'
 import {Link, Navigate, useNavigate} from "react-router-dom";
+import Avatar from './Avatar';
 
 
 function Map(props) {
@@ -69,11 +70,13 @@ function createPins(mapFriends) {
 
 function createFriendsPins(friend) {
   var friendLocation = [friend.geolocation.lat, friend.geolocation.long]
+  console.log(Object.keys(friend))
   return (      
   <Marker key = {friend.account_name} position={friendLocation}>
     <Popup>
       <center>
-        {friend.account_name} <br></br>
+      <h2>{friend.account_name}</h2>
+        <Avatar avatar={friend.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
         <Button variant="primary" onClick={(e) => handleSee(e,friend.uid)}>
             See Profile
         </Button>
