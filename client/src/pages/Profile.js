@@ -53,7 +53,7 @@ export default function Profile() {
             { field: "language", value: location.state.profile ? location.state.profile.language : "" },
             { field: "platform", value: location.state.profile ? location.state.profile.platform : "" }];
         userGames = games.filter(game => location.state.games.includes(game['_id']));
-        userAvatar = location.state.avatar ? location.state.avatar : "";
+        userAvatar = location.state.avatar ? location.state.avatar : "dafault_user";
     } else {
         if (user.uid && games !== []) {
             userInfo =
@@ -67,7 +67,7 @@ export default function Profile() {
                 { field: "language", value: user.profile ? user.profile.language : "" },
                 { field: "platform", value: user.profile ? user.profile.platform : "" }];
             userGames = games.filter(game => user.games.includes(game['_id']));
-            userAvatar = user.avatar ? user.avatar : "";
+            userAvatar = user.avatar ? user.avatar : "dafault_user";
         }
     }
 
