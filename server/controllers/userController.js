@@ -127,11 +127,12 @@ function getUserMatching(req, res, next) {
         const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];
         const language = result[0].profile.language;
         const games = result[0].games;
+        const time = result[0].profile.standard_time;
         return [{requests_id}, {
             $nor: friends_id.map(f => {
                 return {_id: f}
             })
-        }, language, games];
+        }, language, games, time];
     }).then((query) => {
         console.log(query);
         let findQuery = {...query[1]};
@@ -140,6 +141,9 @@ function getUserMatching(req, res, next) {
         }
         if (gamesChecked === true) {
             findQuery['games'] = {$in: query[3]};
+        }
+        if (timeChecked === true) {
+            findQuery['profile.standard_time'] = {$in: query[4]};
         }
         if (genders.length >= 1) {
             findQuery['profile.pronoun'] = {$in: genders};

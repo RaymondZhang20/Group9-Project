@@ -60,6 +60,8 @@ function UpdateUserInfo() {
         platform: Array.from(form.elements['platform'])
           .filter(input => input.checked)
           .map(input => input.value),
+        standard_time: translateToStandard(form.elements['time-zone'].value,
+        Array.from(form.elements['play-time']).filter(input => input.checked).map(input => input.value))
       },
       geolocation: { lat: latitude, long: longitude }
     };
@@ -73,20 +75,66 @@ function UpdateUserInfo() {
     }  
   };
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    alert("Geolocation is not supported by this browser.");
+    function getLocation() {
+      if (navigator.geolocation) {
+        // setsTime(translateToStandard(userInfo));
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    function showPosition(position) {
+      const locationField = document.querySelector('input[name="location"]');
+      locationField.value = "Latitude: " + position.coords.latitude +
+      ", Longitude: " + position.coords.longitude;
+    }
+
+  const timeZoneValues = [-12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const timeZoneOptions = ["Baker Island", "Jarvis Island", "Honolulu", "Anchorage, Alaska",
+                           "Los Angeles, Vancouver, Tijuana", "Denver, Edmonton, Ciudad Juárez", "Mexico City, Chicago",
+                           "New York, Toronto, Havana", "Santiago, Santo Domingo, Halifax",
+                           "São Paulo, Argentina", "South Georgia and the South Sandwich Islands",
+                           "Azores islands", "London, Dublin, Lisbon", "Berlin, Rome, Paris",
+                           "Cairo, Johannesburg, Khartoum, Kyiv", " Moscow, Istanbul", "Dubai, Baku", "Karachi, Tashkent", "Dhaka, Almaty, Omsk",
+                           "Ho Chi Minh City, Bangkok", "Shanghai, Singapore", "Tokyo, Seoul", "Sydney", "Nouméa",
+                           "Auckland, Suva"];
+
+  let timeZoneMap = new Map();
+  for (let i = 0; i < timeZoneOptions.length; i++) {
+      timeZoneMap.set(timeZoneOptions[i], timeZoneValues[i]);
   }
-}
 
-function showPosition(position) {
-  const locationField = document.querySelector('input[name="location"]');
-  locationField.value = "Latitude: " + position.coords.latitude +
-  ", Longitude: " + position.coords.longitude;
-}
+  // Get the current user's timezone offset
+  function getUserOffset(timezone) {
+    const userOffset = timeZoneMap.get(timezone);
+    return userOffset;
+  }
 
+  function translateToStandard(timezone, playtime) {
+      let numPlayTime = [];
+          if (playtime.includes("Morning (6am-12pm)")) {
+              numPlayTime.push(6,7,8,9,10,11);
+          }
+          if (playtime.includes("Afternoon(12pm-7pm)")) {
+              numPlayTime.push(12,13,14,15,16,17,18);
+          }
+          if (playtime.includes("Evening(7pm-12am)")) {
+              numPlayTime.push(19,20,21,22,23);
+          }
+          if (playtime.includes("Midnight(12am-6am)")) {
+              numPlayTime.push(0,1,2,3,4,5);
+          }
+      console.log(numPlayTime);
+      let standardTime = [];
+      const offset = getUserOffset(timezone);
+      console.log(offset);
+      for (let i = 0; i < numPlayTime.length; i++) {
+          standardTime[i] = (numPlayTime[i] + offset)%24;
+      }
+      console.log(standardTime);
+      return standardTime;
+  }
 
   return (
     <div style={{ minHeight: '100vh', display: 'grid', justifyContent: 'center', paddingTop: '60px' }}>
