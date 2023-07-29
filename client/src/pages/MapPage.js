@@ -207,7 +207,7 @@ const FriendRequests = () => {
                               <div className="Request-container">
                                   <div className="Request-image-container">
                                       {/*<Card.Img src={user_img} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>*/}
-                                      <Avatar avatar={user.avatar} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>
+                                      <Avatar avatar={request.avatar} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>
                                       <div className="Request-middle"  style={{ left: "50%" }}>
                                           <div className="Request-text">See Profile</div>
                                       </div>
@@ -230,7 +230,7 @@ const FriendRequests = () => {
                   <h1 style={{ marginBottom: '100px' }}>No ignored requests for now...</h1> :
                   user.ignored_requests.map((request) => (
                       <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
-                          <Avatar avatar={user.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
+                          <Avatar avatar={request.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
                           <Card.Body>
                               <Card.Title className="text-center">{request.account_name}</Card.Title>
                               <div style={{ display:'flex', justifyContent:'center', gap:'8px' }}>
@@ -245,7 +245,7 @@ const FriendRequests = () => {
                   <h1 style={{ marginBottom: '100px' }}>You have no friends... <br/> Go to matching page to find more friends! </h1>:
                   user.friends.map((request) => (
                       <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
-                          <Avatar avatar={user.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
+                          <Avatar avatar={request.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
                           <Card.Body>
                               <Card.Title className="text-center">{request.account_name}</Card.Title>
                               <div style={{ display:'flex', justifyContent:'center', gap:'8px' }}>

@@ -44,7 +44,7 @@ async function postUser(req, res, next) {
 }
 
 function getFriendsLocation(req, res, next) {
-    User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation'}).then((result) => {
+    User.find({uid: req.params.uid}).select('geolocation uid friends').populate({path:'friends', select:'account_name uid geolocation avatar'}).then((result) => {
         if (!result) {
             res.status(404).send('Cannot found the user');
         } else {
@@ -150,7 +150,7 @@ function getUserMatching(req, res, next) {
             findQuery['profile.pronoun'] = {$in: genders};
         }
         console.log(findQuery);
-        return User.find(findQuery).select('account_name uid profile').then((result2) => {
+        return User.find(findQuery).select('account_name uid profile avatar').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
                 return Object.assign({requested}, f["_doc"]);
@@ -165,9 +165,9 @@ function getUserMatching(req, res, next) {
 
 function getUserLogIn(req, res, next) {
     User.findOneAndUpdate({uid: req.params.uid},{online: true}, {returnDocument:'after'})
-        .populate({path:'friends', select:'account_name uid'})
-        .populate({path:'requests', select:'account_name uid'})
-        .populate({path:'ignored_requests', select:'account_name uid'})
+        .populate({path:'friends', select:'account_name uid avatar'})
+        .populate({path:'requests', select:'account_name uid avatar'})
+        .populate({path:'ignored_requests', select:'account_name uid avatar'})
         .then((result) => {
             if (!result) {
                 res.status(404).send('Cannot found the user');
@@ -196,9 +196,9 @@ function patchUser(req, res, next) {
     const AccUid = {uid: req.params.uid};
     const updatedAcc = req.body;
     User.findOneAndUpdate(AccUid,updatedAcc,{returnDocument:'after'})
-        .populate({path:'friends', select:'account_name uid'})
-        .populate({path:'requests', select:'account_name uid'})
-        .populate({path:'ignored_requests', select:'account_name uid'})
+        .populate({path:'friends', select:'account_name uid avatar'})
+        .populate({path:'requests', select:'account_name uid avatar'})
+        .populate({path:'ignored_requests', select:'account_name uid avatar'})
         .then((result) => {
             if (!result) {
                 res.status(404).send('Cannot found the user');
