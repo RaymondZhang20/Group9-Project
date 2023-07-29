@@ -13,7 +13,7 @@ export function SocketProvider({ id, children }) {
     useEffect(() => {
         if (id !== 0) {
             const newSocket = io(
-                '',
+                'https://room9-web-socket.onrender.com/',
                 {query: {id}}
             )
             setSocket(newSocket);
