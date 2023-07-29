@@ -5,24 +5,23 @@
 Our application will be presented in the form of a website, with the functionality to allow users who share similar interests in video games to connect with other users (like a find “someone you might know” function on social media). It is for users who sit at home while playing games to find friends with similar interests and to promote social activity. It will store location data for users for the “find users near you” functionality, it will also store data for user’s interests (games that the user is interested in). It stores the users' preferences of what other users it would want to be matched to (how far away is still near? timezone? age? gender?) and this could be an additional functionality, to match users taking their preferences into consideration.
 
 ### Minimal requirements:
-1. Implementing an account system that can let users register or log in when they access the website, store all their information in a database, and update to the database every time users changed or created accounts.
-- Add new user to the database when registering
-- Update information of an existing user in the database when editing profile
-2. Implementing a filter system that computes the match levels of different accounts in the database, which could later be removed or sending matching request from the user.
-- Select from user's locations, games played, gaming platform and gender and filter users from backend with satisfied conditions 
-3. Be able to view other users profiles and what games they play and send them friend invitations
-- Responsive window/link should be jumped out when clicking profile
-- Invitations sent should be and only be visible to that specific user (database should store these 2 users along with invitation)
+1. Implementing an authentication system with Firebase that can let users register or log in and then(if passing the authentication) access their private routes.
+2. Implementing an account system integrated with Firebase that restores users' information in database, and allows users to send friend requests, accept requests, ignore requests and remove friends.
+3. Implementing a profile and a game list for every account. Users are able to edit their profile and game list and view others.
 
 ### Standard requirements:
-1. Be able to communicate with other users by sending direct messages
-2. Display the user and this user's friends location on a map 
-3 .Be able to select games from a list of games, if the list is very large, may need a search functionality.
+1. Implementing a query system that computes the match levels of different accounts in the database, which could later be removed or sending matching requests from the user.
+- Select from user's locations, games played, gaming platform and gender and filter users from backend with satisfied conditions.
+2. Be able to communicate with friends by sending direct messages.
+3. Display the user and this user's friends location on a map.
+4 .Be able to select games from a list of games provided by the server, stored as part of user information.
 
 ### Stretch requirements:
-1. Link games to account???display in-game achievement?
-2. Send an invitation to everyone within an outlined area for people to join a users party/game
-3. Online voice call service to ensure better friend making process / gaming experience
+1. Link games to account, display in-game achievement?
+2. Make messaging system respond in real time using WebSokect.
+3. Send an invitation to everyone within an outlined area for people to join a users party/game
+4. Variable avatars for users to select, and show users avatar on matching, map, friend list and chat.
+5. Be able to add a new game to the list. Having search functionality to find a game in a large game list.
 
 ### Task breakdown
 1. Choose proper database and implement database connector to the back-end.
