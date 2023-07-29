@@ -8,6 +8,7 @@ import { emptyAccount } from "../redux/accountReducers/accountReducer";
 import { ProfileField } from '../components/ProfileField';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Avatar from '../components/Avatar';
 
 export default function Profile() {
     const location = useLocation();
@@ -39,7 +40,8 @@ export default function Profile() {
     const uid = currentUser.uid;
     let userInfo = [];
     let userGames = [];
-    if (location.state !== null  && games !== []) {
+    let userAvatar = "";
+    if (location.state !== null && games !== []) {
         userInfo =
             [{ field: "account Name", value: location.state.account_name ? location.state.account_name : "" },
             { field: "first", value: location.state.profile ? location.state.profile.first_name : "" },
@@ -51,6 +53,7 @@ export default function Profile() {
             { field: "language", value: location.state.profile ? location.state.profile.language : "" },
             { field: "platform", value: location.state.profile ? location.state.profile.platform : "" }];
         userGames = games.filter(game => location.state.games.includes(game['_id']));
+        userAvatar = location.state.avatar ? location.state.avatar : "";
     } else {
         if (user.uid && games !== []) {
             userInfo =
@@ -64,6 +67,7 @@ export default function Profile() {
                 { field: "language", value: user.profile ? user.profile.language : "" },
                 { field: "platform", value: user.profile ? user.profile.platform : "" }];
             userGames = games.filter(game => user.games.includes(game['_id']));
+            userAvatar = user.avatar ? user.avatar : "";
         }
     }
 
@@ -100,7 +104,7 @@ export default function Profile() {
                 <div id="profile" style={{ display: 'flex', paddingTop: '40px' }}>
                     <Card className="card-container" style={{ width: '550px' }}>
                         <Card.Body>
-                            <h1 className="text-center">Profile</h1>
+                            <center><Avatar avatar={userAvatar} className="rounded-circle" variant="top" style={{ width: '200px', height: '200px', margin: '20px', boxShadow: '0 1px 5px rgba(0,0,0,0.2)' }} /></center>
                             <ListGroup variant="flush">
                                 {userInfo.map((field, index) => {
                                     if (field.value && Array.isArray(field.value)) {
