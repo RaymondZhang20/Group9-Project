@@ -16,6 +16,7 @@ export function SocketProvider({ id, children }) {
                 'https://room9-web-socket.onrender.com/',
                 {query: {id}}
             )
+            console.log("HERE")
             setSocket(newSocket);
 
             return () => newSocket.close();
