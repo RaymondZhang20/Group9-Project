@@ -170,7 +170,7 @@ return (
                       <Card key={request.uid} style={{ minWidth: '550px', maxWidth: '550px', maxHeight: '350px' }}>
                           <div className="Request-container">
                               <div className="Request-image-container">
-                                  <Avatar avatar="cod" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
+                                  <Avatar avatar={request.avatar} alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
                                   <div className="Request-middle" style={{ right: "47.5%" }}>
                                       <div className="Request-text">See Profile</div>
                                   </div>
