@@ -177,12 +177,7 @@ return (
                                       <div className="Request-text">See Profile</div>
                                   </div>
                               </div>
-                              <div className="Request-detail-container">
-                                  <p>0 common friends</p>
-                                  <p>0 common games</p>
-                                  <p>same time zone</p>
-                                  <p>0 hours play-time overlapped</p>
-                              </div>
+
                           </div>
                           <Card.Body>
                               <Card.Title className="text-center">{request.account_name}</Card.Title>
@@ -226,3 +221,10 @@ function AnimatedMulti() {
     );
 }
 }
+// originally in line 180, comment for demo
+//<div className="Request-detail-container">
+//                                  <p>0 common friends</p>
+//                                  <p>0 common games</p>
+//                                  {request.time_zone === user.time_zone && <p>same time zone</p>}
+//                                  <p>0 hours play-time overlapped</p>
+//                              </div>
