@@ -13,7 +13,6 @@ const ChatPage = () => {
     const [friends, setFriends] = useState(user.friends.map((friend) => {
         let f = Object.assign({selected: false}, friend);
         f["online"] = true;
-        f["avatar"] = DefaultUser;
         f["messages"] = [];
         return f;
     }));

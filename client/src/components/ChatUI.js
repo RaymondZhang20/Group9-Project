@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import './ChatUI.css';
 import ChatMessage from './ChatMessage';
 import { useSocket } from "../contexts/SocketProvider";
+import Avatar from "./Avatar";
 
 const ChatUI = ({ friend }) => {
     const [input, setInput] = useState('');
@@ -20,6 +21,7 @@ const ChatUI = ({ friend }) => {
             socket.on("receive-message", (message) => {
                 friend.messages.push({ ...message, sentByMe: false });
                 setChange(Math.random);
+                scrollToBottom();
             });
         }
         return () => { ignore = true }
@@ -33,6 +35,7 @@ const ChatUI = ({ friend }) => {
             socket.emit('send-message', { recipient: friend.uid, message: { content: input, timeStamp } });
             friend.messages.push({ content: input, sentByMe: true, timeStamp });
             setInput('');
+            scrollToBottom();
         }
     };
 
@@ -42,7 +45,7 @@ const ChatUI = ({ friend }) => {
             <div className="chat-header">
                 <div className="chat-header-content">
                     <div className="avatar">
-                        <img src={friend.avatar} alt={friend.account_name} />
+                        <Avatar avatar={friend.avatar} alt={friend.account_name} />
                     </div>
                 </div>
                 <div className="username">
