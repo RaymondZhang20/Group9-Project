@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
+import Avatar from '../components/Avatar';
 
 const profileOption = {
   "time-zone" :
@@ -21,7 +22,8 @@ const profileOption = {
    "language" : ["English", "Spanish", "French", "German", "Mandarin", "Cantonese",
    "Japanese", "Korean", "Italian", "Portuguese", "Russian", "Arabic", "Hindi",
    "Bengali", "Dutch", "Swedish", "Other"],
-   "platform" : ["Phone", "PC", "PS", "XBOX", "NS", "Other"]
+   "platform" : ["Phone", "PC", "PS", "XBOX", "NS", "Other"],
+   "avatar" : ["apex", "cod", "mario", "minecraft", "overwatch"]
 };
 
 function UpdateUserInfo() {
@@ -66,7 +68,8 @@ function UpdateUserInfo() {
         standard_time: translateToStandard(form.elements['time-zone'].value,
         Array.from(form.elements['play-time']).filter(input => input.checked).map(input => input.value))
       },
-      geolocation: { lat: latitude, long: longitude }
+      geolocation: { lat: latitude, long: longitude },
+      avatar: form.elements['avatar'].value
     };
 
     try {
@@ -200,6 +203,16 @@ function UpdateUserInfo() {
               <Form.Label>Platform</Form.Label>
               {profileOption["platform"].map((option) => {
                 return (<Form.Check name="platform" type="checkbox" label={option} value={option} defaultChecked={userInfo.profile?userInfo.profile.platform.includes(option):false}/>);})}
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicAvatar">
+              <Form.Label>Avatar</Form.Label>
+              {profileOption["avatar"].map((option) => {
+                return (
+                <div>
+                  <Form.Check inline name="avatar" type="radio" value={option} aria-label={option} defaultChecked={userInfo?userInfo.avatar === option:false}/>
+                  <Avatar avatar={option} variant="top" style={{ width: '100px', height: '100px', margin: '20px', boxShadow: '0 1px 5px rgba(0,0,0,0.2)' }} />
+                  </div>);})}
             </Form.Group>
 
             <Button variant="primary" type="submit">

@@ -134,6 +134,7 @@ const handleSubmit = async (e) => {
 
 return (
     <div className="container">
+        <div className="box">
          <div className="selection">
              <Form onSubmit={(e) => handleSubmit(e)}>
                  <div>
@@ -163,6 +164,7 @@ return (
                  <Button variant="primary" type="submit">Apply Filters</Button>
              </Form>
          </div>
+        </div>
          <div className="cards">
               {matchings.length === 0?
                   <h1 style={{ marginBottom: '100px' }}>No matching for you, sorry</h1>:
@@ -175,12 +177,7 @@ return (
                                       <div className="Request-text">See Profile</div>
                                   </div>
                               </div>
-                              <div className="Request-detail-container">
-                                  <p>0 common friends</p>
-                                  <p>0 common games</p>
-                                  <p>same time zone</p>
-                                  <p>0 hours play-time overlapped</p>
-                              </div>
+
                           </div>
                           <Card.Body>
                               <Card.Title className="text-center">{request.account_name}</Card.Title>
@@ -224,3 +221,10 @@ function AnimatedMulti() {
     );
 }
 }
+// originally in line 180, comment for demo
+//<div className="Request-detail-container">
+//                                  <p>0 common friends</p>
+//                                  <p>0 common games</p>
+//                                  {request.time_zone === user.time_zone && <p>same time zone</p>}
+//                                  <p>0 hours play-time overlapped</p>
+//                              </div>
