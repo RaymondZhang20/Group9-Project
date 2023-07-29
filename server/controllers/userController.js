@@ -108,7 +108,16 @@ function patchUserRequests(req, res, next) {
 }
 
 function getUserMatching(req, res, next) {
-    const genders = req.query.genders.split(',');
+    const genderFrontend = req.query.genders.split(',');
+    const pronouns = [
+        {value: "he", label: "He/Him"},
+        {value: "she", label: "She/Her"},
+        {value: "they", label: "They/Them"},
+        {value: "ze", label: "Ze/Hir"},
+        {value: "xe", label: "Xe/Xem"},
+        {value: "o", label: "Other"}
+    ];
+    const genders = pronouns.filter(pronoun => genderFrontend.includes(pronoun.value)).map(pronoun => pronoun.label);
     const timeChecked = req.query.time;
     const gamesChecked = req.query.games;
     const languageChecked = req.query.language;
@@ -116,13 +125,27 @@ function getUserMatching(req, res, next) {
     User.find({uid: req.params.uid}).then((result) => {
         const friends_id = [...result[0]["friends"], result[0]["_id"]];
         const requests_id = [...result[0]["requests"].map(f => f.valueOf()), ...result[0]["ignored_requests"].map(f => f.valueOf())];
+        const language = result[0].profile.language;
+        const games = result[0].games;
         return [{requests_id}, {
             $nor: friends_id.map(f => {
                 return {_id: f}
             })
-        }];
+        }, language, games];
     }).then((query) => {
-        return User.find(query[1]).select('account_name uid profile').then((result2) => {
+        console.log(query);
+        let findQuery = {...query[1]};
+        if (languageChecked === true) {
+            findQuery['profile.language'] = {$in: query[2]};
+        }
+        if (gamesChecked === true) {
+            findQuery['games'] = {$in: query[3]};
+        }
+        if (genders.length >= 1) {
+            findQuery['profile.pronoun'] = {$in: genders};
+        }
+        console.log(findQuery);
+        return User.find(findQuery).select('account_name uid profile').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
                 return Object.assign({requested}, f["_doc"]);
@@ -130,6 +153,7 @@ function getUserMatching(req, res, next) {
             res.status(200).json(result_with_requests);
         });
     }).catch((err) => {
+        console.log(err);
         res.status(500).json({message: err.message});
     });
 }
