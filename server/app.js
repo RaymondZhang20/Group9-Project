@@ -5,9 +5,9 @@ var logger = require('morgan');
 var cors = require('cors');
 require('dotenv').config();
 var mongoose = require('mongoose');
-const io = require('socket.io')(5001, {
+const io = require('socket.io')(process.env.PORT || 5001, {
     cors: {
-        origin: ["http://localhost:3000"],
+        origin: ["https://room9-backend.onrender.com"],
     },
 });
 const mongoAtlasUri =
