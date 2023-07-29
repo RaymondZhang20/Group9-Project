@@ -25,32 +25,12 @@ export default function MatchingPage() {
   const [showAlert, setShowAlert] = useState({show:false, variant: "success", message: "..."});
   const navigate = useNavigate();
 
-  // initialize a HashMap to handle timezone offset
-  const timeZoneValues = [-12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const timeZoneOptions = ["Baker Island", "Jarvis Island", "Honolulu", "Anchorage, Alaska",
-                           "Los Angeles, Vancouver, Tijuana", "Denver, Edmonton, Ciudad Juárez", "Mexico City, Chicago",
-                           "New York, Toronto, Havana", "Santiago, Santo Domingo, Halifax",
-                           "São Paulo, Argentina", "South Georgia and the South Sandwich Islands",
-                           "Azores islands", "London, Dublin, Lisbon", "Berlin, Rome, Paris",
-                           "Cairo, Johannesburg, Khartoum, Kyiv", " Moscow, Istanbul", "Dubai, Baku", "Karachi, Tashkent", "Dhaka, Almaty, Omsk",
-                           "Ho Chi Minh City, Bangkok", "Shanghai, Singapore", "Tokyo, Seoul", "Sydney", "Nouméa",
-                           "Auckland, Suva"];
-
-  let timeZoneMap = new Map();
-  for (let i = 0; i < timeZoneOptions.length; i++) {
-      timeZoneMap.set(timeZoneOptions[i], timeZoneValues[i]);
-  }
-
 const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const time = form.elements["time"].checked;
     const games = form.elements["game"].checked;
     const language = form.elements["language"].checked;
-    // if (time) findTimeMatching();
-    // if (games) findGameMatching();
-    // if (language) findLanguageMatching();
-    // if (genderOptions) findGenderMatching();
     const genders = genderOptions.map((a) => a.value);
     const queryString = new URLSearchParams({ genders, time, games, language }).toString();
     fetch(`http://localhost:5000/users/${user.uid}/matching?${queryString}`, {
@@ -66,54 +46,6 @@ const handleSubmit = async (e) => {
     }).catch((error) => {
         console.error(error);
     });
-}
-// Get the current user's timezone offset
-function getUserOffset() {
-    const userTimeZone = currentUser.profile["time-zone"];
-    const userOffset = timeZoneMap.get(userTimeZone);
-    return userOffset;
-}
-
-const playTimeSlots = ["Morning (6am-12pm)", "Afternoon(12pm-7pm)", "Evening(7pm-12am)", "Midnight(12am-6am)"];
-const slotStartEndTimes = [[6, 12], [12, 19], [19, 24], [0, 6]];
-
-function getOriginalTimes() {
-    const time = [];
-    const userPlaytime = currentUser.profile["play-time"];
-    for (let i = 0; i < playTimeSlots.length; i++) {
-        if (userPlaytime.includes(playTimeSlots[i])) {
-            time.push(slotStartEndTimes[i]);
-        }
-    }
-    return time;
-}
-
-// Calculate the UTC start and end times for each play time slot for a user
-function convertTimes() {
-    const originalTimes = getOriginalTimes();
-    const userOffset = getUserOffset();
-
-    // Convert the local start and end times to uniformed time zones
-    const uniformedTimes = originalTimes.map(([startTime, endTime]) => [(startTime - userOffset + 24) % 24, (endTime - userOffset + 24) % 24]);
-}
-
-
-function findTimeMatching() {
-    // we convert starting times to a universal standard
-    const userOffset = getUserOffset();
-    // TODO: how to get other information
-}
-
-function findGameMatching() {
-    // TODO: how to get other information
-}
-
-function findLanguageMatching() {
-    // TODO: how to get other information
-}
-
-function findGenderMatching() {
-    // TODO: how to get other information
 }
 
     function handleApprove(e, _id) {
@@ -291,21 +223,4 @@ function AnimatedMulti() {
         />
     );
 }
-
-//// Check if two time ranges overlap
-//function rangesOverlap(start1, end1, start2, end2) {
-//    if (start1 < end1 && start2 < end2) {
-//        // Both ranges are within the same day
-//        return start1 < end2 && start2 < end1;
-//    } else if (start1 >= end1 && start2 >= end2) {
-//        // Both ranges span across two days
-//        return true;
-//    } else if (start1 >= end1 && start2 < end2) {
-//        // First range spans across two days, second range is within the same day
-//        return start2 < end1 || start1 < end2;
-//    } else {
-//        // Second range spans across two days, first range is within the same day
-//        return start1 < end2 || start2 < end1;
-//    }
-//}
 }
