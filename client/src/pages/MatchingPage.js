@@ -170,11 +170,7 @@ return (
                       <Card key={request.uid} style={{ minWidth: '550px', maxWidth: '550px', maxHeight: '350px' }}>
                           <div className="Request-container">
                               <div className="Request-image-container">
-<<<<<<< HEAD
-                                  <Card.Img src="https://room9-backend.onrender.com/img/avatar/default" alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
-=======
                                   <Avatar avatar={request.avatar} alt="Avatar" className="Request-image" style={{ minWidth: '250px', maxWidth: '250px', maxHeight: '350px' }} onClick={(e) => handleSee(e,request.uid)}/>
->>>>>>> origin/main
                                   <div className="Request-middle" style={{ right: "47.5%" }}>
                                       <div className="Request-text">See Profile</div>
                                   </div>
