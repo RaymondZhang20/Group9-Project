@@ -135,7 +135,6 @@ function getUserMatching(req, res, next) {
             })
         }, language, games, time];
     }).then((query) => {
-        console.log(query);
         let findQuery = {...query[1]};
         if (languageChecked === 'true') {
             findQuery['profile.language'] = {$in: query[2]};
@@ -149,8 +148,7 @@ function getUserMatching(req, res, next) {
         if (genders.length >= 1) {
             findQuery['profile.pronoun'] = {$in: genders};
         }
-        console.log(findQuery);
-        return User.find(findQuery).select('account_name uid profile avatar').then((result2) => {
+        return User.find(findQuery).select('account_name uid profile avatar games friends').then((result2) => {
             const result_with_requests = result2.map((f) => {
                 let requested = query[0]["requests_id"].includes(f["_doc"]["_id"].valueOf());
                 return Object.assign({requested}, f["_doc"]);

@@ -45,6 +45,8 @@ function handleSee(e, uid) {
 
 function createPins(mapFriends) {
   if (mapFriends[0] === undefined) {
+  } else if (mapFriends[0].geolocation.lat === null || mapFriends[0].geolocation.long === null) {
+    return (<div>Please add geolocation for map to work</div>)
   } else {
     var currentlocation = [mapFriends[0].geolocation.lat, mapFriends[0].geolocation.long]
     return (

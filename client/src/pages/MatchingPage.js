@@ -42,7 +42,15 @@ const handleSubmit = async (e) => {
         return response.json();
     }).then((data) => {
         console.log(data);
-        setMatchings(data);
+        const matchingsWithInfo = data.map(match => {
+            const commonFriends = user.friends.map(friend => friend._id) && match.friends ? user.friends.map(friend => friend._id).filter(friendId => match.friends.includes(friendId)).length : 0;
+            const commonGames = user.games && match.games ? user.games.filter(game => match.games.includes(game)).length : 0;
+            const overlappingPlayTime = user.profile.standard_time && match.profile.standard_time ? user.profile.standard_time.filter(time => match.profile.standard_time.includes(time)).length : 0;
+            console.log(match.friends);
+            return { ...match, commonFriends, commonGames, overlappingPlayTime };
+        });
+        console.log(user.friends.map(friend => friend._id));
+        setMatchings(matchingsWithInfo);
     }).catch((error) => {
         console.error(error);
     });
@@ -177,7 +185,12 @@ return (
                                       <div className="Request-text">See Profile</div>
                                   </div>
                               </div>
-
+                              <div className="Request-detail-container">
+                                  {request.profile.time_zone === user.profile.time_zone && <p>same time zone</p>}
+                                  <p>{request.overlappingPlayTime} hours play-time overlapped</p>
+                                  <p>{request.commonGames} common games</p>
+                                  <p>{request.commonFriends} common friends</p>
+                              </div>
                           </div>
                           <Card.Body>
                               <Card.Title className="text-center">{request.account_name}</Card.Title>
@@ -221,10 +234,3 @@ function AnimatedMulti() {
     );
 }
 }
-// originally in line 180, comment for demo
-//<div className="Request-detail-container">
-//                                  <p>0 common friends</p>
-//                                  <p>0 common games</p>
-//                                  {request.time_zone === user.time_zone && <p>same time zone</p>}
-//                                  <p>0 hours play-time overlapped</p>
-//                              </div>
