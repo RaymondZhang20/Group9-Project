@@ -30,13 +30,23 @@ export default function MapPage() {
         <div id="MapPage-whole">
             <Navigate to={"/"+currentUser.uid} replace={true} />
             <h1>MainPage</h1>
-            <h2>Welcome, {user.account_name}</h2>
-            <h2>You have 0 new matches, and 0 new messages</h2>
+            <WelcomeHeader accountName={user.account_name} />
             <FriendRequests/>
-            <Map />
+            <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                <Map />
+            </div>
+
         </div>
     );
 }
+function WelcomeHeader({ accountName }) {
+    return (
+        <header className="welcome-header">
+            <h3>Welcome, {accountName}!</h3>
+        </header>
+    );
+}
+
 
 const FriendRequests = () => {
     const [requestState, setRequestSate] = useState("pending");
@@ -201,7 +211,7 @@ const FriendRequests = () => {
       switch (requestState) {
           case "pending":
               return user.requests.length === 0?
-                      <h1 style={{ marginBottom: '100px' }}>No pending requests for now... <br/> Go to matching page to find more friends! </h1>:
+                      <h3 style={{ marginBottom: '100px'}}>No pending requests for now... <br/> Go to matching page to find more friends! </h3>:
                       user.requests.map((request) => (
                           <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
                               <div className="Request-container">
@@ -227,7 +237,7 @@ const FriendRequests = () => {
                           </Card>))
           case "ignored":
               return user.ignored_requests.length === 0?
-                  <h1 style={{ marginBottom: '100px' }}>No ignored requests for now...</h1> :
+                  <h3 style={{ marginBottom: '100px' }}>No ignored requests for now...</h3> :
                   user.ignored_requests.map((request) => (
                       <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
                           <Avatar avatar={request.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
@@ -242,7 +252,7 @@ const FriendRequests = () => {
                       </Card>))
           case "friends":
               return user.friends.length === 0?
-                  <h1 style={{ marginBottom: '100px' }}>You have no friends... <br/> Go to matching page to find more friends! </h1>:
+                  <h3 style={{ marginBottom: '100px' }}>You have no friends... <br/> Go to matching page to find more friends! </h3>:
                   user.friends.map((request) => (
                       <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
                           <Avatar avatar={request.avatar} variant="top" style={{width: '250px', height: '250px'}}/>
