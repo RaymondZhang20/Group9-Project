@@ -1,8 +1,45 @@
 # Group9-Project
 ## FINAL PROJECT REPORT
 
-### Project Description: 
-Our application will be presented in the form of a website, with the functionality to allow users who share similar interests in video games to connect with other users (like a find “someone you might know” function on social media). It is for users who sit at home while playing games to find friends with similar interests and to promote social activity. It will store location data for users for the “find users near you” functionality, it will also store data for user’s interests (games that the user is interested in). It stores the users' preferences of what other users it would want to be matched to (how far away is still near? timezone? age? gender?) and this could be an additional functionality, to match users taking their preferences into consideration.
+# Project Description
+
+This project is a comprehensive user account and gaming platform, built using modern web technologies and methodologies.
+
+## Features & Technical Highlights
+
+### 1. Authentication System
+- **Framework/Tools:** Firebase and React-Router
+- Allows users to register and log in.
+- Provides access to private routes based on authentication context.
+
+### 2. Account Management System
+- **Backend:** Express and Mongoose
+- Stores user profiles, game lists, and friends in MongoDB.
+- Enables users to:
+  - Modify their profile.
+  - Add favorite games.
+  - Manage a server-side game list.
+- Integration with Firebase for private route access post-authentication.
+- Friend management:
+  - Sending, accepting, ignoring friend requests.
+  - Viewing friends' profiles and activities.
+- Query engine for recommending accounts based on user information and matching criteria.
+
+### 3. Real-time Communication
+- **Technology:** socket.io
+- Provides real-time messaging and notifications.
+- Allows direct messaging.
+- Stores message histories in MongoDB.
+
+### 4. Client-Side Application
+- **Frameworks/Tools:** React, Redux, Bootstrap, Leaflet map
+- Manages client-side info with reducers, thunks, and services.
+- Features:
+  - Displaying friend requests and friends' profiles.
+  - Showcasing friends' locations on a map.
+  - User input for matching, with server results paginated.
+  - Profile and game list viewing/modification.
+  - Chat histories and real-time messages.
 
 ### Minimal requirements:
 - [x] 1. Implementing an authentication system with Firebase that can let users register or log in and then(if passing the authentication) access their private routes.
