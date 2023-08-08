@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import {useDispatch, useSelector} from "react-redux";
 import {getAccountAsync, updateAccountAsync} from "../redux/accountReducers/accountThunks";
 import Avatar from '../components/Avatar';
+import { useNavigate } from 'react-router-dom';
 
 const profileOption = {
   "time-zone" :
