@@ -20,7 +20,7 @@
     background-color: #2A4C65;
     padding: 15px;
     text-align: center;
-    font-size: larger;
+    font-size: x-large;
     font-weight: bold;
     color: white;
     border-radius: 5px;
@@ -29,7 +29,7 @@
 .empty-chat .title {
     background-color: #4f7562;
     padding: 15px;
-    font-size: larger;
+    font-size: x-large;
     text-align: center;
     font-weight: bold;
     color: white;
@@ -57,7 +57,7 @@
 .chat-ui .title {
     background-color: #4f7562;
     padding: 15px;
-    font-size: larger;
+    font-size: x-large;
     text-align: center;
     font-weight: bold;
     color: white;

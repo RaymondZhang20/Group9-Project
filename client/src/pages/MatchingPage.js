@@ -175,7 +175,7 @@ return (
         </div>
          <div className="cards">
               {matchings.length === 0?
-                  <h1 style={{ marginBottom: '100px' }}>No matching for you, sorry</h1>:
+                  <h3 style={{ marginBottom: '100px' }}>No matching for you, sorry</h3>:
                   matchings.map((request) => (
                       <Card key={request.uid} style={{ minWidth: '550px', maxWidth: '550px', maxHeight: '350px' }}>
                           <div className="Request-container">
