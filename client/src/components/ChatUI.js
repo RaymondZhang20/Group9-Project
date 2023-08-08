@@ -19,6 +19,10 @@ const ChatUI = ({ friend }) => {
     const [messages, setMessages] = useState(friend.messages);
 
     useEffect(() => {
+        setMessages(friend.messages);
+    }, [friend]);
+
+    useEffect(() => {
         if (!ignore) {
             socket.on("receive-message", (message) => {
                 setMessages(prevMessages => [...prevMessages, { ...message, sentByMe: false }]);
