@@ -76,7 +76,7 @@ function UpdateUserInfo() {
     try {
       dispatch(updateAccountAsync(updatedUserInfo));
       alert("Updated Successfully!");
-      window.location.href = './profile';
+      navigate(-1);
     } catch (e) {
       alert("Failed to update user information.");
     }  
