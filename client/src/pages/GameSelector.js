@@ -61,7 +61,7 @@ function GameSelector() {
     const handleSearch = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/games/' + searchRef.current.value);
+            const response = await fetch('https://room9-backend.onrender.com/games/' + searchRef.current.value);
             if (!response.ok) {
                 throw new Error('Failed to get list of games.');
             }
