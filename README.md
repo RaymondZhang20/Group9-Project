@@ -24,7 +24,15 @@ Our application will be presented in the form of a website, with the functionali
 - [x] 5. Be able to add a new game to the list. Having search functionality to find a game in a large game list.
 
 ### Tech from units 1-5
+Unit 1 – HTML, CSS, JS
 
+Unit 2 – React & Redux
+
+Unit 3 – Node & Express
+
+Unit 4 – MongoDB
+
+Unit 5 – Builds and Deployment
 ### Above and Beyond
 
 ### Next Steps
@@ -32,6 +40,7 @@ Our application will be presented in the form of a website, with the functionali
 ### List of Contributions
 Jasper: Worked on the Map part of the web application which includes setting up the map api, creating the component, managing the redux of the data displayed on the map and calling the backend for everything map needs. Also dealth with all of the deployment and any issues that deployment presented. 
  <br> Shawn: Implemented the details of update page and matching page both on frontend and backen, and made some user friendly designs like one button to retrieve current location, and showing some information for potential matches. 
+ <br> Cheryl: Worked on the layout and implementation for home page, profile page, update profile page and game selection page. Created API endpoints for games on the server side. Utilized React components to refactor the code and enhance its clarity.
 
 ### Task breakdown
 1. Choose proper database and implement database connector to the back-end.
