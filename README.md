@@ -30,7 +30,7 @@ Our application will be presented in the form of a website, with the functionali
 ### Next Steps
 
 ### List of Contributions
-Jasper: Worked on the Map part of the web application along with dealing with all of the depoployment and any issues that deployment presented
+Jasper: Worked on the Map part of the web application which includes setting up the map api, creating the component, managing the redux of the data displayed on the map and calling the backend for everything map needs. Also dealth with all of the deployment and any issues that deployment presented. 
 
 ### Task breakdown
 1. Choose proper database and implement database connector to the back-end.
