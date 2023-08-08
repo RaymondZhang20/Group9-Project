@@ -1,5 +1,5 @@
 # Group9-Project
-## Project Progress 1
+## FINAL PROJECT REPORT
 
 ### Project Description: 
 Our application will be presented in the form of a website, with the functionality to allow users who share similar interests in video games to connect with other users (like a find “someone you might know” function on social media). It is for users who sit at home while playing games to find friends with similar interests and to promote social activity. It will store location data for users for the “find users near you” functionality, it will also store data for user’s interests (games that the user is interested in). It stores the users' preferences of what other users it would want to be matched to (how far away is still near? timezone? age? gender?) and this could be an additional functionality, to match users taking their preferences into consideration.
@@ -22,6 +22,15 @@ Our application will be presented in the form of a website, with the functionali
 - [ ] 3. Send an invitation to everyone within an outlined area for people to join a users party/game
 - [x] 4. Variable avatars for users to select, and show users avatar on matching, map, friend list and chat.
 - [x] 5. Be able to add a new game to the list. Having search functionality to find a game in a large game list.
+
+### Tech from units 1-5
+
+### Above and Beyond
+
+### Next Steps
+
+### List of Contributions
+Jasper: Worked on the Map part of the web application along with dealing with all of the depoployment and any issues that deployment presented
 
 ### Task breakdown
 1. Choose proper database and implement database connector to the back-end.
