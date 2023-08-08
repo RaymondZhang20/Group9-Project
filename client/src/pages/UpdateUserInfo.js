@@ -28,6 +28,7 @@ const profileOption = {
 
 function UpdateUserInfo() {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
       if (currentUser) {
