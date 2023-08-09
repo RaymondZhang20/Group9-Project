@@ -62,18 +62,19 @@ An engaging gaming social network platform, with a robust authentication and use
 
 ### Tech from units 1-5
 Unit 1 – HTML, CSS, JS
-
+We use this for styling
 Unit 2 – React & Redux
-
+Used for most of the front end interaction along with using Redux to manage our state
 Unit 3 – Node & Express
-
+Used facilate our calls to our back end along with installing and running the application
 Unit 4 – MongoDB
-
+Used to store all of our information
 Unit 5 – Builds and Deployment
+Used render to deploy our front end back end and web socket
 ### Above and Beyond
-
+Chat system
 ### Next Steps
-
+Further refine our search function along with enhancing the user interface
 ### List of Contributions
 Jasper: Worked on the Map part of the web application which includes setting up the map api, creating the component, managing the redux of the data displayed on the map and calling the backend for everything map needs. Also dealth with all of the deployment and any issues that deployment presented. 
  <br> Shawn: Implemented the details of update page and matching page both on frontend and backen, and made some user friendly designs like one button to retrieve current location, and showing some information for potential matches. 
