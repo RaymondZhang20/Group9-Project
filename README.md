@@ -3,7 +3,7 @@
 
 # Project Description
 
-This project is a comprehensive user account and gaming platform, built using modern web technologies and methodologies.
+An engaging gaming social network platform, with a robust authentication and user account system for profile customization, friend interactions, and game selection. Including real-time communication and gaming requests, and functionalities such as viewing friends on maps, user matching results, and real-time notifications.
 
 ## Features & Technical Highlights
 
