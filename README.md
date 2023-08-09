@@ -61,16 +61,16 @@ An engaging gaming social network platform, with a robust authentication and use
 - [x] 5. Be able to add a new game to the list. Having search functionality to find a game in a large game list.
 
 ### Tech from units 1-5
-Unit 1 – HTML, CSS, JS
-We use this for styling
-Unit 2 – React & Redux
-Used for most of the front end interaction along with using Redux to manage our state
-Unit 3 – Node & Express
-Used facilate our calls to our back end along with installing and running the application
-Unit 4 – MongoDB
-Used to store all of our information
-Unit 5 – Builds and Deployment
-Used render to deploy our front end back end and web socket
+ <br> Unit 1 – HTML, CSS, JS
+ <br> We use this for styling
+ <br> Unit 2 – React & Redux
+ <br> Used for most of the front end interaction along with using Redux to manage our state
+ <br> Unit 3 – Node & Express
+ <br> Used facilate our calls to our back end along with installing and running the application
+ <br> Unit 4 – MongoDB
+ <br> Used to store all of our information
+ <br> Unit 5 – Builds and Deployment
+ <br> Used render to deploy our front end back end and web socket
 ### Above and Beyond
 Chat system
 ### Next Steps
