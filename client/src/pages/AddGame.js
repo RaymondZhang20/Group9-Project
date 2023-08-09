@@ -21,7 +21,6 @@ export default function AddGame() {
                     .map(input => input.value),
                 url: form.elements['url'].value
             };
-            console.log(newGame);
             const response = await fetch('https://room9-backend.onrender.com/games/', {
                 method: 'POST',
                 headers: {

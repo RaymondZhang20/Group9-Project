@@ -41,15 +41,12 @@ const handleSubmit = async (e) => {
         }
         return response.json();
     }).then((data) => {
-        console.log(data);
         const matchingsWithInfo = data.map(match => {
             const commonFriends = user.friends.map(friend => friend._id) && match.friends ? user.friends.map(friend => friend._id).filter(friendId => match.friends.includes(friendId)).length : 0;
             const commonGames = user.games && match.games ? user.games.filter(game => match.games.includes(game)).length : 0;
             const overlappingPlayTime = user.profile.standard_time && match.profile.standard_time ? user.profile.standard_time.filter(time => match.profile.standard_time.includes(time)).length : 0;
-            console.log(match.friends);
             return { ...match, commonFriends, commonGames, overlappingPlayTime };
         });
-        console.log(user.friends.map(friend => friend._id));
         setMatchings(matchingsWithInfo);
     }).catch((error) => {
         console.error(error);

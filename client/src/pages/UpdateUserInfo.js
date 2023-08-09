@@ -40,7 +40,6 @@ function UpdateUserInfo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Get the updated user information from the form
     const form = e.target;
     const locationString = form.elements['location'].value;
     let latitude = null, longitude = null;
@@ -85,7 +84,6 @@ function UpdateUserInfo() {
 
     function getLocation() {
       if (navigator.geolocation) {
-        // setsTime(translateToStandard(userInfo));
         navigator.geolocation.getCurrentPosition(showPosition);
       } else {
         alert("Geolocation is not supported by this browser.");
@@ -113,7 +111,6 @@ function UpdateUserInfo() {
       timeZoneMap.set(timeZoneOptions[i], timeZoneValues[i]);
   }
 
-  // Get the current user's timezone offset
   function getUserOffset(timezone) {
     const userOffset = timeZoneMap.get(timezone);
     return userOffset;
@@ -133,14 +130,11 @@ function UpdateUserInfo() {
           if (playtime.includes("Midnight(12am-6am)")) {
               numPlayTime.push(0,1,2,3,4,5);
           }
-      console.log(numPlayTime);
       let standardTime = [];
       const offset = getUserOffset(timezone);
-      console.log(offset);
       for (let i = 0; i < numPlayTime.length; i++) {
           standardTime[i] = (numPlayTime[i] + offset)%24;
       }
-      console.log(standardTime);
       return standardTime;
   }
 

@@ -72,7 +72,6 @@ function createPins(mapFriends) {
 
 function createFriendsPins(friend) {
   var friendLocation = [friend.geolocation.lat, friend.geolocation.long]
-  console.log(Object.keys(friend))
   return (      
   <Marker key = {friend.account_name} position={friendLocation}>
     <Popup>

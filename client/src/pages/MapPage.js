@@ -20,12 +20,6 @@ export default function MapPage() {
     }, [currentUser]);
     const user = useSelector(state => state.account.currentUser);
 
-  const handleSearch = (searchText) => {
-    // Perform search logic based on the entered search text
-    // Update the map display accordingly
-    console.log('Search text:', searchText);
-  };
-
     return (
         <div id="MapPage-whole">
             <Navigate to={"/"+currentUser.uid} replace={true} />
@@ -216,7 +210,6 @@ const FriendRequests = () => {
                           <Card key={request.uid} style={{ minWidth: '250px', maxWidth: '250px' }}>
                               <div className="Request-container">
                                   <div className="Request-image-container">
-                                      {/*<Card.Img src={user_img} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>*/}
                                       <Avatar avatar={request.avatar} alt="Avatar" className="Request-image" style={{width: '250px', height: '250px'}} onClick={(e) => handleSee(e,request.uid)}/>
                                       <div className="Request-middle"  style={{ left: "50%" }}>
                                           <div className="Request-text">See Profile</div>
