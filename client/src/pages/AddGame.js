@@ -21,7 +21,6 @@ export default function AddGame() {
                     .map(input => input.value),
                 url: form.elements['url'].value
             };
-            console.log(newGame);
             const response = await fetch('http://localhost:5000/games/', {
                 method: 'POST',
                 headers: {

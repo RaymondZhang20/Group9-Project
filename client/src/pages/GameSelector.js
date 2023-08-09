@@ -46,7 +46,6 @@ function GameSelector() {
             alert("Updated Successfully!");
         } catch (e) {
             alert("Failed to update user information.");
-            // setError("Cannot update profile: " + e.message);
         }
     }
 

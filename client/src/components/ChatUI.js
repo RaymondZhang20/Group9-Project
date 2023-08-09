@@ -54,7 +54,6 @@ const ChatUI = ({ friend }) => {
                 <div className="username">
                     <h4>{friend.account_name}</h4>
                 </div>
-                {/*<button className="btn btn-success">Voice Call</button>*/}
             </div>
             <div className="chat-body">
                 {messages.map((message, index) => (

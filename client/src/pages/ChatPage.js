@@ -8,7 +8,6 @@ import {SocketProvider, useSocket} from "../contexts/SocketProvider";
 
 const ChatPage = () => {
     const user = useSelector(state => state.account.currentUser);
-    // const socket = useSocket();
 
     const [friends, setFriends] = useState(user.friends.map((friend) => {
         let f = Object.assign({selected: false}, friend);
