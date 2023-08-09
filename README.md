@@ -3,7 +3,7 @@
 
 # Project Description
 
-This project is a comprehensive user account and gaming platform, built using modern web technologies and methodologies.
+An engaging gaming social network platform, with a robust authentication and user account system for profile customization, friend interactions, and game selection. Including real-time communication and gaming requests, and functionalities such as viewing friends on maps, user matching results, and real-time notifications.
 
 ## Features & Technical Highlights
 
@@ -75,7 +75,7 @@ Unit 5 – Builds and Deployment
 ### Next Steps
 
 ### List of Contributions
-Jasper: Worked on the Map part of the web application which includes setting up the map api, creating the component, managing the redux of the data displayed on the map and calling the backend for everything map needs. Also dealth with all of the deployment and any issues that deployment presented. 
+Jasper: Worked on the Map part of the web application which includes setting up the map api, creating the component, managing the redux of the data displayed on the map and calling the backend for everything map needs. Also dealt with all of the deployment and any issues that deployment presented. 
  <br> Shawn: Implemented the details of update page and matching page both on frontend and backen, and made some user friendly designs like one button to retrieve current location, and showing some information for potential matches. 
  <br> Cheryl: Worked on the layout and implementation for home page, profile page, update profile page and game selection page. Created API endpoints for games on the server side. Utilized React components to refactor the code and enhance its clarity.
 
