@@ -60,6 +60,7 @@ An engaging gaming social network platform, with a robust authentication and use
 - [x] 5. Be able to add a new game to the list. Having search functionality to find a game in a large game list.
 
 ### Tech from units 1-5
+<<<<<<< HEAD
 Unit 1 – HTML, CSS, JS
 Html mostly are later converted into React. CSS and JS are continued in usage because one is for styling and another is for functionalities. For example, avatars are styled by CSS, JS so that when hover the mouse over the avatar, the image faded and a text “see profile” showed up, navigate to it’s profile page when click the avatar. The chat page also almost entirely relies on CSS, every component uses a background color, and the round-corner effect for bars are achieved using the border-radius attribute in CSS.
 
@@ -83,6 +84,22 @@ Implemented authentication system with Firebase that can let users register or l
 ### Next Steps
 For next steps: First, we could refine the functionality of our matching and search function, we could also improve the map to take part in the matching process. Second, we could also perhaps make group chats as well and add the option to link your account to a steam account. Third, we can make more real-time notifications using socket.io, for example, showing popup alert when your friend is online, or when they send you gaming invitation.
 
+=======
+ <br> Unit 1 – HTML, CSS, JS
+ <br> We use this for styling
+ <br> Unit 2 – React & Redux
+ <br> Used for most of the front end interaction along with using Redux to manage our state
+ <br> Unit 3 – Node & Express
+ <br> Used facilate our calls to our back end along with installing and running the application
+ <br> Unit 4 – MongoDB
+ <br> Used to store all of our information
+ <br> Unit 5 – Builds and Deployment
+ <br> Used render to deploy our front end back end and web socket
+### Above and Beyond
+Chat system
+### Next Steps
+Further refine our search function along with enhancing the user interface
+>>>>>>> 6074fd3ae326194c82dd913ba556713c985f9fd2
 ### List of Contributions
 - **Jasper:** Worked on the Map part of the web application which includes setting up the map api, creating the component, managing the redux of the data displayed on the map and calling the backend for everything map needs. Also dealt with all of the deployment and any issues that deployment presented.
 - **Shawn:** Implemented the details of update page and matching page both on frontend and backend, and made some user friendly designs like one button to retrieve current location, and showing some information for potential matches.
